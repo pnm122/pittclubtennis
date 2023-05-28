@@ -1,0 +1,137 @@
+#hero {
+  background-color: var(--blue);
+  padding-bottom: 70px;
+  --baseline-size: 8px;
+  --line-size: 6px;
+}
+
+#court, #serviceBoxes, #singles {
+  position: relative;
+}
+/* Using pseudo-elements to create the tennis court lines */
+#court::before, #court::after, #serviceBoxes::before, #serviceBoxes::after, #singles::before, #singles::after {
+  content: "";
+  background-color: white;
+  position: absolute;
+  opacity: 0;
+}
+
+/* Center mark on baseline */
+#court::before {
+  width: var(--baseline-size);
+  height: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  animation: slideInCenterMark var(--transition-long) forwards;
+  animation-delay: 0.375s;
+}
+
+/* Baseline */
+#court::after {
+  width: 0;
+  height: var(--baseline-size);
+  animation: slideInHorizontal var(--transition-long) forwards;
+}
+
+/* Baseline-parallel service box line */
+#serviceBoxes::before {
+  height: var(--line-size);
+  width: 0;
+  bottom: 0;
+  left: 0;
+  animation: slideInHorizontal var(--transition-long) forwards;
+  animation-delay: 0.1s;
+}
+
+/* Middle service box line */
+#serviceBoxes::after {
+  height: 0;
+  width: var(--line-size);
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  animation: slideInVertical var(--transition-long) forwards;
+  animation-delay: 0.375s;
+}
+
+#singles::before, #singles::after {
+  width: var(--line-size);
+  height: 0;
+  animation: slideInVertical var(--transition-long) forwards;
+}
+
+/* Left singles line */
+#singles::before {
+  left: var(--container-padding);
+  top: 0;
+}
+
+/* Right singles line */
+#singles::after {
+  right: var(--container-padding);
+  top: 0;
+  animation-delay: 1s;
+}
+
+@keyframes slideInHorizontal {
+  from {
+    opacity: 0;
+    width: 0;
+  }
+  to {
+    opacity: 1;
+    width: 100%;
+  }
+}
+
+@keyframes slideInVertical {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    height: 100%;
+  }
+}
+
+@keyframes slideInCenterMark {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    height: 10px;
+  }
+}
+
+#serviceBoxes {
+  height: var(--header-size);
+}
+
+#heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: white;
+  min-height: 65vh;
+}
+
+@media (width < 900px) {
+  #heroContent {
+    min-height: 50vh;
+  }
+}
+
+#heroContent p {
+  color: var(--light-text);
+}
+
+#heroButtons {
+  display: flex;
+  gap: 18px;
+}
