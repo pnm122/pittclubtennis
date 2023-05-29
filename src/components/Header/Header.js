@@ -48,7 +48,7 @@ export default function Header() {
     <header id={styles.header} className={styles.notScrolled}>
       <div className="container">
         <div id={styles.innerHeader}>
-          <img src='/images/pct_shield.webp' alt='PCT Logo'></img>
+          <Link to="/"><img src='/images/pct_shield.webp' alt='PCT Shield'></img></Link>
           <nav id={styles.linksWrapper} aria-expanded={expanded}>
             <div id={styles.toggleLinks} onClick={() => setExpanded(!expanded)}>
               <div></div>

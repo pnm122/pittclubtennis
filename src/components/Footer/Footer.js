@@ -9,7 +9,7 @@ export default function Footer() {
     <div id={styles.footer}>
       <div className="container">
         <div id={styles.top}>
-          <img src='/images/pct_logo.png'></img>
+          <img src='/images/pct_logo.png' alt='PCT Logo'></img>
           <div id={styles.links}>
             <div>
               <h6>Links</h6>

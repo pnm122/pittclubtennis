@@ -190,9 +190,14 @@
     }
   }
 
+  #linksWrapper {
+    overflow: hidden;
+  }
+
   #linksWrapper[aria-expanded=false] #links {
     visibility: hidden;
     opacity: 0;
+    transform: translateX(50px); /* Might affect mobile? */
   }
 }
 
