@@ -14,14 +14,27 @@ export default function HomePage() {
 
     const headerString = header.innerHTML;
     header.innerHTML = '';
+
+    // Wrap each word in a span, so that words break rather than characters
+    let wordElem = document.createElement('span');
+    wordElem.classList.add(styles.word);
+    header.appendChild(wordElem);
+
     let del = 0;
     for(let char of headerString) {
       let s = document.createElement('span');
-      if(char === ' ') s.innerHTML = '&nbsp;'
-      else s.innerHTML = char;
+      // Start a new word element when we see a space
+      if(char === ' ') {
+        wordElem = document.createElement('span');
+        wordElem.classList.add(styles.word);
+        header.appendChild(wordElem);
+      }
+      else {
+        s.innerHTML = char;
+      }
 
       s.style.animationDelay = `${del}s`;
-      header.appendChild(s);
+      wordElem.appendChild(s);
       del += 0.05;
     }
   }
@@ -74,23 +87,27 @@ export default function HomePage() {
               competitive club sport at the University of Pittsburgh. Since then, Pitt Club Tennis has grown tremendously. Today, we have roughly 
               35 members, hold practices 3 times a week at Alpha Tennis and Fitness, and attend tournaments all across the nation!</p>
             <Link to='/about' className="primary-button">About Us <FaArrowRight /></Link>
-            <div id={styles.aboutNumbers}>
-              <div>
-                <h2>35</h2>
-                <span>Members</span>
-              </div>
-              <div>
-                <h2>3</h2>
-                <span>Practices Per Week</span>
-              </div>
-              <div>
-                <h2>2+</h2>
-                <span>Tournaments Per Semester</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
+      {/* <div id={styles.numbersWrapper} className="section">
+        <div className="container">
+          <div id={styles.numbers}>
+            <div>
+              <h2>35</h2>
+              <span>Members</span>
+            </div>
+            <div>
+              <h2>3</h2>
+              <span>Practices Per Week</span>
+            </div>
+            <div>
+              <h2>2+</h2>
+              <span>Tournaments Per Semester</span>
+            </div>
+          </div>
+        </div>
+      </div> */}
       <div className="container section">
         <div id={styles.tournaments}>
           <h2>Upcoming Tournaments</h2>

@@ -9,12 +9,6 @@
   margin-bottom: 12px;
 }
 
-@media (width < 900px) {
-  #tournament {
-    width: 100%;
-  }
-}
-
 #tournament > div {
   display: flex;
   align-items: center;
@@ -28,11 +22,32 @@
 #link {
   width: 225px;
   justify-content: flex-end;
-  text-align: right;
 }
 
 #link a {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+@media (width < 950px) {
+  #tournament {
+    width: 100%;
+  }
+
+  #link a {
+    white-space: normal;
+  }
+}
+
+@media (width < 700px) {
+  #tournament {
+    flex-direction: column;
+    align-items: start;
+    /* width: fit-content; */
+  }
+
+  #link, #name {
+    width: fit-content;
+  }
 }

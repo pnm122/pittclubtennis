@@ -123,12 +123,19 @@
 }
 
 #heroContent h1 {
-  display: block;
-  overflow: hidden;
   color: white;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.25em;
+  justify-content: center;
 }
 
-#heroContent h1 span {
+.word {
+  display: block;
+  overflow: hidden;
+}
+
+.word span {
   color: white;
   display: inline-block;
   animation: slideInHeader var(--transition-mid) forwards;
@@ -236,14 +243,22 @@
   width: fit-content;
 }
 
-#aboutNumbers {
+#numbersWrapper {
+  
+}
+
+#numbers {
   --gap: 40px;
   display: flex;
   gap: var(--gap);
-  margin-top: 25px;
+  background-color: var(--card-color);
+  padding: 40px 60px;
+  margin: auto;
+  border-radius: 999px;
+  width: fit-content;
 }
 
-#aboutNumbers > div {
+#numbers > div {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -251,18 +266,18 @@
   width: 150px;
 }
 
-#aboutNumbers > div h2 {
+#numbers > div h2 {
   color: var(--yellow);
   margin: 0;
 }
 
-#aboutNumbers > div span {
+#numbers > div span {
   text-transform: uppercase;
   font-weight: bold;
   color: var(--text-color-dark);
 }
 
-#aboutNumbers > div:not(:last-of-type)::after {
+#numbers > div:not(:last-of-type)::after {
   content: "";
   position: absolute;
   height: 100%;
