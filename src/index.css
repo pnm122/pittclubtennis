@@ -10,9 +10,13 @@ body {
 
   --blue: #003594;
   --yellow: #FFB81C;
+  --sky-blue: #71C5E8;
+  --teal: #008264;
   --text-color-dark: rgba(0, 0, 0, 0.75);
   --text-color-light: rgba(255, 255, 255, 0.75);
   --line-color: #ddd;
+  --card-color: #f0f0f0;
+  --anchor-color: #305fdf;
 
   --xxl-text: 5rem;
   --xl-text: 4rem;
@@ -29,7 +33,7 @@ body {
   --container-padding: 40px;
 }
 
-@media (width < 768px) {
+@media (width < 900px) {
   body {
     --xxl-text: 4rem;
     --xl-text: 3rem;
@@ -51,6 +55,11 @@ a {
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
+  color: var(--anchor-color);
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 a svg {
@@ -66,7 +75,7 @@ p, span {
   color: var(--text-color-dark);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h3, h4, h5, h6 {
   line-height: 1em;
   margin: 0;
 }
@@ -77,6 +86,7 @@ h1 {
 
 h2 {
   font-size: var(--xl-text);
+  margin: 0 0 0.2em 0;
 }
 
 h3 {
@@ -101,6 +111,10 @@ h4, h5, h6 {
 .primary-button, .secondary-button {
   position: relative;
   overflow: hidden;
+}
+
+.primary-button:hover, .secondary-button:hover {
+  text-decoration: none;
 }
 
 .primary-button {

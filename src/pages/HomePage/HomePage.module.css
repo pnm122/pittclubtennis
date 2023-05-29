@@ -38,7 +38,7 @@
 #serviceBoxes::before {
   height: var(--line-size);
   width: 0;
-  bottom: 0;
+  bottom: calc(-1 * var(--line-size));
   left: 0;
   animation: slideInHorizontal var(--transition-long) forwards;
   animation-delay: 0.1s;
@@ -226,7 +226,10 @@
 #aboutContent {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+}
+
+#aboutContent p {
+  margin-bottom: 1em;
 }
 
 #aboutContent a {
@@ -250,6 +253,7 @@
 
 #aboutNumbers > div h2 {
   color: var(--yellow);
+  margin: 0;
 }
 
 #aboutNumbers > div span {

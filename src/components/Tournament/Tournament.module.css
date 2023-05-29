@@ -1,0 +1,38 @@
+#tournament {
+  background-color: var(--card-color);
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 75%;
+  margin-bottom: 12px;
+}
+
+@media (width < 900px) {
+  #tournament {
+    width: 100%;
+  }
+}
+
+#tournament > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#name {
+  width: 225px;
+}
+
+#link {
+  width: 225px;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+#link a {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

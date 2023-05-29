@@ -1,0 +1,207 @@
+#header {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  color: var(--header-link-color);
+  background-color: var(--header-bg-color);
+  transition: background-color var(--transition);
+  border-bottom: var(--header-border);
+}
+
+#header:not(.notScrolled) {
+  --header-link-color: black;
+  --header-link-hover-color: var(--teal);
+  --header-bg-color: white;
+  --header-border: 1px solid var(--line-color);
+}
+
+.notScrolled {
+  --header-link-color: white;
+  --header-link-hover-color: var(--sky-blue);
+  --header-bg-color: transparent;
+  --header-border: none;
+}
+
+#header img {
+  height: 45px;
+}
+
+#innerHeader {
+  height: var(--header-size);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  /* position: relative; */
+}
+
+#links {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 4px;
+  transform: translate(15px); /* Account for padding of last nav item */
+}
+
+#links li {
+  display: block;
+}
+
+#links a {
+  color: var(--header-link-color);
+  padding: 0 15px;
+  line-height: var(--header-size);
+  transition: color var(--transition);
+  position: relative;
+}
+
+#links a:hover {
+  color: var(--header-link-hover-color);
+  text-decoration: none;
+}
+
+#links a::after {
+  content: "";
+  background-color: var(--header-link-hover-color);
+  position: absolute;
+  bottom: 30px;
+  left: 15px;
+  height: 0.3em;
+  width: calc(100% - 30px);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+#links a:hover::after {
+  opacity: 0.2;
+}
+
+#toggleLinks {
+  display: none;
+  cursor: pointer;
+}
+
+#toggleLinks > div {
+  background-color: var(--header-link-color);
+  height: 3px;
+  transition: var(--transition);
+}
+
+#linksWrapper[aria-expanded=false] #toggleLinks > div:first-of-type {
+  width: 24px;
+}
+
+#linksWrapper[aria-expanded=false] #toggleLinks > div:nth-of-type(2) {
+  width: 20px;
+}
+
+#linksWrapper[aria-expanded=false] #toggleLinks > div:last-of-type {
+  width: 24px;
+}
+
+#linksWrapper[aria-expanded=true] #toggleLinks > div:first-of-type {
+  transform: translateY(8px) rotate(45deg);
+  width: 24px;
+}
+
+#linksWrapper[aria-expanded=true] #toggleLinks > div:nth-of-type(2) {
+  width: 0;
+  transform: translateX(-12px);
+}
+
+#linksWrapper[aria-expanded=true] #toggleLinks > div:last-of-type {
+  transform: translateY(-8px) rotate(-45deg);
+  width: 24px;
+}
+
+@media (width < 1200px) {
+  #linksWrapper[aria-expanded=true] {
+    --header-link-color: black;
+    --header-link-hover-color: var(--teal);
+  }
+
+  #toggleLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  #links {
+    position: absolute;
+    background-color: white;
+    top: 0;
+    right: 0;
+    flex-direction: column;
+    justify-content: center;
+    transform: none;
+    z-index: -1;
+    padding: var(--header-size) 20px 0 0;
+    height: 100vh;
+    box-shadow: 0 0 0 100vw #0008;
+    transition: var(--transition); /* transition on just opacity doesn't work??? */
+  }
+
+  #links::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: var(--header-size);
+    background-color: var(--line-color);
+  }
+
+  #links a {
+    line-height: 1em;
+    padding: 25px 40px;
+    font-size: 3rem;
+    font-weight: bold;
+    display: block;
+  }
+
+  #links a::after {
+    bottom: 50%;
+    /* left: initial; */
+    transform: translateY(50%);
+    height: 5px;
+    left: 0;
+    width: 0;
+  }
+
+  #links a:hover::after {
+    opacity: 1;
+    width: 25px;
+  }
+
+  #linksWrapper[aria-expanded=true] li {
+    opacity: 0;
+    animation: slideIn var(--transition) forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  #linksWrapper[aria-expanded=false] #links {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@media (width < 500px) {
+  #links {
+    width: 100vw;
+  }
+
+  #links a {
+    font-size: 2rem;
+  }
+}
