@@ -47,6 +47,17 @@ body {
   }
 }
 
+@media (width < 400px) {
+  body {
+    --xxl-text: 4rem;
+    --xl-text: 2.5rem;
+    --l-text: 2rem;
+    --ml-text: 1.25rem;
+    --m-text: 1rem;
+    --s-text: 0.75rem;
+  }
+}
+
 button {
   border: none;
   outline: none;

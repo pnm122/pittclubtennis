@@ -90,21 +90,19 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      {/* <div id={styles.numbersWrapper} className="section">
-        <div className="container">
-          <div id={styles.numbers}>
-            <div>
-              <h2>35</h2>
-              <span>Members</span>
-            </div>
-            <div>
-              <h2>3</h2>
-              <span>Practices Per Week</span>
-            </div>
-            <div>
-              <h2>2+</h2>
-              <span>Tournaments Per Semester</span>
-            </div>
+      {/* <div className="container section">
+        <div id={styles.numbers}>
+          <div>
+            <h2>35</h2>
+            <span>Members</span>
+          </div>
+          <div>
+            <h2>3</h2>
+            <span>Practices Per Week</span>
+          </div>
+          <div>
+            <h2>2+</h2>
+            <span>Tournaments Per Semester</span>
           </div>
         </div>
       </div> */}
