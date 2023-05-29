@@ -12,6 +12,7 @@ body {
   --yellow: #FFB81C;
   --text-color-dark: rgba(0, 0, 0, 0.75);
   --text-color-light: rgba(255, 255, 255, 0.75);
+  --line-color: #ddd;
 
   --xxl-text: 5rem;
   --xl-text: 4rem;
@@ -21,6 +22,7 @@ body {
   --s-text: 0.75rem;
 
   --transition: 0.2s cubic-bezier(0.19, 0, 0.22, 1);
+  --transition-mid: 0.5s cubic-bezier(0.19, 0, 0.22, 1);
   --transition-long: 1.25s cubic-bezier(0.19, 0, 0.22, 1);
 
   --header-size: 75px;
@@ -51,6 +53,11 @@ a {
   cursor: pointer;
 }
 
+a svg {
+  font-size: 0.8em;
+  margin-left: 0.2em;
+}
+
 p {
   margin: 0;
 }
@@ -61,15 +68,11 @@ p, span {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1em;
-}
-
-h2, h3, h4, h5, h6 {
-  margin: 0 0 0.3em 0;
+  margin: 0;
 }
 
 h1 {
   font-size: var(--xxl-text);
-  margin: 0;
 }
 
 h2 {
@@ -89,6 +92,10 @@ h4, h5, h6 {
   margin: auto;
   padding-left: var(--container-padding);
   padding-right: var(--container-padding);
+}
+
+.section {
+  margin-bottom: 60px;
 }
 
 .primary-button, .secondary-button {

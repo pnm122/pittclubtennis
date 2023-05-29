@@ -117,8 +117,49 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  color: white;
   min-height: 65vh;
+  padding: 0 20px;
+  text-align: center;
+}
+
+#heroContent h1 {
+  display: block;
+  overflow: hidden;
+  color: white;
+}
+
+#heroContent h1 span {
+  color: white;
+  display: inline-block;
+  animation: slideInHeader var(--transition-mid) forwards;
+  transform: translateY(100%);
+}
+
+#heroContent p {
+  color: var(--text-color-light);
+  animation: fadeIn var(--transition-mid) forwards;
+  opacity: 0;
+  animation-delay: 2s;
+}
+
+@keyframes slideInHeader {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (width < 900px) {
@@ -127,11 +168,102 @@
   }
 }
 
-#heroContent p {
-  color: var(--light-text);
+@media (width < 600px) {
+  #heroContent h1 {
+    font-size: 3rem;
+  }
 }
 
 #heroButtons {
   display: flex;
   gap: 18px;
+}
+
+#heroButtons a {
+  height: fit-content;
+  animation: fadeIn var(--transition-mid) forwards;
+  opacity: 0;
+  animation-delay: 2s;
+}
+
+#about {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+#about > div {
+  flex: 1;
+}
+
+#aboutImg {
+  position: relative;
+}
+
+#mainImg {
+  width: 80%;
+}
+
+#tennisBall {
+  --right: 15%;
+  --top: 23%;
+  position: absolute;
+  width: 5%;
+  right: var(--right);
+  top: var(--top);
+}
+
+#dots {
+  background: radial-gradient(var(--blue) 2px, transparent 0);
+  background-size: 25px 25px;
+  height: 50%;
+  width: 40%;
+  position: absolute;
+  left: 0;
+  bottom: 15%;
+}
+
+#aboutContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#aboutContent a {
+  width: fit-content;
+}
+
+#aboutNumbers {
+  --gap: 40px;
+  display: flex;
+  gap: var(--gap);
+  margin-top: 25px;
+}
+
+#aboutNumbers > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 150px;
+}
+
+#aboutNumbers > div h2 {
+  color: var(--yellow);
+}
+
+#aboutNumbers > div span {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--text-color-dark);
+}
+
+#aboutNumbers > div:not(:last-of-type)::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  right: calc(-1 * var(--gap) / 2);
+  top: 0;
+  background-color: var(--line-color);
 }
