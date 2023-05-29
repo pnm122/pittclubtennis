@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { FaArrowRight } from 'react-icons/fa'
 import Tournament from 'components/Tournament/Tournament'
 import Header from 'components/Header/Header'
+import Footer from 'components/Footer/Footer'
 
 export default function HomePage() {
 
@@ -98,6 +99,7 @@ export default function HomePage() {
           <Link to="/tournaments" className="primary-button">See all tournaments <FaArrowRight /></Link>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

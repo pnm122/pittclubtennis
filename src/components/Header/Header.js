@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Header.module.css'
 import { Link } from 'react-router-dom'
+import Links from 'components/Links/Links';
 
 export default function Header() {
 
@@ -55,11 +56,7 @@ export default function Header() {
               <div></div>
             </div>
             <ul id={styles.links}>
-              <li><Link to="/about">About</Link></li>
-              <li><Link to="/tryouts">Tryouts</Link></li>
-              <li><Link to="/fundraisers">Fundraisers</Link></li>
-              <li><Link to="/tournaments">Tournaments</Link></li>
-              <li><Link to="/members">Members</Link></li>
+              <Links />
             </ul>
           </nav>
         </div>
