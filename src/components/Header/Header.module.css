@@ -72,8 +72,16 @@
   transition: var(--transition);
 }
 
-#links a:hover::after {
+#links a:hover::after, #links a[aria-selected=true]::after {
   opacity: 0.2;
+}
+
+#links a[aria-selected=true] {
+  color: var(--header-link-hover-color);
+}
+
+#links a[aria-selected=true], #links a[aria-selected=true]::after {
+  transition: none !important;
 }
 
 #toggleLinks {
@@ -171,7 +179,7 @@
     width: 0;
   }
 
-  #links a:hover::after {
+  #links a:hover::after, #links a[aria-selected=true]::after {
     opacity: 1;
     width: 25px;
   }

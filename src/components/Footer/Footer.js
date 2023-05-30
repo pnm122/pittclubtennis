@@ -4,7 +4,7 @@ import Links from 'components/Links/Links'
 import NewTabLink from 'components/NewTabLink/NewTabLink'
 import { FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa'
 
-export default function Footer() {
+export default function Footer({ selected }) {
   return (
     <div id={styles.footer}>
       <div className="container">
@@ -13,8 +13,8 @@ export default function Footer() {
           <div id={styles.links}>
             <div>
               <h6>Links</h6>
-              <ul>
-                <Links />
+              <ul role='tablist'>
+                <Links selected={selected} />
               </ul>
             </div>
             <div>

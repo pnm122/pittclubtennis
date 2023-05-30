@@ -43,6 +43,10 @@
   display: block;
 }
 
+#links a[aria-selected=true] {
+  text-decoration: underline;
+}
+
 #bottom {
   padding: 40px 0;
   display: flex;

@@ -11,7 +11,7 @@ export default function MemberPage() {
   })
   return (
     <>
-      <Header />
+      <Header selected='Members' />
       <div id="page">
         <div className='container' id='page-title'>
           <h1>Members</h1>
@@ -22,7 +22,7 @@ export default function MemberPage() {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer selected='Members' />
     </>
   )
 }

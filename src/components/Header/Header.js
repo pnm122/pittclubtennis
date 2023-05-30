@@ -3,7 +3,7 @@ import styles from './Header.module.css'
 import { Link } from 'react-router-dom'
 import Links from 'components/Links/Links';
 
-export default function Header() {
+export default function Header({ selected }) {
 
   const [expanded, setExpanded] = useState(false);
 
@@ -55,8 +55,8 @@ export default function Header() {
               <div></div>
               <div></div>
             </div>
-            <ul id={styles.links}>
-              <Links />
+            <ul role='tablist' id={styles.links}>
+              <Links selected={selected} />
             </ul>
           </nav>
         </div>
