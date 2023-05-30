@@ -7,6 +7,7 @@
 body {
   margin: 0;
   font-family: 'Rubik', 'Roboto', sans-serif;
+  scroll-behavior: smooth;
 
   --blue: #003594;
   --yellow: #FFB81C;
@@ -31,6 +32,8 @@ body {
 
   --header-size: 75px;
   --container-padding: 40px;
+
+  --shadow: 4px 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 @media (width < 900px) {
@@ -48,7 +51,7 @@ body {
 
 @media (width < 400px) {
   body {
-    --xxl-text: 4rem;
+    --xxl-text: 3.25rem;
     --xl-text: 2.5rem;
     --l-text: 2rem;
     --ml-text: 1.25rem;
@@ -106,6 +109,19 @@ h3 {
 
 h4, h5, h6 {
   font-size: var(--ml-text);
+}
+
+#page {
+  padding-top: var(--header-size);
+}
+
+#page-title {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+#page-title h1 {
+  color: var(--blue);
 }
 
 .container {

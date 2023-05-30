@@ -44,7 +44,7 @@ export default function HomePage() {
 
     const moveTennisBall = e => {
       let tennisBall = document.getElementById(styles.tennisBall)
-      tennisBall.style.right = `calc(var(--right) - ${window.scrollY / 8}px)`
+      tennisBall.style.right = `calc(var(--right) - ${window.scrollY / 6}px)`
       tennisBall.style.top = `calc(var(--top) - ${window.scrollY / 40}px)`
       tennisBall.style.transform = `rotate(${(window.scrollY / 12) - 20}deg)`
     }
