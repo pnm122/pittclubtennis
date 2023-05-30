@@ -10,7 +10,7 @@
 
 #header:not(.notScrolled) {
   --header-link-color: black;
-  --header-link-hover-color: var(--teal);
+  --header-link-hover-color: var(--blue);
   --header-bg-color: white;
   --header-border: 1px solid var(--line-color);
 }
@@ -117,7 +117,7 @@
 @media (width < 1200px) {
   #linksWrapper[aria-expanded=true] {
     --header-link-color: black;
-    --header-link-hover-color: var(--teal);
+    --header-link-hover-color: var(--blue);
   }
 
   #toggleLinks {

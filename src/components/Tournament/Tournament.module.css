@@ -34,10 +34,6 @@
   #tournament {
     width: 100%;
   }
-
-  #link a {
-    white-space: normal;
-  }
 }
 
 @media (width < 700px) {

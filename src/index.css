@@ -11,7 +11,6 @@ body {
   --blue: #003594;
   --yellow: #FFB81C;
   --sky-blue: #71C5E8;
-  --teal: #003594;
   --text-color-dark: rgba(0, 0, 0, 0.75);
   --text-color-light: rgba(255, 255, 255, 0.75);
   --line-color: #ddd;
@@ -147,13 +146,18 @@ h4, h5, h6 {
   transition: var(--transition);
 }
 
-.primary-button::after, .secondary-button::after {
+.primary-button::after {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.secondary-button::after {
+  background-color: var(--sky-blue);
+  z-index: -1;
+}
+
 .secondary-button:hover {
-  color: white;
-  border-color: rgba(255, 255, 255, 0.2);
+  color: black;
+  border-color: var(--sky-blue);
 }
 
 .primary-button:hover::after, .secondary-button:hover::after {
