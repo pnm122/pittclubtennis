@@ -216,14 +216,14 @@
 }
 
 #mainImg {
-  width: 80%;
+  width: 100%;
 }
 
 #tennisBall {
-  --right: 15%;
-  --top: 23%;
+  --right: -5%;
+  --top: 15%;
   position: absolute;
-  width: 5%;
+  width: 4.5%;
   right: var(--right);
   top: var(--top);
 }
@@ -240,7 +240,7 @@
   height: 50%;
   width: 40%;
   position: absolute;
-  left: 0;
+  left: 5%;
   bottom: 15%;
 }
 

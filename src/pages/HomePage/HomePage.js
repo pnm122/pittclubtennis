@@ -77,7 +77,7 @@ export default function HomePage() {
       <div className="container section">
         <div id={styles.about}>
           <div id={styles.aboutImg}>
-            <img id={styles.mainImg} src="/images/pct_img1.png" alt=''></img>
+            <img id={styles.mainImg} src="/images/pct_img2.png" alt=''></img>
             <img id={styles.tennisBall} src="images/pct_tennisball.png" alt="Tennis Ball"></img>
             <div id={styles.dots}></div>
           </div>
