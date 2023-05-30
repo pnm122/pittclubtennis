@@ -1,11 +1,15 @@
 #tournament {
-  background-color: var(--card-color);
+  --tourney-bg: var(--card-color);
+  --result-color: black;
+  --border-color: transparent;
+  background: var(--tourney-bg);
+  border: 1px solid var(--border-color);
   padding: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  width: 75%;
+  gap: 20px;
+  max-width: 1000px;
   margin-bottom: 12px;
 }
 
@@ -21,6 +25,9 @@
 
 #link {
   width: 225px;
+}
+
+#link:is(:last-of-type) {
   justify-content: flex-end;
 }
 
@@ -30,16 +37,38 @@
   text-overflow: ellipsis;
 }
 
-@media (width < 950px) {
-  #tournament {
-    width: 100%;
-  }
+#result, #result span {
+  color: var(--result-color);
 }
+
+.gold {
+  --tourney-bg: linear-gradient(to right, #ffefb5, #fff8df) !important;
+  --result-color: #f0bf0d !important;
+  --border-color: #ffc800 !important;
+}
+
+.silver {
+  --tourney-bg: linear-gradient(to right, #e1e1e1, #f7f7f7) !important;
+  --result-color: #7d7d7d !important;
+  --border-color: #b6b6b6 !important;
+}
+
+.bronze {
+  --tourney-bg: linear-gradient(to right, #e7caad, #fff5eb) !important;
+  --result-color: #865c33 !important;
+  --border-color: #865c33 !important;
+}
+
 
 @media (width < 700px) {
   #tournament {
     flex-direction: column;
     align-items: start;
+    gap: 4px;
+  }
+
+  #tournament h4 {
+    margin-bottom: 0.3em;
   }
 
   #link, #name {

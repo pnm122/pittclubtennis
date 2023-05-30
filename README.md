@@ -2,4 +2,4 @@
 
 Created by Pierce Martin
 
-v0.2.1
+v0.3.0

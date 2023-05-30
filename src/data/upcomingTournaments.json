@@ -1,0 +1,16 @@
+[
+  {
+    "id": 0,
+    "name": "Hershey",
+    "date": "2/17/23 - 2/18/23",
+    "location": "Hershey Racquet Club",
+    "locationLink": "https://www.google.com/maps/place/Hershey+Racquet+Club/@40.2699664,-76.6749489,17z/data=!3m1!4b1!4m6!3m5!1s0x89c8bb63a19d7eed:0x915e2292e4faa1cf!8m2!3d40.2699664!4d-76.6727602!16s%2Fg%2F1tgnsmlv?entry=ttu"
+  },
+  {
+    "id": 1,
+    "name": "Nationals",
+    "date": "4/6/23 - 4/8/23",
+    "location": "Surprise Tennis and Racquet Complex",
+    "locationLink": "https://www.google.com/maps/place/Surprise+Tennis+%26+Racquet+Complex/@33.6297222,-112.3738554,17z/data=!3m1!4b1!4m6!3m5!1s0x872b44dae2b9635f:0x90bdbef88f5f4502!8m2!3d33.6297222!4d-112.3716667!16s%2Fg%2F1tykvvvb?entry=ttu"
+  }
+]

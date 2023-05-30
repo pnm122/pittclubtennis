@@ -5,8 +5,11 @@ import { FaArrowRight } from 'react-icons/fa'
 import Tournament from 'components/Tournament/Tournament'
 import Header from 'components/Header/Header'
 import Footer from 'components/Footer/Footer'
+import upcomingTournaments from 'data/upcomingTournaments.json'
+import useScroll from 'hooks/useScroll'
 
 export default function HomePage() {
+  useScroll();
 
   const splitHeader = () => {
     let header = document.getElementById('hero-header');
@@ -109,8 +112,9 @@ export default function HomePage() {
       <div className="container section">
         <div id={styles.tournaments}>
           <h2>Upcoming Tournaments</h2>
-          <Tournament name="Hershey" date="2/17 - 2/18" location="Hershey Racquet Club" locationLink="https://www.google.com/maps/place/Hershey+Racquet+Club/@40.2699664,-76.6749489,17z/data=!3m1!4b1!4m6!3m5!1s0x89c8bb63a19d7eed:0x915e2292e4faa1cf!8m2!3d40.2699664!4d-76.6727602!16s%2Fg%2F1tgnsmlv?entry=ttu" />
-          <Tournament name="Nationals" date="4/6 - 4/8" location="Surprise Tennis and Racquet Complex" locationLink="https://www.google.com/maps/place/Surprise+Tennis+%26+Racquet+Complex/@33.6297222,-112.3738554,17z/data=!3m1!4b1!4m6!3m5!1s0x872b44dae2b9635f:0x90bdbef88f5f4502!8m2!3d33.6297222!4d-112.3716667!16s%2Fg%2F1tykvvvb?entry=ttu" />
+          { upcomingTournaments.map(t => {
+            return <Tournament key={t.id} name={t.name} date={t.date} location={t.location} locationLink={t.locationLink} />
+          }) }
           <Link to="/tournaments" className="primary-button">See all tournaments <FaArrowRight /></Link>
         </div>
       </div>
