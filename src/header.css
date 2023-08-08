@@ -1,0 +1,199 @@
+/* Separate header CSS file instead of module because .active won't work inside a module + too much to put inside index.css */
+
+header {
+  margin-top: var(--page-vert-pad);
+}
+
+#header-inner {
+  background-color: var(--primary);
+  border-radius: var(--rounding);
+  padding: var(--size-md) var(--size-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#title {
+  font-size: var(--text-lg);
+  color: white;
+  font-family: var(--title-font);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+header nav {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(10vw);
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: var(--primary);
+  height: 100vh;
+  max-height: -webkit-fill-available;
+  max-width: 400px;
+  width: 100%;
+  z-index: 99;
+  padding: 0 var(--size-2xl);
+  transition: visibility var(--transition-short),
+              opacity var(--transition-short),
+              transform var(--transition-short);
+}
+
+header nav ul {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header nav a {
+  font-family: var(--title-font);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: var(--text-2xl);
+  padding: var(--size-xl) 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1em;
+  transition: color var(--transition-short);
+}
+
+header nav a::before {
+  content: '';
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 5px;
+  background-color: white;
+  transition: width var(--transition-short);
+}
+
+header nav a:hover {
+  color: white !important;
+}
+
+header nav a.active::before {
+  width: 16px;
+}
+
+header nav a:not(.active):hover::before {
+  width: 16px;
+}
+
+header nav a:not(.active) {
+  color: var(--secondary);
+}
+
+header nav a.active {
+  color: white;
+}
+
+#toggle-nav {
+  padding: var(--size-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 999;
+}
+
+.line {
+  background-color: white;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  transition: width var(--transition-short), 
+              transform var(--transition-short);
+  /* transition-delay: 150ms; */
+}
+
+.line:nth-of-type(2) {
+  width: 16px;
+  margin-left: 4px;
+  /* transition-delay: 0ms; */
+}
+
+header[aria-expanded=true] .line:nth-of-type(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+header[aria-expanded=true] .line:nth-of-type(2) {
+  width: 0;
+  margin: 0;
+}
+
+header[aria-expanded=true] .line:nth-of-type(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+header[aria-expanded=true] nav {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#header-close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.33333);
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility var(--transition-short),
+              opacity var(--transition-short);
+}
+
+header[aria-expanded=true] #header-close {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (width > 800px) {
+  #toggle-nav {
+    display: none;
+  }
+
+  header nav {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    position: static;
+    padding: 0;
+    height: fit-content;
+    max-width: none;
+    width: auto;
+  }
+
+  header nav ul {
+    flex-direction: row;
+    gap: var(--size-2xl);
+  }
+
+  header nav a {
+    font-size: var(--text-md);
+    padding: var(--size-md) 0;
+    position: relative;
+  }
+
+  header nav a.active::before {
+    display: block;
+    position: absolute;
+    bottom: var(--size-sm);
+    left: 0;
+    width: 100%;
+    height: 1px;
+  }
+
+  header nav a::before {
+    display: none;
+  }
+
+  #header-close {
+    display: none;
+  }
+}

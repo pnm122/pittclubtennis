@@ -6,8 +6,6 @@
 }
 
 :root {
-  font-family: "Public Sans", system-ui;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -63,6 +61,8 @@ body {
   --size-5xl: 8rem;
 
   --section-gap: 6rem;
+  --page-vert-pad: var(--size-2xl);
+  --rounding: var(--size-md);
 
   --transition-timing: cubic-bezier(0.19, 1, 0.22, 1);
   --transition-short: 0.25s var(--transition-timing);
@@ -75,14 +75,19 @@ body {
   --shadow-md: 2px 3px 10px var(--shadow-color);
   --shadow-lg: 4px 4px 14px var(--shadow-color);
   --shadow-xl: 4px 6px 18px var(--shadow-color);
+
+  --title-font: 'ClashDisplay-Variable', system-ui, sans-serif;
+  --default-font: "Public Sans", system-ui, sans-serif;
+
+  font-family: var(--default-font);
 }
 
-body[theme='dark'] {
+/* body[theme='dark'] {
   --bg: #151515;
   --on-bgRGB: 255, 255, 255;
-}
+} */
 
-body[theme='light'] {
+body[theme='dark'], body[theme='light'] {
   --bg: white;
   --on-bgRGB: 0, 0, 0;
 }
@@ -112,7 +117,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'ClashDisplay-Variable', sans-serif;
+  font-family: var(--title-font);
   text-transform: uppercase;
   font-weight: 600;
   line-height: 1em;
@@ -194,31 +199,13 @@ hr {
   border: 1px solid var(--on-bg50);
 }
 
-header {
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  background-color: var(--bg);
-}
-
 nav ul {
-  display: flex;
-  gap: var(--size-xl);
   margin: 0;
   padding: 0;
 }
 
 nav li {
   display: block;
-}
-
-header nav li a {
-  display: block;
-  padding: var(--size-xl) var(--size-md);
-}
-
-header .active, header .active:hover {
-  color: var(--secondary);
 }
 
 footer .active, footer .active:hover {
@@ -267,8 +254,16 @@ section:not(:last-of-type) {
 }
 
 .container {
-  margin: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 20px;
+  padding-right: 20px;
   max-width: 1140px;
+}
+
+@media (width > 1024px) {
+  .container {
+    padding-right: 64px;
+    padding-left: 64px;
+  }
 }

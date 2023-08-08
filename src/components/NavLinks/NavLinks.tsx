@@ -2,9 +2,11 @@ import { NavLink } from "react-router-dom"
 
 export default function NavLinks() {
   const links = [
-    { path: '/', name: 'Item 1' },
-    { path: '/a', name: 'Item 2' },
-    { path: '/b', name: 'Item 3' },
+    { path: '/about', name: 'About' },
+    { path: '/tryouts', name: 'Tryouts' },
+    { path: '/fundraisers', name: 'Fundraisers' },
+    { path: '/tournaments', name: 'Tournaments' },
+    { path: '/members', name: 'Members' }
   ]
 
   return (

@@ -27,9 +27,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/404" element={<PageNotFound />} />
-          <Route path="*" element={<Navigate to='/404' />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </ThemeProvider>
     </BrowserRouter>
   )
