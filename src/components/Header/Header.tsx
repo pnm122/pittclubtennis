@@ -11,7 +11,7 @@ export default function Header() {
       className='container'
       aria-expanded={active}>
       <div id='header-inner'>
-        <Link to='/' id='title'>Page Title</Link>
+        <Link to='/' id='title'>Club Tennis at Pitt</Link>
         <NavLinks />
         <button 
           onClick={() => setActive(!active)} 

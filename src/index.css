@@ -260,10 +260,3 @@ section:not(:last-of-type) {
   padding-right: 20px;
   max-width: 1140px;
 }
-
-@media (width > 1024px) {
-  .container {
-    padding-right: 64px;
-    padding-left: 64px;
-  }
-}
