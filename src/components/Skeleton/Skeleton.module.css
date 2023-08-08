@@ -1,0 +1,24 @@
+.skeleton {
+  border-radius: var(--size-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton::after {
+  content: "";
+  background: linear-gradient(to right, transparent, var(--shine-color), transparent);
+  opacity: 0.33;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: skeleton var(--transition-long) infinite forwards;
+}
+
+@keyframes skeleton {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 100%;
+  }
+}
