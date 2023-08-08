@@ -17,9 +17,9 @@ export default function Header() {
           onClick={() => setActive(!active)} 
           aria-label='Toggle navigation'
           id='toggle-nav'>
-          <div className='line'></div>
-          <div className='line'></div>
-          <div className='line'></div>
+          <div className='hamburger-line'></div>
+          <div className='hamburger-line'></div>
+          <div className='hamburger-line'></div>
         </button>
       </div>
       <div id='header-close' onClick={() => setActive(false)}></div>

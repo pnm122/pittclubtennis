@@ -1,0 +1,83 @@
+#hero-wrapper {
+  overflow: hidden;
+}
+
+#hero {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: linear-gradient(to right, var(--bg) 67%, transparent);
+  min-height: 75vh;
+}
+
+#hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xl);
+}
+
+#hero-content h1 {
+  font-size: var(--text-2xl);
+}
+
+#hero-buttons {
+  display: flex;
+  gap: var(--size-xl);
+}
+
+#hero-img-wrap {
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  transform: translateX(50%);
+  height: 100%;
+}
+
+#hero-img {
+  height: 100%;
+}
+
+#tennis-ball {
+  display: none;
+}
+
+@media (width > 768px) {
+  #hero {
+    background: none;
+  }
+
+  #hero h1 {
+    white-space: nowrap;
+  }
+
+  #hero-content {
+    flex-basis: content;
+    flex-grow: 1;
+  }
+
+  #hero-img-wrap {
+    position: relative;
+    transform: none;
+    max-width: 425px;
+  }
+
+  #hero-img {
+    width: 100%;
+    height: auto;
+  }
+
+  #tennis-ball {
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 15%;
+    left: -5%;
+  }
+}
+
+@media (width > 1024px) {
+  #hero h1 {
+    font-size: var(--text-3xl);
+  }
+}
