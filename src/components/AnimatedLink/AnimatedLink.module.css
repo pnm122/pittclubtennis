@@ -1,0 +1,23 @@
+.link {
+  overflow: hidden;
+}
+
+.link-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  font-size: inherit;
+  height: 1em;
+  line-height: 1em;
+  gap: 100%;
+  transition: transform var(--transition-short);
+}
+
+.link-inner::before {
+  content: attr(data-text);
+}
+
+.link:hover .link-inner {
+  transform: translateY(calc(-1 * (100% + 1em)));
+}

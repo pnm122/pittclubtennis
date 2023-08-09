@@ -274,7 +274,6 @@ section:not(:last-of-type) {
   text-transform: uppercase;
   font-weight: 600;
   transition: var(--transition-short);
-  text-decoration: underline transparent;
 }
 
 .primary-button {
@@ -284,7 +283,6 @@ section:not(:last-of-type) {
 
 .primary-button:hover {
   color: white;
-  text-decoration-color: white;
 }
 
 .secondary-button {
@@ -294,7 +292,6 @@ section:not(:last-of-type) {
 
 .secondary-button:hover {
   color: var(--primary);
-  text-decoration-color: var(--primary);
 }
 
 .no-overflow {

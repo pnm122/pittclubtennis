@@ -3,6 +3,7 @@ import styles from './Homepage.module.css'
 import { useLayoutEffect, useRef } from 'react'
 import SplitType from 'split-type'
 import { gsap } from 'gsap'
+import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
 
 export default function Homepage() {
   return (
@@ -39,10 +40,12 @@ const Hero = () => {
 
       tl.current.fromTo(splitText.chars, {
         y: '100%',
-        opacity: 0
+        opacity: 0,
+        rotate: 45
       }, {
         y: 0,
         opacity: 1,
+        rotate: 0,
         stagger: 0.02,
         ease: 'power4.inOut',
         duration: 0.5
@@ -75,8 +78,8 @@ const Hero = () => {
             at the University of Pittsburgh.
           </p>
           <div id={styles['hero-buttons']}>
-            <Link to='/tryouts' className='primary-button fade-in'>Join</Link>
-            <Link to='/about' className='secondary-button fade-in'>About Us</Link>
+            <AnimatedLink to='/tryouts' text='Join' className='primary-button fade-in'></AnimatedLink>
+            <AnimatedLink to='/about' text='About Us' className='secondary-button fade-in'></AnimatedLink>
           </div>
         </div>
         <div id={styles['hero-img-wrap']}>
