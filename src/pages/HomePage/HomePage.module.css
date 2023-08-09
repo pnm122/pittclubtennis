@@ -20,6 +20,12 @@
   font-size: var(--text-2xl);
 }
 
+#hero-content p {
+  font-size: var(--text-lg);
+  max-width: 500px;
+  font-weight: 500;
+}
+
 #hero-buttons {
   display: flex;
   gap: var(--size-xl);

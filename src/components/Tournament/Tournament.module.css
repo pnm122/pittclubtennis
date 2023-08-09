@@ -1,0 +1,16 @@
+#tournament {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--size-xl);
+  border-bottom: 1px solid var(--on-bg);
+  width: 100%;
+}
+
+#tournament:not(:first-of-type) {
+  padding-top: var(--size-xl);
+}
+
+#tournament h3 {
+  font-size: var(--text-lg);
+}

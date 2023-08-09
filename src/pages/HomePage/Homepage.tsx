@@ -1,14 +1,20 @@
 import { Link } from 'react-router-dom'
 import styles from './Homepage.module.css'
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import SplitType from 'split-type'
 import { gsap } from 'gsap'
 import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
+import getTournaments from 'utils/firebase/getTournaments'
+import TournamentType from 'types/TournamentType'
+import Tournament from 'components/Tournament/Tournament'
+import filterUpcoming from 'utils/filterUpcoming'
 
 export default function Homepage() {
   return (
     <main>
       <Hero />
+      <About />
+      <Tournaments />
     </main>
   )
 }
@@ -78,8 +84,8 @@ const Hero = () => {
             at the University of Pittsburgh.
           </p>
           <div id={styles['hero-buttons']}>
-            <AnimatedLink to='/tryouts' text='Join' className='primary-button fade-in'></AnimatedLink>
-            <AnimatedLink to='/about' text='About Us' className='secondary-button fade-in'></AnimatedLink>
+            <AnimatedLink to='/tryouts' text='Join' className='primary-button large fade-in'></AnimatedLink>
+            <AnimatedLink to='/about' text='About Us' className='secondary-button large fade-in'></AnimatedLink>
           </div>
         </div>
         <div id={styles['hero-img-wrap']}>
@@ -96,6 +102,76 @@ const Hero = () => {
             id={styles['tennis-ball']}
             className='fade-in'
           />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const About = () => {
+  return (
+    <section>
+      <div id={styles['about']} className='container two-cols'>
+        <h2 className='title'>Our Club</h2>
+        <div className='content'>
+          <div>
+            <p>On September 14th, 2006, the Pittsburgh Club Tennis Team was born, holding 
+              its first tryout and marking the beginning of a new, competitive club sport 
+              at the University of Pittsburgh. Since then, Pitt Club Tennis has grown 
+              tremendously. Today, we have roughly 35 members, hold practices 3 times a 
+              week at Alpha Tennis and Fitness, and attend tournaments all across the 
+              nation!</p>
+            <AnimatedLink 
+              to='/about' 
+              text='Learn More' 
+              className='primary-button'
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const Tournaments = () => {
+  const [tournaments, setTournaments] = useState<TournamentType[] | null>(null)
+
+  useEffect(() => {
+    getTournaments().then(res => {
+      if(!res.data) {
+        console.error(res.error)
+        return
+      }
+
+      setTournaments(res.data)
+    })
+  }, [])
+
+  return (
+    <section>
+      <div className='container two-cols'>
+        <h2 className='title'>Upcoming Tournaments</h2>
+        <div className='content'>
+          <div>
+            { tournaments ? (
+              filterUpcoming(tournaments).upcoming.map((t, index) => {
+                return (
+                  <Tournament
+                    key={index}
+                    name={t.name}
+                    dateStart={t.dateStart}
+                    dateEnd={t.dateEnd}
+                    locationName={t.locationName}
+                    locationLink={t.locationLink}
+                    placement={t.placement}
+                  />
+                )
+              })
+            ) : (
+              <></>
+            )}
+          </div>
+          <AnimatedLink to='/tournaments' text='See All Tournaments' className='primary-button' />
         </div>
       </div>
     </section>
