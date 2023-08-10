@@ -192,6 +192,7 @@ a {
   display: flex;
   align-items: center;
   gap: var(--size-sm);
+  transition: color var(--transition-short);
 }
 
 a:hover {
@@ -209,25 +210,6 @@ nav ul {
 
 nav li {
   display: block;
-}
-
-footer .active, footer .active:hover {
-  color: var(--secondary);
-}
-
-footer {
-  padding-top: 25px;
-  padding-bottom: 25px;
-  background-color: var(--primary);
-}
-
-footer h6 {
-  margin-bottom: var(--size-md);
-}
-
-footer ul {
-  flex-direction: column;
-  gap: var(--size-sm);
 }
 
 section {

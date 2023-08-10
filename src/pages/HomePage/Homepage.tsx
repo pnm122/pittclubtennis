@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import styles from './Homepage.module.css'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import SplitType from 'split-type'
@@ -8,6 +7,8 @@ import getTournaments from 'utils/firebase/getTournaments'
 import TournamentType from 'types/TournamentType'
 import Tournament from 'components/Tournament/Tournament'
 import filterUpcoming from 'utils/filterUpcoming'
+import { textFrom, textTo } from 'utils/animation/textAnimation'
+import { fadeFrom, fadeTo } from 'utils/animation/fadeAnimation'
 
 export default function Homepage() {
   return (
@@ -25,6 +26,8 @@ const Hero = () => {
   const tl = useRef<GSAPTimeline | null>()
 
   useLayoutEffect(() => {
+    if(!hero.current) return
+
     window.onscroll = e => {
       if(!tennisball.current) return
 
@@ -40,37 +43,17 @@ const Hero = () => {
     let ctx = gsap.context(() => {
       tl.current = gsap.timeline()
 
-      const splitText = new SplitType('.text.split', {
+      const splitText = new SplitType('.hero-text.split', {
         wordClass: 'no-overflow'
       })
 
-      tl.current.fromTo(splitText.chars, {
-        y: '100%',
-        opacity: 0,
-        rotate: 45
-      }, {
-        y: 0,
-        opacity: 1,
-        rotate: 0,
-        stagger: 0.02,
-        ease: 'power4.inOut',
-        duration: 0.5
-      })
+      tl.current.fromTo(splitText.chars, textFrom, textTo)
 
-      tl.current.fromTo(`.fade-in`, {
-        opacity: 0,
-        y: 50
-      }, {
-        opacity: 1,
-        y: 0,
-        ease: `expo.inOut`,
-        duration: 1.25,
-        stagger: 0.05
-      })
-    }, hero)
+      tl.current.fromTo(`.hero-fade-in`, fadeFrom, fadeTo)
+    }, hero.current)
 
     return () => ctx.revert()
-  }, [])
+  }, [hero.current])
 
   return (
     <section id={styles['hero-wrapper']}>
@@ -79,13 +62,13 @@ const Hero = () => {
         className='container'
         ref={hero}>
         <div id={styles['hero-content']}>
-          <h1 className='text split'>Club Tennis at Pitt</h1>
-          <p className='fade-in'>We're a student-run competitive co-ed club sports team
+          <h1 className='hero-text split'>Club Tennis at Pitt</h1>
+          <p className='hero-fade-in'>We're a student-run competitive co-ed club sports team
             at the University of Pittsburgh.
           </p>
           <div id={styles['hero-buttons']}>
-            <AnimatedLink to='/tryouts' text='Join' className='primary-button large fade-in'></AnimatedLink>
-            <AnimatedLink to='/about' text='About Us' className='secondary-button large fade-in'></AnimatedLink>
+            <AnimatedLink to='/tryouts' text='Join' className='primary-button large hero-fade-in'></AnimatedLink>
+            <AnimatedLink to='/about' text='About Us' className='secondary-button large hero-fade-in'></AnimatedLink>
           </div>
         </div>
         <div id={styles['hero-img-wrap']}>
@@ -93,14 +76,14 @@ const Hero = () => {
             src='images/hero.png' 
             alt='Player hitting a ball'
             id={styles['hero-img']}
-            className='fade-in'
+            className='hero-fade-in'
           />
           <img 
             src='images/tennisball.png' 
             alt='Tennis ball'
             ref={tennisball}
             id={styles['tennis-ball']}
-            className='fade-in'
+            className='hero-fade-in'
           />
         </div>
       </div>

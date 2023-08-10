@@ -153,6 +153,12 @@ header[aria-expanded=true] #header-close {
   opacity: 1;
 }
 
+@media (width > 768px) {
+  #header-inner {
+    padding: var(--size-md) var(--size-2xl);
+  }
+}
+
 @media (width > 925px) {
   #toggle-nav {
     display: none;

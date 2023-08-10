@@ -1,12 +1,20 @@
 import Header from 'components/Header/Header.tsx'
 import Homepage from 'pages/Homepage/Homepage.tsx'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { ThemeProvider } from 'context/ThemeContext'
 import Footer from 'components/Footer/Footer'
 import { initializeApp } from "firebase/app";
 import PageNotFound from 'pages/404/PageNotFound'
+import { useLayoutEffect } from 'react'
+import { gsap } from 'gsap'
+import { textFrom, textTo, textToInView } from 'utils/animation/textAnimation'
+import { ScrollTrigger } from 'gsap/all'
+import SplitType from 'split-type'
+import { fadeFrom, fadeToInView } from 'utils/animation/fadeAnimation'
 
 function App() {
+  const location = useLocation()
+
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,
     authDomain: "clubtennisatpitt-0.firebaseapp.com",
@@ -20,18 +28,47 @@ function App() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig)
 
+  gsap.registerPlugin(ScrollTrigger)
+
+  useLayoutEffect(() => {
+    const sections = document.getElementsByClassName('two-cols')
+    let ctxs : gsap.Context[] = []
+    for(let s of sections) {
+      ctxs.push(
+        gsap.context(() => {
+          const splitTextElem = s.querySelector('.title')
+          const contentElem = s.querySelector('.content')
+
+          if (!splitTextElem || !contentElem) return
+
+          const splitText = new SplitType(splitTextElem as any, {
+            wordClass: 'no-overflow'
+          })
+          
+          gsap.fromTo(splitText.chars, textFrom, textToInView(s))
+      
+          gsap.fromTo(contentElem, fadeFrom, fadeToInView(s))
+        }, s)
+      )
+    }
+
+    return () => {
+      for(let ctx of ctxs) {
+        ctx.revert()
+      }
+    }
+  }, [location.pathname])
+
   return (
-    <BrowserRouter>
-      <ThemeProvider>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/404" element={<PageNotFound />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        {/* <Footer /> */}
-      </ThemeProvider>
-    </BrowserRouter>
+    <ThemeProvider>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/404" element={<PageNotFound />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <Footer />
+    </ThemeProvider>
   )
 }
 
