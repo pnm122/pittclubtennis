@@ -5,7 +5,7 @@ import { gsap } from 'gsap'
 import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
 import getTournaments from 'utils/firebase/getTournaments'
 import TournamentType from 'types/TournamentType'
-import Tournament from 'components/Tournament/Tournament'
+import Tournament, { TournamentSkeleton } from 'components/Tournament/Tournament'
 import filterUpcoming from 'utils/filterUpcoming'
 import { textFrom, textTo } from 'utils/animation/textAnimation'
 import { fadeFrom, fadeTo } from 'utils/animation/fadeAnimation'
@@ -31,7 +31,7 @@ const Hero = () => {
     window.onscroll = e => {
       if(!tennisball.current) return
 
-      const x = -1 * (window.scrollY / 6)
+      const x = -1 * (window.scrollY / 4.5)
       const y = -1 * (window.scrollY / 12)
 
       tennisball.current.style.transform = `translate(${x}px, ${y}px)`
@@ -118,6 +118,7 @@ const About = () => {
 
 const Tournaments = () => {
   const [tournaments, setTournaments] = useState<TournamentType[] | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     getTournaments().then(res => {
@@ -126,7 +127,8 @@ const Tournaments = () => {
         return
       }
 
-      setTournaments(res.data)
+      // Only show upcoming tournaments on the homepage
+      setTournaments(filterUpcoming(res.data).upcoming)
     })
   }, [])
 
@@ -137,7 +139,7 @@ const Tournaments = () => {
         <div className='content'>
           <div>
             { tournaments ? (
-              filterUpcoming(tournaments).upcoming.map((t, index) => {
+              tournaments.map((t, index) => {
                 return (
                   <Tournament
                     key={index}
@@ -151,7 +153,14 @@ const Tournaments = () => {
                 )
               })
             ) : (
-              <></>
+              loading ? (
+                <>
+                  <TournamentSkeleton />
+                  <TournamentSkeleton />
+                </>
+              ) : (
+                <p>No upcoming tournaments.</p>
+              )
             )}
           </div>
           <AnimatedLink to='/tournaments' text='See All Tournaments' className='primary-button' />

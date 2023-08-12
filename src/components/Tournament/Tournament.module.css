@@ -1,16 +1,44 @@
-#tournament {
+#tournament, #tournament-skeleton {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: var(--size-sm);
   padding-bottom: var(--size-xl);
-  border-bottom: 1px solid var(--on-bg);
   width: 100%;
 }
 
-#tournament:not(:first-of-type) {
+#tournament {
+  border-bottom: 1px solid var(--on-bg);
+}
+
+@media (width < 500px) {
+  #tournament, #tournament-skeleton {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--size-sm);
+  }
+
+  #tournament h3 {
+    margin-bottom: var(--size-sm);
+  }
+}
+
+#tournament:not(:first-of-type), 
+#tournament-skeleton:not(:first-of-type) {
   padding-top: var(--size-xl);
 }
 
 #tournament h3 {
   font-size: var(--text-lg);
+}
+
+#tournament-skeleton {
+  border-bottom: 1px solid var(--on-bg10);
+}
+
+#skeleton-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
 }

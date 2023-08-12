@@ -31,6 +31,8 @@ function App() {
   gsap.registerPlugin(ScrollTrigger)
 
   useLayoutEffect(() => {
+    // For each two-cols section on the page, create a GSAP context where
+    // the content of the section animates in when the section appears on-screen
     const sections = document.getElementsByClassName('two-cols')
     let ctxs : gsap.Context[] = []
     for(let s of sections) {
@@ -39,6 +41,7 @@ function App() {
           const splitTextElem = s.querySelector('.title')
           const contentElem = s.querySelector('.content')
 
+          // Make sure that the elems exist before performing anything on them
           if (!splitTextElem || !contentElem) return
 
           const splitText = new SplitType(splitTextElem as any, {

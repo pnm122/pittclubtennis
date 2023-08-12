@@ -11,6 +11,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 #title {
@@ -113,6 +114,10 @@ header nav a.active {
   width: 16px;
   margin-left: 4px;
   /* transition-delay: 0ms; */
+}
+
+body:has(header[aria-expanded=true]) {
+  overflow: hidden;
 }
 
 header[aria-expanded=true] .hamburger-line:nth-of-type(1) {
