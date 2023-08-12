@@ -87,3 +87,10 @@
     font-size: var(--text-3xl);
   }
 }
+
+#about-paragraph {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-lg);
+  align-items: flex-start;
+}

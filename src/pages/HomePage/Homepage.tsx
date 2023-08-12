@@ -56,7 +56,7 @@ const Hero = () => {
   }, [hero.current])
 
   return (
-    <section id={styles['hero-wrapper']}>
+    <section id={styles['hero-wrapper']} className='hero'>
       <div 
         id={styles['hero']} 
         className='container'
@@ -97,7 +97,7 @@ const About = () => {
       <div id={styles['about']} className='container two-cols'>
         <h2 className='title'>Our Club</h2>
         <div className='content'>
-          <div>
+          <div id={styles['about-paragraph']}>
             <p>On September 14th, 2006, the Pittsburgh Club Tennis Team was born, holding 
               its first tryout and marking the beginning of a new, competitive club sport 
               at the University of Pittsburgh. Since then, Pitt Club Tennis has grown 

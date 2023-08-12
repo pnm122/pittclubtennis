@@ -11,6 +11,7 @@ import { textFrom, textTo, textToInView } from 'utils/animation/textAnimation'
 import { ScrollTrigger } from 'gsap/all'
 import SplitType from 'split-type'
 import { fadeFrom, fadeToInView } from 'utils/animation/fadeAnimation'
+import About from 'pages/About/About'
 
 function App() {
   const location = useLocation()
@@ -67,6 +68,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/about" element={<About />} />
         <Route path="/404" element={<PageNotFound />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
