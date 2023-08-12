@@ -1,6 +1,8 @@
 import TournamentType from "types/TournamentType";
 
-const filterUpcoming = (tournaments : TournamentType[]) => {
+const filterUpcoming = (tournaments : TournamentType[] | null) => {
+  if(!tournaments) return { upcoming: null, past: null }
+
   let upcoming : TournamentType[] | null = tournaments.filter(t => {
     return t.dateEnd.toMillis() > Date.now()
   })

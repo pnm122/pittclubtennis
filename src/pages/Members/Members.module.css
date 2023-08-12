@@ -10,12 +10,6 @@
   }
 }
 
-@media (width > 1024px) {
-  #members {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
 .member {
   background: var(--on-bg10) linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.67));
   border-radius: var(--rounding);

@@ -1,0 +1,21 @@
+#title {
+  font-size: var(--text-2xl);
+}
+
+@media (width > 1024px) {
+  #title {
+    font-size: var(--text-3xl);
+  }
+}
+
+#tournaments {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4xl);
+}
+
+.tournament-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2xl);
+}

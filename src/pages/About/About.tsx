@@ -37,7 +37,7 @@ export default function About() {
                 Since practices are off-campus, we ask those on the team with cars to 
                 get players to and from practices. However, tournaments, practices, and other 
                 team expenses add up over time. Pitt covers some of our costs, but we have to 
-                make up the difference ourselves. We achieve this with fundraising, donations, 
+                make up the difference ourselves. We achieve this with fundraisers, donations, 
                 and player dues, which are currently $225 per player per semester.
               </p>
             </div>

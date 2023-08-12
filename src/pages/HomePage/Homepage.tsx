@@ -129,6 +129,7 @@ const Tournaments = () => {
 
       // Only show upcoming tournaments on the homepage
       setTournaments(filterUpcoming(res.data).upcoming)
+      setLoading(false)
     })
   }, [])
 

@@ -35,8 +35,8 @@ export default function Members() {
     <main>
       <section>
         <div className='container two-cols'>
-          <h2>Members</h2>
-          <div className='content'>
+          <h2 className='title'>Members</h2>
+          <div className='content fade-in'>
             <div id={styles['members']}>
               { loading ? (
                 <MembersSkeleton />
