@@ -302,6 +302,13 @@ section:first-of-type:not(.hero) {
   color: var(--primary);
 }
 
+.primary-button[aria-disabled=true], 
+.secondary-button[aria-disabled=true] {
+  background-color: var(--on-bg10);
+  color: var(--on-bg50);
+  pointer-events: none;
+}
+
 .no-overflow {
   overflow: hidden;
 }
@@ -313,7 +320,7 @@ section:first-of-type:not(.hero) {
 .two-cols {
   display: flex;
   flex-direction: column;
-  gap: var(--size-lg);
+  gap: var(--size-2xl);
 }
 
 .two-cols > .content {
@@ -340,7 +347,7 @@ section:first-of-type:not(.hero) {
     gap: var(--size-3xl);
   }
 
-  .two-cols > .title {
+  .two-cols .title {
     max-width: 350px;
     min-width: 350px;
   }
@@ -352,7 +359,7 @@ section:first-of-type:not(.hero) {
 }
 
 @media (width > 1024px) {
-  .two-cols > .title {
+  .two-cols .title {
     min-width: 500px;
     max-width: 500px;
   }

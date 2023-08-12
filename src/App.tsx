@@ -12,6 +12,7 @@ import { ScrollTrigger } from 'gsap/all'
 import SplitType from 'split-type'
 import { fadeFrom, fadeToInView } from 'utils/animation/fadeAnimation'
 import About from 'pages/About/About'
+import Tryouts from 'pages/Tryouts/Tryouts'
 
 function App() {
   const location = useLocation()
@@ -40,10 +41,10 @@ function App() {
       ctxs.push(
         gsap.context(() => {
           const splitTextElem = s.querySelector('.title')
-          const contentElem = s.querySelector('.content')
+          const fadeInElems = s.getElementsByClassName('fade-in')
 
           // Make sure that the elems exist before performing anything on them
-          if (!splitTextElem || !contentElem) return
+          if (!splitTextElem || !fadeInElems) return
 
           const splitText = new SplitType(splitTextElem as any, {
             wordClass: 'no-overflow'
@@ -51,7 +52,9 @@ function App() {
           
           gsap.fromTo(splitText.chars, textFrom, textToInView(s))
       
-          gsap.fromTo(contentElem, fadeFrom, fadeToInView(s))
+          for(let elem of fadeInElems) {
+            gsap.fromTo(elem, fadeFrom, fadeToInView(s))
+          }
         }, s)
       )
     }
@@ -69,6 +72,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/tryouts" element={<Tryouts />} />
         <Route path="/404" element={<PageNotFound />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

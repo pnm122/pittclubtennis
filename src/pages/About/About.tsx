@@ -4,9 +4,9 @@ export default function About() {
   return (
     <main>
       <section>
-        <div id={styles['about']} className='container two-cols'>
+        <div className='container two-cols'>
           <h2 className='title'>About Us</h2>
-          <div className='content'>
+          <div className='content fade-in'>
             <div>
               <h5>Our History</h5>
               <p>

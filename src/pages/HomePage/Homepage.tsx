@@ -96,7 +96,7 @@ const About = () => {
     <section>
       <div id={styles['about']} className='container two-cols'>
         <h2 className='title'>Our Club</h2>
-        <div className='content'>
+        <div className='content fade-in'>
           <div id={styles['about-paragraph']}>
             <p>On September 14th, 2006, the Pittsburgh Club Tennis Team was born, holding 
               its first tryout and marking the beginning of a new, competitive club sport 
@@ -136,7 +136,7 @@ const Tournaments = () => {
     <section>
       <div className='container two-cols'>
         <h2 className='title'>Upcoming Tournaments</h2>
-        <div className='content'>
+        <div className='content fade-in'>
           <div>
             { tournaments ? (
               tournaments.map((t, index) => {

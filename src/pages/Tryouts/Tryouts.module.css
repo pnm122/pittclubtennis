@@ -1,0 +1,10 @@
+.title-button {
+  display: none;
+}
+
+@media (width > 768px) {
+  .title-button {
+    display: block;
+  }
+}
+
