@@ -1,13 +1,13 @@
 import Header from 'components/Header/Header.tsx'
 import Homepage from 'pages/Homepage/Homepage.tsx'
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { ThemeProvider } from 'context/ThemeContext'
 import Footer from 'components/Footer/Footer'
 import { initializeApp } from "firebase/app";
 import PageNotFound from 'pages/404/PageNotFound'
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useEffect } from 'react'
 import { gsap } from 'gsap'
-import { textFrom, textTo, textToInView } from 'utils/animation/textAnimation'
+import { textFrom, textToInView } from 'utils/animation/textAnimation'
 import { ScrollTrigger } from 'gsap/all'
 import SplitType from 'split-type'
 import { fadeFrom, fadeToInView } from 'utils/animation/fadeAnimation'
@@ -64,6 +64,10 @@ function App() {
         ctx.revert()
       }
     }
+  }, [location.pathname])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
   }, [location.pathname])
 
   return (

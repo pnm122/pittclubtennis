@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom'
 import NavLinks from 'components/NavLinks/NavLinks'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import 'header.css'
 
 export default function Header() {
   const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    setActive(false)
+  }, [location.pathname])
 
   return (
     <header 
