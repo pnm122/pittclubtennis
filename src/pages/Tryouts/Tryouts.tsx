@@ -1,8 +1,22 @@
 import TryoutsType from 'types/TryoutsType'
 import styles from './Tryouts.module.css'
 import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
+import { useEffect, useState } from 'react'
+import getTryoutsInfo from 'utils/firebase/getTryoutsInfo'
 
 export default function Tryouts() {
+  const [tryoutsInfo, setTryoutsInfo] = useState<TryoutsType | null>(null)
+
+  useEffect(() => {
+    getTryoutsInfo().then(res => {
+      if(res.error || !res.data) {
+        return
+      }
+
+      setTryoutsInfo(res.data)
+    })
+  }, [])
+
   return (
     <main>
       <section>
@@ -44,10 +58,19 @@ export default function Tryouts() {
                 whether or not they made the team.
               </p>
             </div>
-            <TryoutButton 
-              state='soon' 
-              link='#'
-            />
+            { tryoutsInfo ? (
+              <TryoutButton 
+                state={tryoutsInfo.state} 
+                link={tryoutsInfo.link}
+              />
+            ) : (
+              <AnimatedLink
+                to='#'
+                disabled
+                text='Loading tryouts info...'
+                className='primary-button'
+              />
+            )}
           </div>
         </div>
       </section>
@@ -70,7 +93,8 @@ const TryoutButton = ({ state, link } : TryoutsType) => {
 
   return (
     <AnimatedLink 
-      to={link} 
+      to={link ?? '#'} 
+      newTab
       text={text} 
       disabled={state != 'open'} 
       className='primary-button'
