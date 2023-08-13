@@ -7,16 +7,19 @@ interface Props {
   id?: string
   text: string
   disabled?: boolean
+  newTab?: boolean
 }
 
 type P = React.PropsWithChildren<Props>
 
-export default function AnimatedLink({ to, text, className, id, disabled, children } : P) {
+export default function AnimatedLink({ to, text, className, id, disabled, newTab, children } : P) {
   return (
     <Link 
       to={to}
       id={id}
       aria-disabled={disabled}
+      target={newTab ? '_blank' : undefined}
+      rel={newTab ? 'noopener noreferrer' : undefined}
       className={`${className} ${styles['link']}`}>
         <span 
           className={styles['link-inner']}

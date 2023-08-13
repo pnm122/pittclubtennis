@@ -1,0 +1,18 @@
+.fundraiser, .fundraiser-skeleton {
+  padding-bottom: var(--size-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+}
+
+.fundraiser {
+  border-bottom: 1px solid var(--on-bg);
+}
+
+.fundraiser-skeleton {
+  border-bottom: 1px solid var(--on-bg25);
+}
+
+.fundraiser h3 {
+  font-size: var(--text-lg);
+}

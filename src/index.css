@@ -41,6 +41,8 @@ body {
   --on-bg50: rgba(var(--on-bgRGB), 0.5);
   --on-bg75: rgba(var(--on-bgRGB), 0.75);
 
+  --error-color: #ff3b3b;
+
   --text-xs: 0.6rem;
   --text-sm: 0.75rem;
   --text-md: 1rem;
@@ -363,4 +365,8 @@ section:first-of-type:not(.hero) {
     min-width: 500px;
     max-width: 500px;
   }
+}
+
+.error {
+  color: var(--error-color);
 }

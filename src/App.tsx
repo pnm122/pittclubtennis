@@ -15,6 +15,7 @@ import About from 'pages/About/About'
 import Tryouts from 'pages/Tryouts/Tryouts'
 import Members from 'pages/Members/Members'
 import Tournaments from 'pages/Tournaments/Tournaments'
+import Fundraisers from 'pages/Fundraisers/Fundraisers'
 
 function App() {
   const location = useLocation()
@@ -80,6 +81,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/tryouts" element={<Tryouts />} />
         <Route path="/tournaments" element={<Tournaments />} />
+        <Route path="/fundraisers" element={<Fundraisers />} />
         <Route path="/members" element={<Members />} />
         <Route path="/404" element={<PageNotFound />} />
         <Route path="*" element={<PageNotFound />} />
