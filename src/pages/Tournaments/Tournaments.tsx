@@ -31,7 +31,10 @@ export default function Tournaments() {
         <div className="container two-cols">
           <h2 className='title' id={styles['title']}>Tournaments</h2>
           <div className='content fade-in'>
-            <p>SJDFSDJKF KdfkS KFKSDF sdf</p>
+            <p>
+              We attend as many tournaments as we can. Check out the tournaments we've played in and 
+              the ones we're going to attend!
+            </p>
             <div id={styles['tournaments']}>
               { tournaments ? (
                 <>

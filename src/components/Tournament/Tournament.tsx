@@ -16,9 +16,14 @@ export default function Tournament({
   const dE = new Date(dateEnd.seconds * 1000).toDateString().substring(4)
 
   return (
-    <div id={styles['tournament']}>
+    <div className={styles['tournament']}>
       <div>
-        <h3>{name}</h3>
+        <h3>
+          {name}
+          { placement && (
+            <span className={`${styles['place']} ${styles[`p${placement}`]}`}></span>
+          )}
+        </h3>
         <span>{dS} - {dE}</span>
       </div>
       <a href={locationLink}>{locationName} <RxExternalLink /></a>
@@ -28,8 +33,8 @@ export default function Tournament({
 
 export function TournamentSkeleton() {
   return (
-    <div id={styles['tournament-skeleton']}>
-      <div id={styles['skeleton-title']}>
+    <div className={styles['tournament-skeleton']}>
+      <div className={styles['skeleton-title']}>
         <Skeleton width='160px' height='var(--text-lg)' />
         <Skeleton width='200px' height='var(--text-md)' />
       </div>

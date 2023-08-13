@@ -1,4 +1,4 @@
-#tournament, #tournament-skeleton {
+.tournament, .tournament-skeleton {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,37 +8,72 @@
   width: 100%;
 }
 
-#tournament {
+.tournament {
   border-bottom: 1px solid var(--on-bg);
 }
 
 @media (width < 500px) {
-  #tournament, #tournament-skeleton {
+  .tournament, .tournament-skeleton {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--size-sm);
   }
 
-  #tournament h3 {
+  .tournament h3 {
     margin-bottom: var(--size-sm);
   }
 }
 
-#tournament:not(:first-of-type), 
-#tournament-skeleton:not(:first-of-type) {
+.tournament:not(:first-of-type), 
+.tournament-skeleton:not(:first-of-type) {
   padding-top: var(--size-xl);
 }
 
-#tournament h3 {
+.tournament h3 {
   font-size: var(--text-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--size-md);
 }
 
-#tournament-skeleton {
+.tournament-skeleton {
   border-bottom: 1px solid var(--on-bg10);
 }
 
-#skeleton-title {
+.skeleton-title {
   display: flex;
   flex-direction: column;
   gap: var(--size-sm);
+}
+
+.place {
+  padding: var(--size-xs) var(--size-md);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.p1 {
+  background-color: #ffbf00;
+}
+
+.p1::after {
+  content: 'First place';
+}
+
+.p2 {
+  background-color: #cccccc;
+}
+
+.p2::after {
+  content: 'Runner up';
+}
+
+.p3 {
+  background-color: #c95e00;
+  color: white;
+}
+
+.p3::after {
+  content: 'Third place';
 }
