@@ -1,8 +1,6 @@
-import Header from 'components/Header/Header.tsx'
 import Homepage from 'pages/Homepage/Homepage.tsx'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { ThemeProvider } from 'context/ThemeContext'
-import Footer from 'components/Footer/Footer'
 import { initializeApp } from "firebase/app";
 import PageNotFound from 'pages/404/PageNotFound'
 import { useLayoutEffect, useEffect } from 'react'

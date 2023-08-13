@@ -28,7 +28,7 @@ const Hero = () => {
   useLayoutEffect(() => {
     if(!hero.current) return
 
-    window.onscroll = e => {
+    window.onscroll = () => {
       if(!tennisball.current) return
 
       const x = -1 * (window.scrollY / 4.5)

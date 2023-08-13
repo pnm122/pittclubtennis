@@ -1,8 +1,3 @@
-interface Return {
-  error?: any
-  data?: any
-}
-
 const queryWithErrors = async <T, S>(callback: () => Promise<T>) => {
   try {
     const data = await callback()
