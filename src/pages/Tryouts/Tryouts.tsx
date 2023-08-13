@@ -1,5 +1,4 @@
 import TryoutsType from 'types/TryoutsType'
-import styles from './Tryouts.module.css'
 import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
 import { useEffect, useState } from 'react'
 import getTryoutsInfo from 'utils/firebase/getTryoutsInfo'

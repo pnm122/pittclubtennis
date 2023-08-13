@@ -16,6 +16,7 @@ import Tryouts from 'pages/Tryouts/Tryouts'
 import Members from 'pages/Members/Members'
 import Tournaments from 'pages/Tournaments/Tournaments'
 import Fundraisers from 'pages/Fundraisers/Fundraisers'
+import PageLayout from 'layout/PageLayout'
 
 function App() {
   const location = useLocation()
@@ -31,6 +32,7 @@ function App() {
   }
   
   // Initialize Firebase
+  // @ts-ignore
   const app = initializeApp(firebaseConfig)
 
   gsap.registerPlugin(ScrollTrigger)
@@ -75,18 +77,17 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Header />
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/tryouts" element={<Tryouts />} />
-        <Route path="/tournaments" element={<Tournaments />} />
-        <Route path="/fundraisers" element={<Fundraisers />} />
-        <Route path="/members" element={<Members />} />
-        <Route path="/404" element={<PageNotFound />} />
+        <Route element={<PageLayout />}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/tryouts" element={<Tryouts />} />
+          <Route path="/tournaments" element={<Tournaments />} />
+          <Route path="/fundraisers" element={<Fundraisers />} />
+          <Route path="/members" element={<Members />} />
+        </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      <Footer />
     </ThemeProvider>
   )
 }
