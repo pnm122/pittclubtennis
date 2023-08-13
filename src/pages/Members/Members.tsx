@@ -41,7 +41,15 @@ export default function Members() {
               { loading ? (
                 <MembersSkeleton />
               ) : (
-                membersRender
+                members ? (
+                  members.length > 0 ? (
+                    membersRender
+                  ) : (
+                    <p>Members coming soon!</p>
+                  )
+                ) : (
+                  <p className='error'>Error loading members.</p>
+                )
               )}
             </div>
           </div>

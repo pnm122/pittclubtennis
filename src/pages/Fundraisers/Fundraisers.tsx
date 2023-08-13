@@ -28,7 +28,12 @@ export default function Fundraisers() {
       <section>
         <div className="container two-cols">
           <h2 className='title'>Fundraisers</h2>
-          <div className='content'>
+          <div className='content fade-in'>
+            <p>
+              We need your support! Fundraisers help us afford practices, attend tournaments, 
+              among other club expenses. Check out our fundraisers below to see how you can help 
+              us today!
+            </p>
             { loading ? (
               <>
                 <FundraiserSkeleton />
