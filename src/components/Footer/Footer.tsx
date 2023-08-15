@@ -1,14 +1,14 @@
 import NavLinks from "components/NavLinks/NavLinks";
 import 'footer.css'
 import { AiFillInstagram } from 'react-icons/ai'
-import { FaTiktok } from 'react-icons/fa'
+// import { FaTiktok } from 'react-icons/fa'
 
 export default function Footer() {
   return (
     <footer className="container">
       <div id='inner'>
         <div id='upper'>
-          <img id='logo' src='images/logo.png' />
+          <img id='logo' src='images/logo.png' alt='Club Tennis Logo' />
           <div id='lists'>
             <div className='list'>
               <h6>Links</h6>
@@ -42,12 +42,12 @@ export default function Footer() {
               rel='noopener noreferrer'>
               <AiFillInstagram />
             </a>
-            <a 
+            {/* <a 
               href='#'
               target='_blank' 
               rel='noopener noreferrer'>
               <FaTiktok />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

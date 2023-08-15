@@ -25,7 +25,7 @@ export default function PageNotFound() {
     <main>
       <div className='container'>
         <div id={styles['pagenotfound']}>
-          <h1 id={styles['title']}>4<img src='images/404-tennisball.png' id='tennis-ball'></img>4</h1>
+          <h1 id={styles['title']}>4<img src='images/404-tennisball.png' id='tennis-ball' alt='Tennis ball'></img>4</h1>
           <h4>Page Not Found</h4>
           <AnimatedLink to='/' text='Go back home' className='primary-button' />
         </div>
