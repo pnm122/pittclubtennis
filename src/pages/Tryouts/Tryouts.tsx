@@ -28,7 +28,7 @@ export default function Tryouts() {
                 tryouts to select the best players to be on our roster. At the start of each Fall 
                 semester, we host tryouts to determine the roster for the year. Everyone must 
                 tryout, including previous members. The team has space for roughly 35 members 
-                per year, and around __ players try out yearly. Though we are competitive, we 
+                per year, and around 100 players try out yearly. Though we are competitive, we 
                 welcome players of all skill levels and experience to tryout! Even if you don't 
                 make the team, tryouts can be a fun way to meet other students at Pitt who are 
                 also interested in tennis.

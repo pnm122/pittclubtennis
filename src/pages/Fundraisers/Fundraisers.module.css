@@ -5,6 +5,10 @@
   gap: var(--size-sm);
 }
 
+.fundraiser:not(:first-of-type), .fundraiser-skeleton:not(:first-of-type) {
+  padding-top: var(--size-xl);
+}
+
 .fundraiser {
   border-bottom: 1px solid var(--on-bg);
 }

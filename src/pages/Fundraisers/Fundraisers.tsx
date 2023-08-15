@@ -13,7 +13,7 @@ export default function Fundraisers() {
   useEffect(() => {
     getFundraisers().then(res => {
       if(res.error || !res.data) {
-        console.error(res.error)
+        // console.error(res.error)
         setLoading(false)
         return
       }

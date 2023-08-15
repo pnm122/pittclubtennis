@@ -11,11 +11,11 @@ export default function Footer() {
           <img id='logo' src='images/logo.png' alt='Club Tennis Logo' />
           <div id='lists'>
             <div className='list'>
-              <h6>Links</h6>
+              <span>Links</span>
               <NavLinks />
             </div>
             <div className='list'>
-              <h6>Contact</h6>
+              <span>Contact</span>
               <ul>
                 <li><a href='mailto:pittctt@gmail.com'>pittctt@gmail.com</a></li>
               </ul>
@@ -39,13 +39,15 @@ export default function Footer() {
             <a 
               href='https://www.instagram.com/clubtennisatpitt/' 
               target='_blank' 
-              rel='noopener noreferrer'>
+              rel='noopener noreferrer'
+              aria-label='Instagram'>
               <AiFillInstagram />
             </a>
             {/* <a 
               href='#'
               target='_blank' 
-              rel='noopener noreferrer'>
+              rel='noopener noreferrer'
+              aria-label='TikTok'>
               <FaTiktok />
             </a> */}
           </div>

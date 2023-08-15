@@ -35,7 +35,10 @@ footer {
   gap: var(--size-xl);
 }
 
-.list h6 {
+.list span {
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: 600;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -101,7 +104,7 @@ footer a:hover {
 }
 
 #copyright span {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 #copyright a {

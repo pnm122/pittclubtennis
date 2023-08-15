@@ -106,7 +106,7 @@ const About = () => {
               nation!</p>
             <AnimatedLink 
               to='/about' 
-              text='Learn More' 
+              text='About Us' 
               className='primary-button'
             />
           </div>
@@ -123,7 +123,7 @@ const Tournaments = () => {
   useEffect(() => {
     getTournaments().then(res => {
       if(!res.data) {
-        console.error(res.error)
+        // console.error(res.error)
         return
       }
 

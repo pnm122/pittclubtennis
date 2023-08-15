@@ -13,7 +13,7 @@ export default function Tournaments() {
   useEffect(() => {
     getTournaments().then(res => {
       if(!res.data) {
-        console.error(res.error)
+        // console.error(res.error)
         return
       }
 

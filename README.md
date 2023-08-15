@@ -6,6 +6,15 @@ By Pierce Martin - <https://pierce-martin.com>
 
 ## Changelog
 
+### 1.0.2
+
+- Remove error logging
+- Top padding for fundraisers
+- Alt name for social links
+- Footer h6 --> span
+- More descriptive text on homepage: Learn More --> About Us
+- Replace __ with 100 on tryouts page
+
 ### 1.0.1
 
 - Remove TikTok link
