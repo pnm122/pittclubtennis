@@ -8,7 +8,8 @@ By Pierce Martin - <https://pierce-martin.com>
 
 ### 1.0.3
 
-- 
+- Added favicon
+- Use .webp for hero image
 
 ### 1.0.2
 
