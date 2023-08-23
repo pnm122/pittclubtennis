@@ -72,12 +72,27 @@ const Hero = () => {
           </div>
         </div>
         <div id={styles['hero-img-wrap']}>
-          <img 
-            src='images/hero.png' 
+          <picture>
+            <source 
+              type="image/webp" 
+              srcSet="images/hero.webp"></source>
+            <source 
+              type="image/png"
+              src='images/hero.png' 
+              id={styles['hero-img']}
+              className='hero-fade-in'></source>
+            <img 
+              src='images/hero.png' 
+              alt='Player hitting a ball'
+              id={styles['hero-img']}
+              className='hero-fade-in'></img>
+          </picture>
+          {/* <img 
+            src='images/hero.webp' 
             alt='Player hitting a ball'
             id={styles['hero-img']}
             className='hero-fade-in'
-          />
+          /> */}
           <img 
             src='images/tennisball.png' 
             alt='Tennis ball'
