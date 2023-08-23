@@ -26,7 +26,7 @@ export default function Tournament({
         </h3>
         <span>{dS} - {dE}</span>
       </div>
-      <a href={locationLink}>{locationName} <RxExternalLink /></a>
+      <a href={locationLink} target='_blank' rel='noopener noreferrer'>{locationName} <RxExternalLink /></a>
     </div>
   )
 }

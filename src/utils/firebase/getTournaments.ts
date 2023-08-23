@@ -13,7 +13,7 @@ const getTournaments = async () => {
       return d.data() as TournamentType
     })
 
-    // Sort tournaments by most recent first
+    // Sort tournaments by last date to first date
     tournaments = tournaments.sort((t1, t2) => {
       return t2.dateStart.seconds - t1.dateStart.seconds
     })

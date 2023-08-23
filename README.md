@@ -6,6 +6,13 @@ By Pierce Martin - <https://pierce-martin.com>
 
 ## Changelog
 
+### 1.0.4
+
+- Tournament wrapping improved
+- Tournament link opens in new tab
+- Tournament times updated so that the date is consistent across US timezones
+- Tournaments now sorted correctly for upcoming vs. past
+
 ### 1.0.3
 
 - Added favicon
