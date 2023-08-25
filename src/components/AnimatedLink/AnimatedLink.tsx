@@ -8,11 +8,12 @@ interface Props {
   text: string
   disabled?: boolean
   newTab?: boolean
+  onClick?: () => void
 }
 
 type P = React.PropsWithChildren<Props>
 
-export default function AnimatedLink({ to, text, className, id, disabled, newTab, children } : P) {
+export default function AnimatedLink({ to, text, className, id, disabled, newTab, onClick, children } : P) {
   return (
     <Link 
       to={to}
@@ -20,6 +21,7 @@ export default function AnimatedLink({ to, text, className, id, disabled, newTab
       aria-disabled={disabled}
       target={newTab ? '_blank' : undefined}
       rel={newTab ? 'noopener noreferrer' : undefined}
+      onClick={onClick}
       className={`${className} ${styles['link']}`}>
         <span 
           className={styles['link-inner']}

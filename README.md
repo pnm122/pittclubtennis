@@ -6,6 +6,10 @@ By Pierce Martin - <https://pierce-martin.com>
 
 ## Changelog
 
+### 1.1.0
+
+- Notifications
+
 ### 1.0.4
 
 - Tournament wrapping improved
