@@ -42,11 +42,12 @@ export default function Members() {
                 <MembersSkeleton />
               ) : (
                 members ? (
-                  members.length > 0 ? (
-                    membersRender
-                  ) : (
-                    <p>Members coming soon!</p>
-                  )
+                  // members.length > 0 ? (
+                  //   membersRender
+                  // ) : (
+                  //   <p>Members coming soon!</p>
+                  // )
+                  <p>Members coming soon!</p>
                 ) : (
                   <p className='error'>Error loading members.</p>
                 )

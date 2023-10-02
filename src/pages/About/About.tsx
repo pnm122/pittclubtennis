@@ -23,20 +23,21 @@ export default function About() {
               <h5>Today</h5>
               <p>Today, Club Tennis at Pitt holds about 35 members, with nearly 100 players 
                 trying out each year. We travel to multiple tournaments each semester, regularly 
-                visiting tournaments both in-state and out-of-state. Tournaments are not 
-                mandatory, though we highly encourage our players to go if they are able. 
-                We practice Tuesday, Wednesday, and Thursday from 9-11pm at <a 
+                visiting tournaments both in-state and out-of-state. We practice Tuesday, 
+                Wednesday, and Thursday from 9-11pm at <a 
                   href="https://alphatennis.net/" 
                   target='_blank' 
                   rel='noopener noreferrer'
                   className='inline'>
                   Alpha Tennis and Fitness
                 </a>. 
-                Since practices are off-campus, we ask those on the team with cars to 
-                get players to and from practices. However, tournaments, practices, and other 
-                team expenses add up over time. Pitt covers some of our costs, but we have to 
-                make up the difference ourselves. We achieve this with fundraisers, donations, 
-                and player dues, which are currently $225 per player per semester.
+                Tournaments and practices are not mandatory, though we highly encourage our 
+                players to go if they are able. Since practices are off-campus, we ask those on 
+                the team with cars to get players to and from practices. However, tournaments, 
+                practices, and other team expenses add up over time. Pitt covers some of our 
+                costs, but we have to make up the difference ourselves. We achieve this with 
+                fundraisers, donations, and player dues, which are currently $225 per player per 
+                semester.
               </p>
             </div>
             <div>

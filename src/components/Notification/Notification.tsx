@@ -22,7 +22,7 @@ export default function Notification() {
   return (
     <div id={styles['notif-outer']} aria-hidden={!showing}>
       <div className='container'>
-        {notif ? (
+        {notif && notif.active ? (
           <div id={styles['notif']}>
             <div id={styles['notif-content']}>
               <h3>{notif.title}</h3>

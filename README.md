@@ -6,6 +6,11 @@ By Pierce Martin - <https://pierce-martin.com>
 
 ## Changelog
 
+### 1.1.1
+
+- Notifications on/off
+- Temporary removal of members display
+
 ### 1.1.0
 
 - Notifications

@@ -1,4 +1,5 @@
 export default interface NotificationType {
+  active: boolean
   title: string
   message: string
   linkTitle: string
