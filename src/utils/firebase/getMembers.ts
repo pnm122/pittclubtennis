@@ -15,14 +15,63 @@ const getMembers = async () => {
 
       // Firebase imgSrc is a reference to where the image in storage is
       // get the download URL for that image, and then replace imgSrc
-      data.imgSrc = await getDownloadURL(ref(storage, data.imgSrc))
+      if(data.imgSrc) data.imgSrc = await getDownloadURL(ref(storage, data.imgSrc))
 
       members.push(data)
     }
 
-    // TODO: sort members
+    // Sort members
+    // President --> VP --> Business Manager --> Logistics Manager --> Social Chair --> Fundraising Chair --> Fundraising Committee
+    let presidents : MemberType[] = []
+    let vicePresidents : MemberType[] = []
+    let business : MemberType[] = []
+    let logistics : MemberType[] = []
+    let socials : MemberType[] = []
+    let fundChairs : MemberType[] = []
+    let fundCommittee : MemberType[] = []
+    let other : MemberType[] = []
+
+    members.forEach(m => {
+      switch(m.role) {
+        case 'President':
+          presidents.push(m)
+          break
+        case 'Vice President':
+          vicePresidents.push(m)
+          break
+        case 'Business Manager':
+          business.push(m)
+          break
+        case 'Logistics Manager':
+          logistics.push(m)
+          break
+        case 'Social Chair':
+          socials.push(m)
+          break
+        case 'Fundraising Chair':
+          fundChairs.push(m)
+          break
+        case 'Fundraising Committee':
+          fundCommittee.push(m)
+          break
+        default:
+          other.push(m)
+          break
+      }
+    })
+
+    let sortedMembers : MemberType[] = []
+
+    sortedMembers.push(...presidents)
+    sortedMembers.push(...vicePresidents)
+    sortedMembers.push(...business)
+    sortedMembers.push(...logistics)
+    sortedMembers.push(...socials)
+    sortedMembers.push(...fundChairs)
+    sortedMembers.push(...fundCommittee)
+    sortedMembers.push(...other)
     
-    return members
+    return sortedMembers
   })
 }
 

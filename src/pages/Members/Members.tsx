@@ -42,12 +42,11 @@ export default function Members() {
                 <MembersSkeleton />
               ) : (
                 members ? (
-                  // members.length > 0 ? (
-                  //   membersRender
-                  // ) : (
-                  //   <p>Members coming soon!</p>
-                  // )
-                  <p>Members coming soon!</p>
+                  members.length > 0 ? (
+                    membersRender
+                  ) : (
+                    <p>Members coming soon!</p>
+                  )
                 ) : (
                   <p className='error'>Error loading members.</p>
                 )
@@ -63,7 +62,7 @@ export default function Members() {
 const Member = ({ name, role, year, imgSrc } : MemberType) => {
   return (
     <div className={styles['member']}>
-      <img src={imgSrc} alt={name} />
+      { imgSrc ? <img src={imgSrc} alt={name} /> : <img src={'images/no-image-silhouette.png'} alt={'Tennis Player Silhouette'} /> }
       <h3>{name}</h3>
       <h6>{role}</h6>
       <span>{year}</span>
@@ -76,7 +75,7 @@ const MembersSkeleton = () => {
   const NUM_MEMBERS_EXPECTED = 35
 
   for(let i = 0; i < NUM_MEMBERS_EXPECTED; i++) {
-    skeletons.push(<Skeleton aspectRatio='3/4' />)
+    skeletons.push(<Skeleton key={i} aspectRatio='3/4' />)
   }
 
   return (

@@ -6,6 +6,14 @@ By Pierce Martin - <https://pierce-martin.com>
 
 ## Changelog
 
+### 1.2.0
+
+- Full members page w/ sorted results & placeholders for those without images
+
+### 1.1.2
+
+- Members added back
+
 ### 1.1.1
 
 - Notifications on/off
