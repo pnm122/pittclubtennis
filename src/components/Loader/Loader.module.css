@@ -1,0 +1,37 @@
+#loader {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  background-color: var(--bgColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: 0.75s linear infinite load;
+}
+
+#loader::after {
+  content: '';
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  background: conic-gradient(var(--color) 0%, var(--color) 33%, transparent 33%, transparent 100%);
+  position: absolute;
+}
+
+#loader-inner {
+  background-color: var(--innerColor);
+  width: calc(var(--size) * 0.8);
+  height: calc(var(--size) * 0.8);
+  border-radius: 999px;
+  position: relative;
+  z-index: 999;
+}
+
+@keyframes load {
+  from {
+    rotate: 0deg;
+  } to {
+    rotate: 360deg;
+  }
+}

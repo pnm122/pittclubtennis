@@ -15,6 +15,8 @@ import Members from 'pages/Members/Members'
 import Tournaments from 'pages/Tournaments/Tournaments'
 import Fundraisers from 'pages/Fundraisers/Fundraisers'
 import PageLayout from 'layout/PageLayout'
+import Admin from 'pages/Admin/Admin';
+import Login from 'pages/Admin/Login/Login';
 
 function App() {
   const location = useLocation()
@@ -83,6 +85,10 @@ function App() {
           <Route path="/tournaments" element={<Tournaments />} />
           <Route path="/fundraisers" element={<Fundraisers />} />
           <Route path="/members" element={<Members />} />
+        </Route>
+        <Route path="/admin" element={<Admin />}>
+          <Route path="login" element={<Login />} />
+          <Route path="edit" />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
