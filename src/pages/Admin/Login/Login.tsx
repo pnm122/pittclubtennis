@@ -1,15 +1,44 @@
 import { useState } from 'react'
 import styles from '../Admin.module.css'
 import Loader from 'components/Loader/Loader'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [pass, setPass] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const navigate = useNavigate()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
     setLoading(true)
+    
+    const auth = getAuth()
+
+    signInWithEmailAndPassword(auth, email, pass)
+    .then(credential => {
+      navigate('/admin/edit')
+    })
+    .catch(e => {
+      setLoading(false)
+      setError(e.code)
+      
+      switch(e.code) {
+        case 'auth/wrong-password':
+        case 'auth/user-not-found':
+          setError('Incorrect login details.')
+          break
+        default:
+          setError('An unknown error occurred.')
+          break
+      }
+
+      setLoading(false)
+    })
   }
 
   return (
@@ -48,6 +77,7 @@ export default function Login() {
             "Login"
           )}
         </button>
+        <span id={styles['error']}>{error}</span>
       </form>
     </div>
   )

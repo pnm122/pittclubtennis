@@ -81,3 +81,9 @@
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
+
+#error {
+  color: var(--error-color);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
