@@ -1,5 +1,5 @@
 import TryoutsType from 'types/TryoutsType'
-import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { useEffect, useState } from 'react'
 import getTryoutsInfo from 'utils/firebase/getTryoutsInfo'
 
@@ -63,11 +63,10 @@ export default function Tryouts() {
                 link={tryoutsInfo.link}
               />
             ) : (
-              <AnimatedLink
-                to='#'
+              <AnimatedButton
+                href='#'
                 disabled
                 text='Loading tryouts info...'
-                className='primary-button'
               />
             )}
           </div>
@@ -91,12 +90,11 @@ const TryoutButton = ({ state, link } : TryoutsType) => {
   }
 
   return (
-    <AnimatedLink 
-      to={link ?? '#'} 
+    <AnimatedButton 
+      href={link} 
       newTab
       text={text} 
-      disabled={state != 'open'} 
-      className='primary-button'
+      disabled={state != 'open'}
     />
   )
 }

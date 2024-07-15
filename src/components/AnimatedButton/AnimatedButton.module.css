@@ -1,0 +1,68 @@
+.link {
+  overflow: hidden;
+}
+
+.link--primary, .link--secondary {
+  border-radius: var(--rounding);
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: var(--transition-short);
+  width: fit-content;
+}
+
+.link--medium {
+  padding: var(--size-lg) var(--size-2xl);
+  font-size: var(--text-md);
+}
+
+.link--large {
+  padding: var(--size-lg) var(--size-2xl);
+  font-size: var(--text-lg);
+}
+
+.link--primary {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.link--primary:hover {
+  color: white;
+}
+
+.link--secondary {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.link--secondary:hover {
+  color: var(--primary);
+}
+
+.link--primary[aria-disabled=true], 
+.link--secondary[aria-disabled=true] {
+  background-color: var(--on-bg10);
+  color: var(--on-bg50);
+  cursor: default;
+}
+
+.link-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  font-size: inherit;
+  height: 1em;
+  line-height: 1em;
+  gap: 100%;
+  transition: transform var(--transition-short);
+  white-space: nowrap;
+}
+
+.link-inner:not([aria-disabled=true])::before {
+  content: attr(data-text);
+}
+
+.link:not([aria-disabled=true]):hover .link-inner {
+  transform: translateY(calc(-1 * (100% + 1em)));
+}

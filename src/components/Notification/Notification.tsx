@@ -2,7 +2,7 @@ import getNotification from 'utils/firebase/getNotification'
 import styles from './Notification.module.css'
 import { useEffect, useState } from 'react'
 import NotificationType from 'types/NotificationType'
-import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 
 export default function Notification() {
   const [notif, setNotif] = useState<NotificationType | null>(null)
@@ -29,12 +29,11 @@ export default function Notification() {
               <p>{notif.message}</p>
             </div>
             <div id={styles['buttons']}>
-              <AnimatedLink 
-                to={notif.link} 
+              <AnimatedButton 
+                href={notif.link} 
                 text={notif.linkTitle}
                 newTab={notif.linkNewTab}
                 onClick={() => setShowing(false)}
-                className='primary-button'
               />
               <button 
                 onClick={() => setShowing(false)}

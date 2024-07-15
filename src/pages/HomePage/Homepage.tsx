@@ -2,7 +2,7 @@ import styles from './Homepage.module.css'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import SplitType from 'split-type'
 import { gsap } from 'gsap'
-import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import getTournaments from 'utils/firebase/getTournaments'
 import TournamentType from 'types/TournamentType'
 import Tournament, { TournamentSkeleton } from 'components/Tournament/Tournament'
@@ -67,8 +67,8 @@ const Hero = () => {
             at the University of Pittsburgh.
           </p>
           <div id={styles['hero-buttons']}>
-            <AnimatedLink to='/tryouts' text='Join' className='primary-button large hero-fade-in'></AnimatedLink>
-            <AnimatedLink to='/about' text='About Us' className='secondary-button large hero-fade-in'></AnimatedLink>
+            <AnimatedButton href='/tryouts' text='Join' size='large' className='hero-fade-in'></AnimatedButton>
+            <AnimatedButton href='/about' text='About Us' size='large' style='secondary' className='hero-fade-in'></AnimatedButton>
           </div>
         </div>
         <div id={styles['hero-img-wrap']}>
@@ -119,10 +119,9 @@ const About = () => {
               tremendously. Today, we have roughly 35 members, hold practices 3 times a 
               week at Alpha Tennis and Fitness, and attend tournaments all across the 
               nation!</p>
-            <AnimatedLink 
-              to='/about' 
-              text='About Us' 
-              className='primary-button'
+            <AnimatedButton 
+              href='/about' 
+              text='About Us'
             />
           </div>
         </div>
@@ -179,7 +178,7 @@ const Tournaments = () => {
               )
             )}
           </div>
-          <AnimatedLink to='/tournaments' text='See All Tournaments' className='primary-button' />
+          <AnimatedButton href='/tournaments' text='See All Tournaments' />
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import FundraiserType from 'types/FundraiserType'
 import styles from './Fundraisers.module.css'
 import { RxExternalLink } from 'react-icons/rx'
-import AnimatedLink from 'components/AnimatedLink/AnimatedLink'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { useEffect, useState } from 'react'
 import getFundraisers from 'utils/firebase/getFundraisers'
 import Skeleton from 'components/Skeleton/Skeleton'
@@ -68,13 +68,12 @@ const Fundraiser = ({ name, description, linkLocation, linkTitle } : FundraiserT
     <div className={styles['fundraiser']}>
       <h3>{name}</h3>
       <p>{description}</p>
-      <AnimatedLink 
-        to={linkLocation} 
+      <AnimatedButton
+        href={linkLocation} 
         text={linkTitle}
+        afterText={<RxExternalLink />}
         newTab
-        className='primary-button'>
-        <RxExternalLink />
-      </AnimatedLink>
+      />
     </div>
   )
 }
