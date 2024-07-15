@@ -1,5 +1,9 @@
 .link {
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-sm);
 }
 
 .link--primary, .link--secondary {
@@ -46,7 +50,16 @@
   cursor: default;
 }
 
-.link-inner {
+.link--loading {
+  opacity: 0.75;
+  cursor: default;
+}
+
+.link--full-width {
+  width: 100%;
+}
+
+.link__inner {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -59,10 +72,10 @@
   white-space: nowrap;
 }
 
-.link-inner:not([aria-disabled=true])::before {
+.link__inner:not([aria-disabled=true])::before {
   content: attr(data-text);
 }
 
-.link:not([aria-disabled=true]):hover .link-inner {
+.link:not([aria-disabled=true]):hover .link__inner {
   transform: translateY(calc(-1 * (100% + 1em)));
 }

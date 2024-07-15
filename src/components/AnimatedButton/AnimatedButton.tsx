@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styles from './AnimatedButton.module.css'
 import createClasses from 'utils/createClasses'
+import Loader from 'components/Loader/Loader'
 
 interface Props {
   type?: 'link' | 'button'
@@ -14,6 +15,8 @@ interface Props {
   afterText?: React.ReactNode
   disabled?: boolean
   newTab?: boolean
+  fullWidth?: boolean
+  loading?: boolean
   onClick?: (e: React.MouseEvent) => void
 }
 
@@ -29,14 +32,35 @@ export default function AnimatedButton({
   className,
   disabled,
   newTab,
+  fullWidth,
+  loading,
   onClick
 } : Props) {
   const classes = createClasses({
     [styles['link']]: true,
     [styles[`link--${size}`]]: true,
     [styles[`link--${style}`]]: true,
+    [styles['link--full-width']]: !!fullWidth,
+    [styles['link--loading']]: !!loading,
     ...(Object.fromEntries((className ?? '').split(' ').map(c => [c, true])))
   })
+
+  const innerJSX = loading ? (
+    <Loader
+      size={size === 'small' ? 16 : size === 'medium' ? 18 : 24}
+      style={style === 'primary' ? 'on-primary' : style === 'secondary' ? 'on-secondary' : 'default'}
+    />
+  ) : (
+    <>
+      {beforeText}
+        <span
+          className={styles['link__inner']}
+          data-text={text}>
+          {text}
+        </span>
+      {afterText}
+    </>
+  )
 
   return type === 'link' ? (
     <Link 
@@ -45,29 +69,17 @@ export default function AnimatedButton({
       aria-disabled={disabled}
       target={newTab ? '_blank' : undefined}
       rel={newTab ? 'noopener noreferrer' : undefined}
-      onClick={(e) => !disabled && onClick && onClick(e)}
+      onClick={(e) => !disabled && !loading && onClick && onClick(e)}
       className={classes}>
-        {beforeText}
-        <span 
-          className={styles['link-inner']}
-          data-text={text}>
-          {text}
-        </span>
-        {afterText}
-      </Link>
+      {innerJSX}
+    </Link>
   ) : (
     <button
       id={id}
       aria-disabled={disabled}
-      onClick={(e) => !disabled && onClick && onClick(e)}
+      onClick={(e) => !disabled && !loading && onClick && onClick(e)}
       className={classes}>
-      {beforeText}
-      <span 
-        className={styles['link-inner']}
-        data-text={text}>
-        {text}
-      </span>
-      {afterText}
+      {innerJSX}
     </button>
   )
 }
