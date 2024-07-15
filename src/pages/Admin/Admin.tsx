@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { User, getAuth } from 'firebase/auth'
+import { Outlet, useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import styles from './Admin.module.css'
 import Loader from "components/Loader/Loader";
 
 export default function Admin() {
-  const location = useLocation()
   const navigate = useNavigate()
-  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const a = getAuth()
-    setUser(a.currentUser)
-    
-    if(a.currentUser) {
-      navigate('/admin/edit')
-    } else {
-      navigate('/admin/login')
-    }
+    console.log('render')
+    const auth = getAuth()
+    const unsubscribe = onAuthStateChanged(auth, () => {
+      if(auth.currentUser) {
+        navigate('/admin/edit')
+      } else {
+        navigate('/admin/login')
+      }
+  
+      setLoading(false)
+    })
 
-    setLoading(false)
-  }, [location.pathname])
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
   return (
     <>
