@@ -78,6 +78,10 @@ body {
   --section-gap: 6rem;
   --page-vert-pad: var(--size-2xl);
   --rounding: var(--size-md);
+  --rounding-small: 0.1875rem;
+
+  --control-height-medium: 2.5rem;
+  --control-height-large: 3rem;
 
   --transition-timing: cubic-bezier(0.19, 1, 0.22, 1);
   --transition-short: 0.25s var(--transition-timing);

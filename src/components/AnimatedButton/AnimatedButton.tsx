@@ -17,6 +17,7 @@ interface Props {
   newTab?: boolean
   fullWidth?: boolean
   loading?: boolean
+  submit?: boolean
   onClick?: (e: React.MouseEvent) => void
 }
 
@@ -34,6 +35,7 @@ export default function AnimatedButton({
   newTab,
   fullWidth,
   loading,
+  submit,
   onClick
 } : Props) {
   const classes = createClasses({
@@ -75,6 +77,7 @@ export default function AnimatedButton({
     </Link>
   ) : (
     <button
+      type={submit ? 'submit' : undefined}
       id={id}
       aria-disabled={disabled}
       onClick={(e) => !disabled && !loading && onClick && onClick(e)}

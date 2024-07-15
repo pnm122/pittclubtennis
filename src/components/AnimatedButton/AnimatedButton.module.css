@@ -16,12 +16,14 @@
 }
 
 .link--medium {
-  padding: var(--size-lg) var(--size-2xl);
+  padding: 0 var(--size-2xl);
+  height: var(--control-height-medium);
   font-size: var(--text-md);
 }
 
 .link--large {
-  padding: var(--size-lg) var(--size-2xl);
+  padding: 0 var(--size-2xl);
+  height: var(--control-height-large);
   font-size: var(--text-lg);
 }
 
