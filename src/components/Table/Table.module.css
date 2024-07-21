@@ -1,0 +1,87 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.table__header {
+  border-bottom: 1px solid var(--border);
+}
+
+.table__header,
+.table__row {
+  display: flex;
+}
+
+.table__row--striped {
+  background-color: var(--striping);
+}
+
+.header-item,
+.item {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.header-item:first-of-type,
+.item:first-of-type {
+  padding-left: 8px;
+}
+
+.header-item:last-of-type,
+.item:last-of-type {
+  padding-right: 8px;
+}
+
+.header-item {
+  gap: 4px;
+}
+
+.header-item__sort {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.header-item__sort::after {
+  content: "";
+  border-radius: 999px;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  scale: 0.5;
+  background-color: var(--hovered);
+  opacity: 0;
+  pointer-events: none;
+  transition: 
+    opacity var(--transition-short),
+    scale var(--transition-short);
+}
+
+.header-item__sort:focus-visible {
+  outline: none;
+}
+
+.header-item__sort:hover,
+.header-item__sort:focus-visible {
+  --sort-icon-color: var(--primary);
+}
+
+.header-item__sort:hover::after,
+.header-item__sort:focus-visible::after {
+  scale: 1.125;
+  opacity: 1;
+}
+
+.header-item__sort svg {
+  color: var(--sort-icon-color, var(--unselected));
+  transition: color var(--transition-short);
+}
+
+.header-item__sort--sorted {
+  --sort-icon-color: var(--on-bg);
+}

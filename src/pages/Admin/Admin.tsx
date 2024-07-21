@@ -9,7 +9,6 @@ export default function Admin() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log('render')
     const auth = getAuth()
     const unsubscribe = onAuthStateChanged(auth, () => {
       if(auth.currentUser) {

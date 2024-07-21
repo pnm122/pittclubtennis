@@ -25,25 +25,25 @@ export default function Edit() {
   const rows: RowData[] = [{
     key: 1,
     name: 'Chris Perry',
-    year: 'Senior',
+    year: 'senior',
     role: 'President',
     imageUploaded: true
   }, {
     key: 2,
     name: 'Irene Yang',
-    year: 'Senior',
+    year: 'senior',
     role: 'President',
     imageUploaded: true
   }, {
     key: 3,
     name: 'Pierce Martin',
-    year: 'Senior',
+    year: 'senior',
     role: 'Social Chair',
-    imageUploaded: true
+    imageUploaded: false
   }, {
     key: 4,
     name: 'Ashley Belous',
-    year: 'Sophomore',
+    year: 'sophomore',
     role: 'Social Chair',
     imageUploaded: true
   }]
@@ -51,20 +51,29 @@ export default function Edit() {
   const columns: Column<RowData>[] = [{
     key: 'name',
     name: 'Name',
-    width: 175,
+    width: 250,
     sort: (a: RowData['name'], b: RowData['name']) => a.localeCompare(b)
   }, {
     key: 'year',
     name: 'Year',
-    width: 125
+    width: 125,
+    sort: (a: RowData['name'], b: RowData['name']) => {
+      const order = ['graduate student', 'senior', 'junior', 'sophomore', 'freshman']
+      const aIndex = order.findIndex(o => o === a)
+      const bIndex = order.findIndex(o => o === b)
+      return aIndex === bIndex ? 0 : aIndex > bIndex ? 1 : -1;
+    }
   }, {
     key: 'role',
     name: 'Role',
-    width: 150
+    width: 175
   }, {
     key: 'imageUploaded',
     name: 'Image Uploaded',
-    width: 125
+    width: 175,
+    sort: (a: RowData['imageUploaded'], b: RowData['imageUploaded']) => (
+      a === b ? 0 : b && !a ? 1 : -1
+    )
   }]
 
   return (
