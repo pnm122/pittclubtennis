@@ -29,3 +29,47 @@
   gap: var(--size-lg);
   width: 100%;
 }
+
+.member__name {
+  color: var(--on-bg);
+}
+
+.member__year {
+  text-transform: capitalize;
+  font-size: var(--text-sm);
+  color: var(--on-bg);
+}
+
+.member__role {
+  font-size: var(--text-sm);
+  line-height: 20px;
+}
+
+.member__role:not(.member__role--none) {
+  color: var(--role-text-color);
+  background-color: var(--role-bg-color);
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+}
+
+.member__role--none {
+  color: var(--unselected);
+}
+
+.uploaded-checkmark {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background-color: var(--positive);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploaded-checkmark svg {
+  color: white;
+  width: 12px;
+  height: 12px;
+  /* transform: translateY; */
+}
