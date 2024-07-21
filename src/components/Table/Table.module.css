@@ -8,6 +8,16 @@
   border-bottom: 1px solid var(--border);
 }
 
+.table__header--selected {
+  background-color: var(--selected);
+  border-color: var(--selected-border);
+}
+
+.items-selected {
+  color: var(--primary);
+  font-weight: 600;
+}
+
 .table__header,
 .table__row {
   display: flex;
@@ -15,6 +25,14 @@
 
 .table__row--striped {
   background-color: var(--striping);
+}
+
+.table__row--selected {
+  background-color: var(--selected);
+}
+
+.table__row--selected.table__row--striped {
+  background-color: var(--striping-selected);
 }
 
 .header-item,
@@ -44,37 +62,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-}
-
-.header-item__sort::after {
-  content: "";
-  border-radius: 999px;
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  scale: 0.5;
-  background-color: var(--hovered);
-  opacity: 0;
-  pointer-events: none;
-  transition: 
-    opacity var(--transition-short),
-    scale var(--transition-short);
-}
-
-.header-item__sort:focus-visible {
-  outline: none;
 }
 
 .header-item__sort:hover,
 .header-item__sort:focus-visible {
   --sort-icon-color: var(--primary);
-}
-
-.header-item__sort:hover::after,
-.header-item__sort:focus-visible::after {
-  scale: 1.125;
-  opacity: 1;
 }
 
 .header-item__sort svg {
@@ -84,4 +76,8 @@
 
 .header-item__sort--sorted {
   --sort-icon-color: var(--on-bg);
+}
+
+.checkbox {
+  --hover-circle-scale: 2;
 }
