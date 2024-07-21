@@ -6,7 +6,7 @@ import Loader from 'components/Loader/Loader'
 interface Props {
   type?: 'link' | 'button'
   size?: 'small' | 'medium' | 'large'
-  style?: 'primary' | 'secondary' | 'ghost'
+  style?: 'primary' | 'secondary' | 'ghost' | 'positive' | 'negative'
   href?: string
   id?: string
   className?: string

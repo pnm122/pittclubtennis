@@ -1,9 +1,26 @@
 .link {
+  --link-bg: var(--primary);
+  --link-color: var(--secondary);
+  --link-hover-bg: var(--primary);
+  --link-hover-color: white;
+  background-color: var(--link-bg);
+  color: var(--link-color);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--size-sm);
+  border-radius: var(--rounding);
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: var(--transition-short);
+  width: fit-content;
+}
+
+.link:hover {
+  background-color: var(--link-bg);
+  color: var(--link-color);
 }
 
 .link:focus-visible {
@@ -11,13 +28,11 @@
   outline-offset: 3px;
 }
 
-.link--primary, .link--secondary {
-  border-radius: var(--rounding);
-  font-family: var(--title-font);
-  text-transform: uppercase;
-  font-weight: 600;
-  transition: var(--transition-short);
-  width: fit-content;
+.link--small {
+  padding: 0 var(--size-md);
+  height: var(--control-height-small);
+  font-size: var(--text-sm);
+  border-radius: var(--rounding-small);
 }
 
 .link--medium {
@@ -33,27 +48,30 @@
 }
 
 .link--primary {
-  background-color: var(--primary);
-  color: var(--secondary);
-}
-
-.link--primary:hover {
-  color: white;
+  --link-bg: var(--primary);
+  --link-color: var(--secondary);
+  --link-hover-color: white;
 }
 
 .link--secondary {
-  background-color: var(--secondary);
-  color: var(--primary);
+  --link-bg: var(--secondary);
+  --link-color: var(--primary);
 }
 
-.link--secondary:hover {
-  color: var(--primary);
+.link--positive {
+  --link-bg: var(--positive);
+  --link-color: white;
+}
+
+.link--negative {
+  --link-bg: var(--negative);
+  --link-color: white;
 }
 
 .link--primary[aria-disabled=true], 
 .link--secondary[aria-disabled=true] {
-  background-color: var(--on-bg10);
-  color: var(--on-bg50);
+  --link-bg: var(--on-bg10);
+  --link-color: var(--on-bg50);
   cursor: default;
 }
 

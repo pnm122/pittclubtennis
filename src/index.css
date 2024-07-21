@@ -81,6 +81,7 @@ body {
   --rounding: var(--size-md);
   --rounding-small: 0.1875rem;
 
+  --control-height-small: 1.75rem;
   --control-height-medium: 2.5rem;
   --control-height-large: 3rem;
 
