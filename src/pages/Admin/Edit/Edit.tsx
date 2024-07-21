@@ -85,6 +85,11 @@ export default function Edit() {
       <Table
         data={rows}
         columns={columns}
+        selectedActions={[{
+          name: 'Delete',
+          sentiment: 'negative',
+          onClick: (selectedRows) => console.log(selectedRows)
+        }]}
         // renderMap={(value) => {
         //   return Object.keys(value).map(key => <div>{value[key].toString()}</div>)[0]
         // }}

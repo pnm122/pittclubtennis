@@ -81,3 +81,8 @@
 .checkbox {
   --hover-circle-scale: 2;
 }
+
+.header-actions {
+  margin-left: auto;
+  gap: 8px;
+}

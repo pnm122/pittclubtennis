@@ -1,8 +1,15 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Column, Row, UnionFromRecord } from "types/Table"
 import { TiArrowUnsorted, TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import createClasses from "utils/createClasses"
 import styles from "./Table.module.css"
+import AnimatedButton from "components/AnimatedButton/AnimatedButton"
+
+interface Action<T extends Row> {
+  sentiment: 'positive' | 'neutral' | 'negative'
+  name: string
+  onClick: (selectedRows: T[]) => void
+}
 
 interface Props<T extends Row> {
   data: T[]
@@ -10,7 +17,8 @@ interface Props<T extends Row> {
   // For each key, make an object with a key of that name and the type for that key, then index by the original keys
   renderMap?: (value: UnionFromRecord<Omit<T, 'key'>>) => React.ReactNode
   onRowClick?: (row: T) => void
-  onRowSelect?: (row: T | T[], selected: boolean) => void
+  onRowSelect?: (row: T | T[], selected: boolean) => void,
+  selectedActions?: Action<T>[]
 }
 
 export default function Table<T extends Row>({
@@ -18,7 +26,8 @@ export default function Table<T extends Row>({
   columns,
   renderMap,
   onRowClick,
-  onRowSelect
+  onRowSelect,
+  selectedActions
 }: Props<T>) {
   const CHECKBOX_WIDTH = 40 as const
 
@@ -109,9 +118,23 @@ export default function Table<T extends Row>({
             </div>
           </td>
           {selected.length > 0 && (
-            <td className={styles['header-item']}>
-              <p className={styles['items-selected']}>{selected.length} items selected</p>
-            </td>
+            <>
+              <td className={styles['header-item']}>
+                <p className={styles['items-selected']}>{selected.length} items selected</p>
+              </td>
+              {selectedActions && (
+                <td className={createClasses({ [styles['header-item']]: true, [styles['header-actions']]: true })}>
+                  {selectedActions.map(({ sentiment, name, onClick}) => (
+                    <AnimatedButton
+                      text={name}
+                      size='small'
+                      style={sentiment === 'neutral' ? 'primary' : sentiment}
+                      onClick={() => onClick(rows.filter(row => selected.includes(row.key)))}
+                    />
+                  ))}
+                </td>
+              )}
+            </>
           )}
           {selected.length === 0 && columns.map(h => {
             const sortedNatural = h.key === sortedBy.key && sortedBy.direction === 'natural'
