@@ -29,7 +29,7 @@ export default function Table<T extends Row>({
   onRowSelect,
   selectedActions
 }: Props<T>) {
-  const CHECKBOX_WIDTH = 40 as const
+  const CHECKBOX_WIDTH = 32 as const
 
   type SortedBy = {
     key?: string

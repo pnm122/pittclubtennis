@@ -21,6 +21,8 @@
 .table__header,
 .table__row {
   display: flex;
+  gap: 8px;
+  padding: 0 8px;
 }
 
 .table__row--striped {
@@ -40,16 +42,8 @@
   min-height: 36px;
   display: flex;
   align-items: center;
-}
-
-.header-item:first-of-type,
-.item:first-of-type {
-  padding-left: 8px;
-}
-
-.header-item:last-of-type,
-.item:last-of-type {
-  padding-right: 8px;
+  overflow: auto;
+  scrollbar-width: thin;
 }
 
 .header-item {
