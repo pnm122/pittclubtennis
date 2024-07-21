@@ -6,6 +6,11 @@
   gap: var(--size-sm);
 }
 
+.link:focus-visible {
+  outline: 2px auto var(--primary);
+  outline-offset: 3px;
+}
+
 .link--primary, .link--secondary {
   border-radius: var(--rounding);
   font-family: var(--title-font);

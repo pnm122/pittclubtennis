@@ -185,6 +185,13 @@ button {
   justify-content: center;
 }
 
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 1px auto var(--on-bg);
+}
+
 button:disabled {
   cursor: default;
 }
