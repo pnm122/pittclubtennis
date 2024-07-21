@@ -21,6 +21,7 @@
 .table__header,
 .table__row {
   display: flex;
+  gap: 8px;
 }
 
 .table__row--striped {
@@ -40,6 +41,8 @@
   min-height: 36px;
   display: flex;
   align-items: center;
+  overflow: auto;
+  scrollbar-width: thin;
 }
 
 .header-item:first-of-type,
