@@ -36,6 +36,17 @@
   background-color: var(--striping-selected);
 }
 
+.table__row--clickable {
+  cursor: pointer;
+  transition: background-color var(--transition-short);
+}
+
+.table__row--clickable:not(.table__row--selected):hover,
+.table__row--clickable:not(.table__row--selected):focus-visible {
+  background-color: var(--hovered);
+  outline: none;
+}
+
 .header-item,
 .item {
   min-height: 36px;
@@ -81,8 +92,27 @@
   --sort-icon-color: var(--on-bg);
 }
 
-.checkbox {
+.item--checkbox {
   --hover-circle-scale: 2;
+}
+
+.item--arrow svg {
+  color: var(--primary);
+  width: 16px;
+  height: 16px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(8px);
+  transition:
+    opacity var(--transition-short),
+    visibility var(--transition-short),
+    transform var(--transition-short);
+}
+
+.table__row--clickable:hover .item--arrow svg {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
 }
 
 .header-actions {

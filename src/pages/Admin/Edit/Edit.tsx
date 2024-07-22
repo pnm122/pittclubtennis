@@ -124,11 +124,13 @@ export default function Edit() {
       <Table
         data={rows}
         columns={columns}
+        selectable
         selectedActions={[{
           name: 'Delete',
           sentiment: 'negative',
           onClick: (selectedRows) => console.log(selectedRows)
         }]}
+        onRowClick={(row) => console.log(row)}
         renderMap={(value) => {
           if('name' in value) {
             return <p className={styles['member__name']}>{value.name}</p>

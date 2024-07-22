@@ -4,6 +4,7 @@ import { TiArrowUnsorted, TiArrowSortedDown, TiArrowSortedUp } from "react-icons
 import createClasses from "utils/createClasses"
 import styles from "./Table.module.css"
 import AnimatedButton from "components/AnimatedButton/AnimatedButton"
+import { MdArrowForward } from "react-icons/md";
 
 interface Action<T extends Row> {
   sentiment: 'positive' | 'neutral' | 'negative'
@@ -17,7 +18,8 @@ interface Props<T extends Row> {
   // For each key, make an object with a key of that name and the type for that key, then index by the original keys
   renderMap?: (value: UnionFromRecord<Omit<T, 'key'>>) => React.ReactNode
   onRowClick?: (row: T) => void
-  onRowSelect?: (row: T | T[], selected: boolean) => void,
+  selectable?: boolean
+  onRowSelect?: (row: T | T[], selected: boolean) => void
   selectedActions?: Action<T>[]
 }
 
@@ -26,10 +28,12 @@ export default function Table<T extends Row>({
   columns,
   renderMap,
   onRowClick,
+  selectable,
   onRowSelect,
   selectedActions
 }: Props<T>) {
   const CHECKBOX_WIDTH = 32 as const
+  const ROW_ARROW_WIDTH = 32 as const
 
   type SortedBy = {
     key?: string
@@ -99,25 +103,28 @@ export default function Table<T extends Row>({
       <thead>
         <tr className={createClasses({
           [styles["table__header"]]: true,
-          [styles["table__header--selected"]]: selected.length !== 0
+          [styles["table__header--selected"]]: !!selectable && selected.length !== 0
         })}>
-          <td 
-            className={createClasses({
-              [styles['checkbox']]: true,
-              [styles['header-item']]: true
-            })}
-            style={widthStyles(CHECKBOX_WIDTH)}>
-            <div className="with-hover-circle">
-              <div
-                role="checkbox"
-                aria-checked={selected.length === rows.length ? true : selected.length > 0 ? 'mixed' : false}
-                aria-label={selected.length === rows.length ? 'Deselect all rows' : 'Select all rows'}
-                tabIndex={0}
-                onClick={() => handleSelectAll()}
-              />
-            </div>
-          </td>
-          {selected.length > 0 && (
+          {!!selectable && (
+            <td
+              className={createClasses({
+                [styles['checkbox']]: true,
+                [styles['header-item']]: true
+              })}
+              style={widthStyles(CHECKBOX_WIDTH)}>
+              <div className="with-hover-circle">
+                <div
+                  role="checkbox"
+                  aria-checked={selected.length === rows.length ? true : selected.length > 0 ? 'mixed' : false}
+                  aria-label={selected.length === rows.length ? 'Deselect all rows' : 'Select all rows'}
+                  tabIndex={0}
+                  onClick={() => handleSelectAll()}
+                  onKeyDown={({ key }) => (key === 'Enter' || key === ' ') && handleSelectAll()}
+                />
+              </div>
+            </td>
+          )}
+          {!!selectable && selected.length > 0 && (
             <>
               <td className={styles['header-item']}>
                 <p className={styles['items-selected']}>{selected.length} items selected</p>
@@ -136,7 +143,7 @@ export default function Table<T extends Row>({
               )}
             </>
           )}
-          {selected.length === 0 && columns.map(h => {
+          {(!!!selectable || selected.length === 0) && columns.map(h => {
             const sortedNatural = h.key === sortedBy.key && sortedBy.direction === 'natural'
             const sortedReverse = h.key === sortedBy.key && sortedBy.direction === 'reverse'
             const sortButtonClasses = createClasses({
@@ -174,27 +181,42 @@ export default function Table<T extends Row>({
           const rowClasses = createClasses({
             [styles['table__row']]: true,
             [styles['table__row--striped']]: index % 2 !== 0,
-            [styles['table__row--selected']]: selected.includes(row.key)
+            [styles['table__row--selected']]: !!selectable && selected.includes(row.key),
+            [styles['table__row--clickable']]: !!onRowClick
           })
 
           const checkboxClasses = createClasses({
-            [styles['checkbox']]: true,
+            [styles['item--checkbox']]: true,
+            [styles['item']]: true
+          })
+
+          const arrowClasses = createClasses({
+            [styles['item--arrow']]: true,
             [styles['item']]: true
           })
 
           return (
-            <tr key={row.key} className={rowClasses}>
-              <td className={checkboxClasses} style={widthStyles(CHECKBOX_WIDTH)}>
-                <div className="with-hover-circle">
-                  <div
-                    role="checkbox"
-                    aria-checked={selected.includes(row.key)}
-                    aria-label={`Select row ${index + 1}`}
-                    tabIndex={0}
-                    onClick={() => handleSelect(row)}
-                  />
-                </div>
-              </td>
+            <tr
+              role={!!onRowClick ? 'button' : undefined}
+              tabIndex={!!onRowClick ? 0 : undefined}
+              onClick={() => !!onRowClick && onRowClick(row)}
+              onKeyDown={({ key }) => !!onRowClick && key === 'Enter' && onRowClick(row)}
+              key={row.key}
+              className={rowClasses}>
+              {!!selectable && (
+                <td className={checkboxClasses} style={widthStyles(CHECKBOX_WIDTH)}>
+                  <div className="with-hover-circle">
+                    <div
+                      role="checkbox"
+                      aria-checked={selected.includes(row.key)}
+                      aria-label={`Select row ${index + 1}`}
+                      tabIndex={0}
+                      onClick={() => handleSelect(row)}
+                      onKeyDown={({ key }) => (key === 'Enter' || key === ' ') && handleSelect(row)}
+                    />
+                  </div>
+                </td>
+              )}
               {Object.keys(row).filter(key => key !== 'key').map(key => (
                 <td key={key} className={styles["item"]} style={widthStyles(getColumn(key)!.width)}>
                   {renderMap && (
@@ -207,6 +229,11 @@ export default function Table<T extends Row>({
                   )}
                 </td>
               ))}
+              {!!onRowClick && (
+                <td className={arrowClasses} style={widthStyles(ROW_ARROW_WIDTH)}>
+                  <MdArrowForward />
+                </td>
+              )}
             </tr>
           )
         })}

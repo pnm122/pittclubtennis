@@ -374,12 +374,14 @@ section:first-of-type:not(.hero) {
     scale var(--transition-short);
 }
 
-.with-hover-circle:focus-visible {
+.with-hover-circle:focus-visible,
+.with-hover-circle:focus-within {
   outline: none;
 }
 
 .with-hover-circle:hover::before,
-.with-hover-circle:focus-visible::before {
+.with-hover-circle:focus-visible::before,
+.with-hover-circle:focus-within::before {
   scale: var(--hover-circle-scale, 1.125);
   opacity: 0.15;
 }
