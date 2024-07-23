@@ -18,13 +18,11 @@ export default function Tournament({
   return (
     <div className={styles['tournament']}>
       <div>
-        <h3>
-          {name}
-          { placement && (
-            <span className={`${styles['place']} ${styles[`p${placement}`]}`}></span>
-          )}
-        </h3>
+        <h3>{name}</h3>
         <span>{dS} - {dE}</span>
+        { placement && (
+          <span className={`${styles['place']} ${styles[`p${placement}`]}`}></span>
+        )}
       </div>
       <a href={locationLink} target='_blank' rel='noopener noreferrer'>{locationName} <RxExternalLink /></a>
     </div>

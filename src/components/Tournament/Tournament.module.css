@@ -59,6 +59,12 @@
   border-radius: 999px;
   font-size: var(--text-sm);
   white-space: nowrap;
+  display: block;
+  width: fit-content;
+  font-family: var(--title-font);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 6px;
 }
 
 .p1 {
