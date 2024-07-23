@@ -1,14 +1,10 @@
 import { NavLink } from "react-router-dom"
 
-export default function NavLinks() {
-  const links = [
-    { path: '/about', name: 'About' },
-    { path: '/tryouts', name: 'Tryouts' },
-    { path: '/fundraisers', name: 'Fundraisers' },
-    { path: '/tournaments', name: 'Tournaments' },
-    { path: '/members', name: 'Members' }
-  ]
+interface Props {
+  links: { path: string, name: string }[]
+}
 
+export default function NavLinks({ links }: Props) {
   return (
     <nav>
       <ul>

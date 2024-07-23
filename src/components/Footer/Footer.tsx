@@ -1,7 +1,7 @@
 import NavLinks from "components/NavLinks/NavLinks";
 import 'footer.css'
 import { AiFillInstagram } from 'react-icons/ai'
-// import { FaTiktok } from 'react-icons/fa'
+import { defaultLinks } from "utils/defaultLinks";
 
 export default function Footer() {
   return (
@@ -12,7 +12,7 @@ export default function Footer() {
           <div id='lists'>
             <div className='list'>
               <span>Links</span>
-              <NavLinks />
+              <NavLinks links={defaultLinks} />
             </div>
             <div className='list'>
               <span>Contact</span>
