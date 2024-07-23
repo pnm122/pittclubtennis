@@ -1,4 +1,3 @@
-import { getAuth } from 'firebase/auth'
 import styles from '../Admin.module.css'
 import Table from 'components/Table/Table'
 import { Column } from 'types/Table'
@@ -7,16 +6,6 @@ import { getRoleColors } from 'utils/getRoleColors'
 import { IoMdCheckmark } from 'react-icons/io'
 
 export default function Edit() {
-  const auth = getAuth()
-
-  const logOut = async () => {
-    try {
-      await auth.signOut()
-    } catch(e) {
-      console.error(e)
-    }
-  }
-
   type RowData = Readonly<{
     key: any,
     name: string,
@@ -116,49 +105,47 @@ export default function Edit() {
   }]
 
   return (
-    <div>
-      <button
-        onClick={logOut}>
-        Log Out
-      </button>
-      <Table
-        data={rows}
-        columns={columns}
-        selectable
-        selectedActions={[{
-          name: 'Delete',
-          sentiment: 'negative',
-          onClick: (selectedRows) => console.log(selectedRows)
-        }]}
-        onRowClick={(row) => console.log(row)}
-        renderMap={(value) => {
-          if('name' in value) {
-            return <p className={styles['member__name']}>{value.name}</p>
-          } else if('year' in value) {
-            return <p className={styles['member__year']}>{value.year}</p>
-          } else if('role' in value) {
-            const roleClasses = createClasses({
-              [styles['member__role']]: true,
-              [styles['member__role--none']]: !!!value.role
-            })
-            const { bg, text } = getRoleColors(value.role)
-
-            return (
-              <p 
-                className={roleClasses} 
-                style={{ '--role-text-color': text, '--role-bg-color': bg } as React.CSSProperties}>
-                {!!value.role ? value.role : 'None'}
-              </p>
-            )
-          } else if ('imageUploaded' in value) {
-            return value.imageUploaded ? (
-              <div className={styles['uploaded-checkmark']}>
-                <IoMdCheckmark />
-              </div>
-            ) : <></>
-          }
-        }}
-      />
+    <div className='container'>
+      <div style={{overflow: 'auto', marginTop: '16px'}}>
+        <Table
+          data={rows}
+          columns={columns}
+          selectable
+          selectedActions={[{
+            name: 'Delete',
+            sentiment: 'negative',
+            onClick: (selectedRows) => console.log(selectedRows)
+          }]}
+          onRowClick={(row) => console.log(row)}
+          renderMap={(value) => {
+            if('name' in value) {
+              return <p className={styles['member__name']}>{value.name}</p>
+            } else if('year' in value) {
+              return <p className={styles['member__year']}>{value.year}</p>
+            } else if('role' in value) {
+              const roleClasses = createClasses({
+                [styles['member__role']]: true,
+                [styles['member__role--none']]: !!!value.role
+              })
+              const { bg, text } = getRoleColors(value.role)
+  
+              return (
+                <p 
+                  className={roleClasses} 
+                  style={{ '--role-text-color': text, '--role-bg-color': bg } as React.CSSProperties}>
+                  {!!value.role ? value.role : 'None'}
+                </p>
+              )
+            } else if ('imageUploaded' in value) {
+              return value.imageUploaded ? (
+                <div className={styles['uploaded-checkmark']}>
+                  <IoMdCheckmark />
+                </div>
+              ) : <></>
+            }
+          }}
+        />
+      </div>
     </div>
   )
 }

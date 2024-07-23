@@ -58,6 +58,11 @@
   --link-color: var(--primary);
 }
 
+.link--accent {
+  --link-bg: var(--accent);
+  --link-color: var(--on-bg);
+}
+
 .link--positive {
   --link-bg: var(--positive);
   --link-color: white;
