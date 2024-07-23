@@ -45,8 +45,8 @@ body {
   --label: #636363;
   --border: #cecece;
   --striping: #f5f5f5;
-  --striping-selected: #cee0ff;
-  --selected: #e1ecff;
+  --selected: #CFE0FF;
+  --selected-hover: #BED5FF;
   --selected-border: #a4c3f8;
   --unselected: #a5a5a5;
   --hovered: #e1ecff;

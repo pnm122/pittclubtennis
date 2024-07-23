@@ -108,7 +108,7 @@ export default function Table<T extends Row>({
           {!!selectable && (
             <td
               className={createClasses({
-                [styles['checkbox']]: true,
+                [styles['header-item--checkbox']]: true,
                 [styles['header-item']]: true
               })}
               style={widthStyles(CHECKBOX_WIDTH)}>
