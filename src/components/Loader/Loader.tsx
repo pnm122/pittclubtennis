@@ -9,7 +9,7 @@ export default function Loader({ size, style = 'default' } : Props) {
   const { bgColor, color, innerColor } =
     style === 'default' ? {
       bgColor: 'var(--primary)',
-      color: 'var(--primary)',
+      color: 'var(--secondary)',
       innerColor: 'var(--bg)'
     } : style === 'on-primary' ? {
       bgColor: 'var(--primary)',
