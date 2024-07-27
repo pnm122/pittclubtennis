@@ -218,9 +218,9 @@ export default function Table<T extends Row>({
                   </div>
                 </td>
               )}
-              {Object.keys(row).filter(key => key !== 'key').map(key => (
-                <td key={key} className={styles["item"]} style={widthStyles(getColumn(key)!.width)}>
-                  {renderMap && (
+              {columns.map(c => c.key).map(key => (
+                <td key={key.toString()} className={styles["item"]} style={widthStyles(getColumn(key.toString())!.width)}>
+                  {renderMap && row[key] && (
                     renderMap({
                       [key]: row[key]
                     } as any)
