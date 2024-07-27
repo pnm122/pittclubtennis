@@ -1,4 +1,3 @@
-import { ChangeEventHandler } from 'react'
 import styles from './Input.module.css'
 import createClasses from 'utils/createClasses'
 
@@ -7,8 +6,8 @@ interface Props {
   label?: string
   type?: React.InputHTMLAttributes<HTMLInputElement>['type']
   name: string
-  value: string
-  onChange: ChangeEventHandler<HTMLInputElement>
+  value?: string
+  onChange: (value: string) => void
   error?: string
   required?: boolean
 }
@@ -42,7 +41,7 @@ export default function Input({
         name={name}
         type={type}
         placeholder={placeholder}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.value)}
         required={required}
       />
       {!!error && <span className={styles['input-group__error']}>{error}</span>}
