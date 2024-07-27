@@ -131,8 +131,9 @@ export default function Table<T extends Row>({
               </td>
               {selectedActions && (
                 <td className={createClasses({ [styles['header-item']]: true, [styles['header-actions']]: true })}>
-                  {selectedActions.map(({ sentiment, name, onClick}) => (
+                  {selectedActions.map(({ sentiment, name, onClick }) => (
                     <AnimatedButton
+                      key={name}
                       text={name}
                       size='small'
                       style={sentiment === 'neutral' ? 'primary' : sentiment}
