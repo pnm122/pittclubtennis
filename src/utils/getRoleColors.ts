@@ -35,7 +35,8 @@ export const roleColors: { [role: string]: RoleColors } = {
   }
 } as const
 
-export const getRoleColors = (role: string) => {
+export const getRoleColors = (role: string | undefined) => {
+  if(!role) return roleColors['default']
   const colors = roleColors[role]
   if(!colors) return roleColors['default']
   return colors

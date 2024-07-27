@@ -8,76 +8,74 @@ import Drawer from 'components/Drawer/Drawer'
 import { useState } from 'react'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import DrawerContent from 'components/Drawer/DrawerContent'
+import { AdminMemberDrawer } from 'types/AdminMembers'
+import Input from 'components/Input/Input'
+import MemberDrawer from '../Members/MemberDrawer'
 
 export default function Edit() {
-  type RowData = Readonly<{
-    key: any,
-    name: string,
-    year: string,
-    role: string,
-    imageUploaded: boolean
-  }>
+  const [open, setOpen] = useState(false)
+  const [drawerData, setDrawerData] = useState<AdminMemberDrawer | null>(null)
+
+  type RowData = Readonly<MemberType & { key: any }>
   
   const rows: RowData[] = [{
     key: 1,
     name: 'Chris Perry',
     year: 'senior',
     role: 'President',
-    imageUploaded: true
+    imgSrc: 'a'
   }, {
     key: 2,
     name: 'Irene Yang',
     year: 'senior',
     role: 'President',
-    imageUploaded: true
+    imgSrc: 'a'
   }, {
     key: 6,
     name: 'Alex Kufner',
     year: 'junior',
     role: 'Vice President',
-    imageUploaded: true
+    imgSrc: ''
   }, {
     key: 7,
     name: 'Olivia Dodge',
     year: 'senior',
     role: 'Business Manager',
-    imageUploaded: false
+    imgSrc: 'a'
   }, {
     key: 8,
     name: 'Rohan Krishnan',
     year: 'senior',
     role: 'Logistics Manager',
-    imageUploaded: false
+    imgSrc: ''
   }, {
     key: 3,
     name: 'Pierce Martin',
     year: 'senior',
     role: 'Social Chair',
-    imageUploaded: false
+    imgSrc: 'a'
   }, {
     key: 4,
     name: 'Ashley Belous',
     year: 'sophomore',
     role: 'Social Chair',
-    imageUploaded: true
+    imgSrc: 'a'
   }, {
     key: 9,
     name: 'Jonah Osband',
     year: 'senior',
     role: 'Fundraising Chair',
-    imageUploaded: false
+    imgSrc: 'a'
   }, {
     key: 10,
     name: 'Amanda Santora',
     year: 'junior',
     role: 'Fundraising Committee',
-    imageUploaded: false
+    imgSrc: 'a'
   }, {
     key: 5,
     name: 'Riya Shah',
     year: 'sophomore',
-    role: '',
-    imageUploaded: true
   }]
 
   const columns: Column<RowData>[] = [{
@@ -100,32 +98,38 @@ export default function Edit() {
     name: 'Role',
     width: 190
   }, {
-    key: 'imageUploaded',
+    key: 'imgSrc',
     name: 'Image Uploaded',
     width: 175,
-    sort: (a: RowData['imageUploaded'], b: RowData['imageUploaded']) => (
+    sort: (a: RowData['imgSrc'], b: RowData['imgSrc']) => (
       a === b ? 0 : b && !a ? 1 : -1
     )
   }]
 
-  const [open, setOpen] = useState(true)
+  const openEditDrawer = (row: RowData) => {
+    setDrawerData({
+      data: row,
+      type: 'edit'
+    })
+    setOpen(true)
+  }
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>
-        Open Drawer
-      </button>
       <Drawer
         orientation='right'
-        style='detached'
         open={open}
         onBackdropClicked={() => setOpen(false)}>
         <DrawerHeader
-          title="Drawer"
+          title={drawerData?.type === 'add' ? 'Add Member' : 'Edit Member'}
           onClose={() => setOpen(false)}
         />
         <DrawerContent>
-          <p>Test content</p>
+          {drawerData && (
+            <>
+              <MemberDrawer {...drawerData} />
+            </>
+          )}
         </DrawerContent>
       </Drawer>
       <div className='container'>
@@ -139,8 +143,9 @@ export default function Edit() {
               sentiment: 'negative',
               onClick: (selectedRows) => console.log(selectedRows)
             }]}
-            onRowClick={(row) => console.log(row)}
+            onRowClick={(row) => openEditDrawer(row)}
             renderMap={(value) => {
+              if(!value) return
               if('name' in value) {
                 return <p className={styles['member__name']}>{value.name}</p>
               } else if('year' in value) {
@@ -159,8 +164,8 @@ export default function Edit() {
                     {!!value.role ? value.role : 'None'}
                   </p>
                 )
-              } else if ('imageUploaded' in value) {
-                return value.imageUploaded ? (
+              } else if ('imgSrc' in value) {
+                return !!value.imgSrc ? (
                   <div className={styles['uploaded-checkmark']}>
                     <IoMdCheckmark />
                   </div>

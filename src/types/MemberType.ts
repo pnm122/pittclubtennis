@@ -1,6 +1,8 @@
+type MemberYear = 'freshman' | 'sophomore' | 'junior' | 'senior' | 'graduate student'
+
 interface MemberType {
   name: string
   role?: string
-  year: 'freshman' | 'sophomore' | 'junior' | 'senior' | 'graduate student'
+  year: MemberYear
   imgSrc?: string
 }
