@@ -11,6 +11,7 @@ import DrawerContent from 'components/Drawer/DrawerContent'
 import { AdminMemberDrawer } from 'types/AdminMembers'
 import Input from 'components/Input/Input'
 import MemberDrawer from '../Members/MemberDrawer'
+import Select from 'components/Select/Select'
 
 export default function Edit() {
   const [open, setOpen] = useState(false)
@@ -113,6 +114,15 @@ export default function Edit() {
     })
     setOpen(true)
   }
+
+  const selectOptions = [{
+    value: 'test'
+  }, {
+    value: 'another'
+  }, {
+    value: 'last'
+  }]
+  const [selectValue, setSelectValue] = useState(0)
 
   return (
     <>

@@ -1,0 +1,118 @@
+.select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+}
+
+.select__label {
+  font-size: var(--text-sm);
+  color: var(--label);
+}
+
+.select--error .select__label {
+  color: var(--error);
+}
+
+.select__current {
+  padding: 0 var(--size-md);
+  width: 100%;
+  height: var(--control-height-medium);
+  border: 1px solid var(--border);
+  border-radius: var(--rounding-small);
+  display: flex;
+  align-items: center;
+  gap: var(--size-sm);
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.select__current:focus {
+  border-color: var(--primary);
+  outline: 2px auto var(--primary);
+  outline-offset: 3px;
+}
+
+.select--error .select__curent:focus {
+  border-color: var(--error);
+  outline: 2px solid var(--error);
+  outline-offset: 3px;
+}
+
+.current-value {
+  color: var(--heading);
+}
+
+.select__arrow {
+  transition: rotate var(--transition-short);
+}
+
+.select__arrow--flipped {
+  rotate: 180deg;
+}
+
+.select__popup {
+  position: absolute;
+  top: 100%;
+  z-index: 99;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--rounding-small);
+  padding: var(--size-sm);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  background-color: var(--bg);
+  transition:
+    opacity var(--transition-short),
+    visibility var(--transition-short),
+    transform var(--transition-short);
+}
+
+.select__popup--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(4px);
+}
+
+.select__popup--hug-contents {
+  width: fit-content;
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.option {
+  display: block;
+}
+
+.option__button {
+  height: 36px;
+  border-radius: var(--size-xs);
+  padding: 0 var(--size-sm);
+  width: 100%;
+  justify-content: start;
+  transition: background-color var(--transition-short);
+}
+
+.option__button:focus-visible {
+  outline: none;
+}
+
+.option__button:not(.option__button--selected):hover,
+.option__button:not(.option__button--selected):focus-visible {
+  background-color: var(--hovered);
+}
+
+.option__button--selected {
+  background-color: var(--selected);
+}
+
+.option__button.option__button--selected:hover,
+.option__button.option__button--selected:focus-visible {
+  background-color: var(--selected-hover);
+}
