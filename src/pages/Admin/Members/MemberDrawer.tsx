@@ -54,7 +54,7 @@ export default function MemberDrawer({
         value={inputs.name}
         label='Name'
         required
-        onChange={value => dispatch({ type: 'name', data: value })}
+        onChange={e => dispatch({ type: 'name', data: e.target.value })}
       />
     </>
   )

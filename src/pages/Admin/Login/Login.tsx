@@ -44,7 +44,7 @@ export default function Login() {
         <Input
           label='Email'
           value={email}
-          onChange={value => setEmail(value)}
+          onChange={e => setEmail(e.target.value)}
           name='email'
           type='email'
           placeholder='johndoe@example.com'
@@ -54,7 +54,7 @@ export default function Login() {
         <Input
           label='Password'
           value={pass}
-          onChange={value => setPass(value)}
+          onChange={e => setPass(e.target.value)}
           name='password'
           type='password'
           error={error}

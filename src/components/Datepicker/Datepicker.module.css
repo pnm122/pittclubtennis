@@ -1,0 +1,30 @@
+.datepicker-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--rounding-small);
+}
+
+.datepicker-input:focus-within {
+  border: 1px solid var(--primary);
+  outline: 2px auto var(--primary);
+  outline-offset: 3px;
+}
+
+.datepicker-input__button {
+  --hover-circle-start-scale: 0.33;
+  --hover-circle-scale: 0.75;
+
+  height: var(--control-height-medium);
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.button-icon {
+  color: var(--on-bg);
+  transition: color var(--transition-short);
+}
+
+.datepicker-input__button:hover .button-icon {
+  color: var(--primary);
+}

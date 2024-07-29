@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import styles from './Input.module.css'
 import createClasses from 'utils/createClasses'
 
@@ -7,9 +8,17 @@ interface Props {
   type?: React.InputHTMLAttributes<HTMLInputElement>['type']
   name: string
   value?: string
-  onChange: (value: string) => void
+  selection?: { start: number, end: number }
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
+  onSelect?: React.ReactEventHandler<HTMLInputElement>
+  onFocus?: React.FocusEventHandler<HTMLInputElement>
+  onBeforeInput?: React.FormEventHandler<HTMLInputElement>
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
+  onBlur?: React.FocusEventHandler<HTMLInputElement>
   error?: string
   required?: boolean
+  borderless?: boolean
+  width?: string
 }
 
 export default function Input({
@@ -19,8 +28,15 @@ export default function Input({
   name,
   value,
   onChange,
+  onSelect,
+  onFocus,
+  onBeforeInput,
+  onKeyDown,
+  onBlur,
   error,
-  required
+  required,
+  borderless,
+  width
 }: Props) {
   const inputGroupClasses = createClasses({
     [styles['input-group']]: true,
@@ -28,20 +44,28 @@ export default function Input({
   })
 
   return (
-    <div className={inputGroupClasses}>
+    <div className={inputGroupClasses} style={{...(width ? { width } : {})}}>
       {!!label && (
         <label className={styles['input-group__label']} htmlFor={name}>
           {label}
           {required && <span className={styles['required-star']}>*</span>}
         </label>
       )}
-      <input 
-        className={styles['input-group__input']}
-        value={value} 
+      <input
+        className={createClasses({
+          [styles['input-group__input']]: true,
+          [styles['input-group__input--borderless']]: !!borderless
+        })}
+        value={value}
         name={name}
         type={type}
         placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
+        onBeforeInput={(e) => onBeforeInput && onBeforeInput(e)}
+        onChange={(e) => onChange && onChange(e)}
+        onSelect={(e) => onSelect && onSelect(e)}
+        onFocus={(e) => onFocus && onFocus(e)}
+        onKeyDown={(e) => onKeyDown && onKeyDown(e)}
+        onBlur={(e) => onBlur && onBlur(e)}
         required={required}
       />
       {!!error && <span className={styles['input-group__error']}>{error}</span>}
