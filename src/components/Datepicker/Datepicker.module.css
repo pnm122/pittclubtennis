@@ -1,3 +1,7 @@
+.datepicker {
+  position: relative;
+}
+
 .datepicker-input {
   display: flex;
   align-items: center;
@@ -25,6 +29,97 @@
   transition: color var(--transition-short);
 }
 
-.datepicker-input__button:hover .button-icon {
-  color: var(--primary);
+.datepicker-popup {
+  --popup-padding: var(--size-lg);
+
+  position: absolute;
+  z-index: 99;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-md);
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--rounding-small);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  background-color: var(--bg);
+  transition:
+    opacity var(--transition-short),
+    visibility var(--transition-short),
+    transform var(--transition-short);
+}
+
+.datepicker-popup--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(4px);
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--popup-padding) var(--popup-padding) 0;
+}
+
+.popup-header__button {
+  width: 32px;
+  aspect-ratio: 1;
+}
+
+.popup-header__button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.calendar {
+  --cell-size: 36px;
+
+  display: block;
+  padding: 0 var(--popup-padding) var(--popup-padding);
+}
+
+.calendar__weekdays,
+.calendar__week {
+  display: flex;
+}
+
+.weekday {
+  width: var(--cell-size);
+  font-size: var(--text-sm);
+  text-align: center;
+  color: var(--label);
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.day-cell {
+  width: var(--cell-size);
+  aspect-ratio: 1;
+}
+
+.day {
+  width: 100%;
+  height: 100%;
+}
+
+.day--selected {
+  color: var(--bg);
+}
+
+.day--selected::before {
+  scale: 1 !important;
+  opacity: 1 !important;
+  background-color: var(--primary) !important;
+}
+
+.day--disabled {
+  color: var(--unselected);
+}
+
+.day--disabled:focus-visible {
+  outline: none;
+  text-decoration: underline;
 }

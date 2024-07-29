@@ -1,6 +1,7 @@
-import { createContext, SetStateAction, useState } from "react"
+import { createContext, SetStateAction, useRef, useState } from "react"
 import DatepickerInput from "./DatepickerInput"
-import { formatDate } from "date-fns"
+import DatepickerPopup from "./DatepickerPopup"
+import styles from './Datepicker.module.css'
 
 interface Props {
   value: Date | null
@@ -11,6 +12,7 @@ interface Props {
   label?: string
   format?: string
   required?: boolean
+  placeholder?: string
 }
 
 export const DEFAULT_DATEPICKER_FORMAT = 'MM/dd/yyyy' as const
@@ -25,6 +27,8 @@ export const DatepickerContext = createContext<DatepickerContextType>({
   setOpen: () => {}
 })
 
+export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as const
+
 export default function Datepicker({
   value,
   onChange,
@@ -32,8 +36,11 @@ export default function Datepicker({
   error,
   width,
   label,
-  format
+  format,
+  required,
+  placeholder
 }: Props) {
+  const datepicker = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
 
   const ctx = {
@@ -41,6 +48,7 @@ export default function Datepicker({
     onChange: (date: Date) => {
       setOpen(false)
       onChange(date)
+      datepicker.current?.querySelector('.datepicker-input__input')
     },
     disabledDates: disabledDates ?? [],
     error: error ?? null,
@@ -51,7 +59,10 @@ export default function Datepicker({
 
   return (
     <DatepickerContext.Provider value={ctx}>
-      <DatepickerInput />
+      <div className={styles['datepicker']} ref={datepicker}>
+        <DatepickerInput required={required} placeholder={placeholder} />
+        <DatepickerPopup />
+      </div>
     </DatepickerContext.Provider>
   )
 }

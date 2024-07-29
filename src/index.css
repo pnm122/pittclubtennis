@@ -194,7 +194,8 @@ select:focus-visible {
   outline: 1px auto var(--on-bg);
 }
 
-button:disabled {
+button:disabled,
+button[aria-disabled="true"] {
   cursor: default;
 }
 
@@ -384,6 +385,14 @@ section:first-of-type:not(.hero) {
 .with-hover-circle:focus-within::before {
   scale: var(--hover-circle-scale, 1.125);
   opacity: 0.15;
+  color: var(--primary);
+}
+
+.with-hover-circle:hover *,
+.with-hover-circle:focus-visible *,
+.with-hover-circle:focus-within * {
+  transition: color var(--transition-short);
+  color: var(--primary);
 }
 
 [role="checkbox"] {

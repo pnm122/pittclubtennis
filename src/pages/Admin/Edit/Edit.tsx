@@ -13,6 +13,7 @@ import Input from 'components/Input/Input'
 import MemberDrawer from '../Members/MemberDrawer'
 import Select from 'components/Select/Select'
 import Datepicker from 'components/Datepicker/Datepicker'
+import { isWeekend } from 'date-fns'
 
 export default function Edit() {
   const [open, setOpen] = useState(false)
@@ -156,6 +157,7 @@ export default function Edit() {
           <Datepicker
             value={datepickerValue}
             onChange={(date) => { console.log(date); setDatepickerValue(date); }}
+            disabledDates={(d) => isWeekend(d)}
           />
         </div>
         <div style={{overflow: 'auto', marginTop: '16px'}}>

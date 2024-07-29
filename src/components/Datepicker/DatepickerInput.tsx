@@ -5,7 +5,15 @@ import { formatDate } from 'date-fns'
 import { MdCalendarToday } from 'react-icons/md'
 import styles from './Datepicker.module.css'
 
-export default function DatepickerInput() {
+interface Props {
+  required?: boolean
+  placeholder?: string
+}
+
+export default function DatepickerInput({
+  required,
+  placeholder
+}: Props) {
   const formatValue = (value: string | Date | null): string | null => {
     try {
       if(value) return formatDate(value, format)
@@ -15,7 +23,7 @@ export default function DatepickerInput() {
     }
   }
 
-  const { format, value, onChange, setOpen } = useContext(DatepickerContext)
+  const { format, value, onChange, open, setOpen } = useContext(DatepickerContext)
   const [inputValue, setInputValue] = useState(formatValue(value) ?? '')
 
   // Update input on datepicker value change
@@ -38,15 +46,20 @@ export default function DatepickerInput() {
   return (
     <div className={styles['datepicker-input']}>
       <Input
+        placeholder={placeholder ?? 'Choose a date'}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onBlur={onBlur}
         onKeyDown={onKeyDown}
         name='datepicker-input'
         width='100%'
+        required={required}
         borderless
       />
       <button
+        aria-label='Open datepicker dialog'
+        aria-haspopup={true}
+        aria-pressed={open}
         className={`${styles['datepicker-input__button']} with-hover-circle`}
         onClick={() => setOpen(o => !o)}>
         <MdCalendarToday className={styles['button-icon']} />
