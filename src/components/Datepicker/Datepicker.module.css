@@ -1,5 +1,32 @@
 .datepicker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+}
+
+.datepicker__inner {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+}
+
+.datepicker__label {
+  font-size: var(--text-sm);
+  color: var(--label);
+}
+
+.datepicker--error .datepicker__label {
+  color: var(--error);
+}
+
+.datepicker--error .datepicker-input {
+  border-color: var(--error);
+}
+
+.datepicker--error .datepicker-input:focus-within {
+  border-color: var(--error);
+  outline-color: var(--error);
 }
 
 .datepicker-input {

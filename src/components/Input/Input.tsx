@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import styles from './Input.module.css'
 import createClasses from 'utils/createClasses'
+import Error from 'components/Error/Error'
 
 interface Props {
   placeholder?: string
@@ -68,7 +69,7 @@ export default function Input({
         onBlur={(e) => onBlur && onBlur(e)}
         required={required}
       />
-      {!!error && <span className={styles['input-group__error']}>{error}</span>}
+      {!!error && <Error>{error}</Error>}
     </div>
   )
 }

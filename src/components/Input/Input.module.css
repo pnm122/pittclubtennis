@@ -51,11 +51,6 @@
   color: var(--unselected);
 }
 
-.input-group__error {
-  font-size: var(--text-sm);
-  color: var(--error);
-}
-
 .required-star {
   margin-left: var(--size-xs);
   color: red;

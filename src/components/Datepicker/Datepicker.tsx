@@ -2,6 +2,9 @@ import { createContext, SetStateAction, useRef, useState } from "react"
 import DatepickerInput from "./DatepickerInput"
 import DatepickerPopup from "./DatepickerPopup"
 import styles from './Datepicker.module.css'
+import createClasses from "utils/createClasses"
+import { MdError } from "react-icons/md"
+import Error from "components/Error/Error"
 
 interface Props {
   value: Date | null
@@ -59,9 +62,18 @@ export default function Datepicker({
 
   return (
     <DatepickerContext.Provider value={ctx}>
-      <div className={styles['datepicker']} ref={datepicker}>
-        <DatepickerInput required={required} placeholder={placeholder} />
-        <DatepickerPopup />
+      <div
+        className={createClasses({
+          [styles['datepicker']]: true,
+          [styles['datepicker--error']]: !!error
+        })}
+        ref={datepicker}>
+        <div className={styles['datepicker__inner']}>
+          {label && <label className={styles['datepicker__label']}>{label}</label>}
+          <DatepickerInput required={required} placeholder={placeholder} />
+          <DatepickerPopup />
+        </div>
+        {error && <Error>{error}</Error>}
       </div>
     </DatepickerContext.Provider>
   )

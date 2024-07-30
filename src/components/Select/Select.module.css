@@ -1,4 +1,10 @@
 .select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+}
+
+.select__inner {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -12,6 +18,15 @@
 
 .select--error .select__label {
   color: var(--error);
+}
+
+.select--error .select__current {
+  border-color: var(--error);
+}
+
+.select--error .select__current:focus {
+  border-color: var(--error);
+  outline-color: var(--error);
 }
 
 .select__current {
