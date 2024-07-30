@@ -16,8 +16,14 @@ export default function DatepickerInput({
 }: Props) {
   const formatValue = (value: string | Date | null): string | null => {
     try {
-      if(value) return formatDate(value, format)
-      else return null
+      if(typeof value === 'string') {
+        // Remove 'th', 'st', 'nd', 'rd' from string because evidently Date doesn't want to support these formats
+        return formatDate(value.replaceAll(/th|st|nd|rd/g, ''), format)
+      } else if(value) {
+        return formatDate(value, format)
+      } else {
+        return null
+      }
     } catch {
       return null
     }
