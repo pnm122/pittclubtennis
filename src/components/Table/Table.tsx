@@ -212,7 +212,10 @@ export default function Table<T extends Row>({
                       aria-checked={selected.includes(row.key)}
                       aria-label={`Select row ${index + 1}`}
                       tabIndex={0}
-                      onClick={() => handleSelect(row)}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleSelect(row)
+                      }}
                       onKeyDown={({ key }) => (key === 'Enter' || key === ' ') && handleSelect(row)}
                     />
                   </div>
