@@ -70,12 +70,21 @@ const Select = forwardRef<SelectRef, Props>(function Select({
     }
   }
 
+  const onBlur = (e: React.FocusEvent) => {
+    const { relatedTarget } = e
+    const inSelect = relatedTarget?.closest(`.${styles['select']}`)
+    if(!inSelect) {
+      setOpen(false)
+    }
+  }
+
   return (
     <div
       className={createClasses({
         [styles['select']]: true,
         [styles['select--error']]: !!error
       })}
+      onBlur={onBlur}
       style={{...(width ? { width }: {})}}>
       {label && <label htmlFor={`select-${label}`} className={styles['select__label']}>{label}</label>}
       <div className={styles['select__inner']}>
