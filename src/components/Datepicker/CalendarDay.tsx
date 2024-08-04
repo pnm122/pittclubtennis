@@ -8,6 +8,7 @@ interface Props {
   date: Date
   selected: boolean
   disabled: boolean
+  focused: boolean
   month: Date
 }
 
@@ -15,21 +16,24 @@ export default function CalendarDay({
   date,
   selected,
   disabled,
+  focused,
   month
 }: Props) {
   const { onChange } = useContext(DatepickerContext)
 
   return (
-    <td className={styles['day-cell']}>
+    <td className={styles['day-cell']} role="gridcell">
       {isSameMonth(date, month) && (
         <button
+          tabIndex={-1}
           aria-label={`${months[getMonth(month)]} ${date.getDate()}`}
           aria-disabled={disabled}
           className={createClasses({
-            'with-hover-circle': !disabled,
+            'with-hover-circle': true,
             [styles['day']]: true,
             [styles['day--selected']]: selected,
-            [styles['day--disabled']]: disabled
+            [styles['day--disabled']]: disabled,
+            [styles['day--focused']]: focused
           })}
           onClick={() => !disabled && onChange(date)}>
           {date.getDate()}

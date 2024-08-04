@@ -1,6 +1,6 @@
-import { createContext, SetStateAction, useRef, useState } from "react"
-import DatepickerInput from "./DatepickerInput"
-import DatepickerPopup from "./DatepickerPopup"
+import { createContext, SetStateAction, useEffect, useRef, useState } from "react"
+import DatepickerInput, { DatepickerInputRef } from "./DatepickerInput"
+import DatepickerPopup, { PopupRef } from "./DatepickerPopup"
 import styles from './Datepicker.module.css'
 import createClasses from "utils/createClasses"
 import { MdError } from "react-icons/md"
@@ -19,7 +19,17 @@ interface Props {
 }
 
 export const DEFAULT_DATEPICKER_FORMAT = 'MM/dd/yyyy' as const
-export type DatepickerContextType = Required<Pick<Props, 'value' | 'onChange' | 'disabledDates' | 'error' | 'format'>> & { open: boolean, setOpen: React.Dispatch<SetStateAction<boolean>> }
+export type DatepickerContextType =
+  Required<
+    Pick<
+      Props,
+      'value' | 'onChange' | 'disabledDates' | 'error' | 'format'
+    >
+  > & {
+    open: boolean,
+    setOpen: React.Dispatch<SetStateAction<boolean>>
+    focusInput: () => void
+  }
 export const DatepickerContext = createContext<DatepickerContextType>({
   value: null,
   onChange: () => {},
@@ -27,10 +37,13 @@ export const DatepickerContext = createContext<DatepickerContextType>({
   error: null,
   format: DEFAULT_DATEPICKER_FORMAT,
   open: false,
-  setOpen: () => {}
+  setOpen: () => {},
+  focusInput: () => {}
 })
 
 export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as const
+
+let resolveRenderPromise: (() => void) | null = null
 
 export default function Datepicker({
   value,
@@ -44,20 +57,52 @@ export default function Datepicker({
   placeholder
 }: Props) {
   const datepicker = useRef<HTMLDivElement>(null)
+  const popup = useRef<PopupRef>(null)
+  const input = useRef<DatepickerInputRef>(null)
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if(resolveRenderPromise) {
+      resolveRenderPromise()
+      resolveRenderPromise = null
+    }
+  })
+
+  const waitForRender = async () => {
+    await new Promise<void>(res => {
+      resolveRenderPromise = res
+    })
+  }
+
+  const focusCalendar = async (wait: boolean) => {
+    if(wait) await waitForRender()
+    return !!popup.current?.focusCalendar()
+  }
+
+  const focusInput = () => {
+    input.current?.focus()
+  }
+
+  const onBlur = (e: React.FocusEvent) => {
+    const { relatedTarget } = e
+    const inPopup = relatedTarget?.closest(`.${styles['datepicker-popup']}`)
+    const inInput = relatedTarget?.closest(`.${styles['datepicker-input']}`)
+    if(!(inPopup || inInput)) {
+      setOpen(false)
+    }
+  }
 
   const ctx = {
     value,
     onChange: (date: Date) => {
-      setOpen(false)
       onChange(date)
-      datepicker.current?.querySelector('.datepicker-input__input')
     },
     disabledDates: disabledDates ?? [],
     error: error ?? null,
     format: format ?? DEFAULT_DATEPICKER_FORMAT,
     open,
-    setOpen
+    setOpen,
+    focusInput
   }
 
   return (
@@ -67,11 +112,17 @@ export default function Datepicker({
           [styles['datepicker']]: true,
           [styles['datepicker--error']]: !!error
         })}
-        ref={datepicker}>
+        ref={datepicker}
+        onBlur={onBlur}>
         <div className={styles['datepicker__inner']}>
           {label && <label className={styles['datepicker__label']}>{label}</label>}
-          <DatepickerInput required={required} placeholder={placeholder} />
-          <DatepickerPopup />
+          <DatepickerInput
+            required={required}
+            placeholder={placeholder}
+            focusCalendar={focusCalendar}
+            ref={input}
+          />
+          <DatepickerPopup ref={popup} />
         </div>
         {error && <Error>{error}</Error>}
       </div>

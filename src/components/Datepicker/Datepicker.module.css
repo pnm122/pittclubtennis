@@ -108,6 +108,10 @@
   padding: 0 var(--popup-padding) var(--popup-padding);
 }
 
+.calendar:focus {
+  outline: none;
+}
+
 .calendar__weekdays,
 .calendar__week {
   display: flex;
@@ -146,7 +150,19 @@
   color: var(--unselected);
 }
 
-.day--disabled:focus-visible {
-  outline: none;
-  text-decoration: underline;
+.day--disabled::before {
+  background-color: transparent !important;
+}
+
+.day--disabled.day--focused::before {
+  background-color: var(--unselected) !important;
+}
+
+.calendar:focus .day--focused:not(.day--selected)::before {
+  scale: 1.125 !important;
+  opacity: 0.15 !important;
+}
+
+.calendar:focus .day--focused.day--selected::before {
+  scale: 1.125 !important;
 }

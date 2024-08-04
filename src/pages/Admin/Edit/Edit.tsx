@@ -153,11 +153,9 @@ export default function Edit() {
             value={selectValue}
             onChange={({ index }) => setSelectValue(index)}
             width='150px'
-            error='test error'
           />
           <Datepicker
             label='Test'
-            error='test error'
             value={datepickerValue}
             onChange={(date) => { console.log(date); setDatepickerValue(date); }}
             disabledDates={(d) => isWeekend(d)}

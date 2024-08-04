@@ -1,5 +1,5 @@
-import Input from 'components/Input/Input'
-import { useContext, useEffect, useState } from 'react'
+import Input, { InputRef } from 'components/Input/Input'
+import { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { DatepickerContext } from './Datepicker'
 import { formatDate } from 'date-fns'
 import { MdCalendarToday } from 'react-icons/md'
@@ -8,12 +8,24 @@ import styles from './Datepicker.module.css'
 interface Props {
   required?: boolean
   placeholder?: string
+  focusCalendar: (wait: boolean) => Promise<boolean>
 }
 
-export default function DatepickerInput({
+export interface DatepickerInputRef {
+  focus: () => void
+}
+
+const DatepickerInput = forwardRef<DatepickerInputRef, Props>(function DatepickerInput({
   required,
-  placeholder
-}: Props) {
+  placeholder,
+  focusCalendar
+}: Props, ref) {
+  useImperativeHandle(ref, () => ({
+    focus() {
+      input.current?.focus()
+    }
+  }))
+
   const formatValue = (value: string | Date | null): string | null => {
     try {
       if(typeof value === 'string') {
@@ -31,6 +43,7 @@ export default function DatepickerInput({
 
   const { format, value, onChange, open, setOpen } = useContext(DatepickerContext)
   const [inputValue, setInputValue] = useState(formatValue(value) ?? '')
+  const input = useRef<InputRef>(null)
 
   // Update input on datepicker value change
   useEffect(() => {
@@ -46,7 +59,23 @@ export default function DatepickerInput({
     if(e.key === 'Enter') {
       const formatted = formatValue(inputValue)
       if(formatted) onChange(new Date(formatted))
+    } else if(e.key === 'ArrowDown') {
+      setOpen(true)
+      focusCalendar(!open)
     }
+  }
+
+  const onClick = () => {
+    setOpen(true)
+  }
+
+  const onButtonClick = () => {
+    setOpen(o => {
+      if(!o) {
+        focusCalendar(true)
+      }
+      return !o
+    })
   }
 
   return (
@@ -57,9 +86,11 @@ export default function DatepickerInput({
         onChange={(e) => setInputValue(e.target.value)}
         onBlur={onBlur}
         onKeyDown={onKeyDown}
+        onClick={onClick}
         name='datepicker-input'
         width='100%'
         required={required}
+        ref={input}
         borderless
       />
       <button
@@ -67,9 +98,11 @@ export default function DatepickerInput({
         aria-haspopup={true}
         aria-pressed={open}
         className={`${styles['datepicker-input__button']} with-hover-circle`}
-        onClick={() => setOpen(o => !o)}>
+        onClick={onButtonClick}>
         <MdCalendarToday className={styles['button-icon']} />
       </button>
     </div>
   )
-}
+})
+
+export default DatepickerInput
