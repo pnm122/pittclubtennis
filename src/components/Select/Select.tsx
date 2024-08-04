@@ -1,6 +1,6 @@
 import createClasses from 'utils/createClasses'
 import styles from './Select.module.css'
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { MdKeyboardArrowUp } from 'react-icons/md'
 import Error from 'components/Error/Error'
 
@@ -38,14 +38,14 @@ const Select = forwardRef<SelectRef, Props>(function Select({
   popupHugContents = false
 }: Props, ref) {
   useImperativeHandle(ref, () => ({
-    focus() {
-      current.current?.focus()
-    }
+    focus
   }))
 
   const current = useRef<HTMLDivElement>(null)
   const popup = useRef<HTMLDivElement>(null)
+  const optionElements = useRef<{ [index: number]: HTMLButtonElement | null }>({})
   const [open, setOpen] = useState(false)
+  const [focusIndex, setFocusIndex] = useState<number | null>(null)
 
   const renderOptions = options.map(o => ({ value: o.value, name: o.name ?? o.value }))
   const renderValue =
@@ -53,20 +53,37 @@ const Select = forwardRef<SelectRef, Props>(function Select({
       ? renderOptions[value]
       : renderOptions.find(o => o.name === value)
 
+  const focus = () => {
+    current.current?.focus()
+  }
+
+  useEffect(() => {
+    if(!open) setFocusIndex(-1)
+  }, [open])
+
+  const focusOption = (index: number) => {
+    setFocusIndex(index)
+    optionElements.current[index]?.focus()
+  }
+
   const handleChange = (value: { index: number, selected: string }) => {
     setOpen(false)
     onChange(value)
     current.current?.focus()
   }
 
-  const getOptionElement = (index: number) => (
-    popup.current?.getElementsByClassName(styles['option__button']).item(index) as HTMLElement
-  )
+  const getSelectedIndex = () => {
+    return renderValue ? renderOptions.findIndex(o => o.name === renderValue.name) : -1
+  }
 
   const onCurrentKeyDown = async (e: React.KeyboardEvent) => {
     if(e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       setOpen(o => !o)
+    } else if((e.key === 'ArrowDown' && renderOptions.length > 0) || (e.key === 'Tab' && !e.shiftKey && open)) {
+      e.preventDefault()
+      const selectedIndex = getSelectedIndex()
+      focusOption(selectedIndex === -1 ? 0 : selectedIndex)
     }
   }
 
@@ -75,6 +92,21 @@ const Select = forwardRef<SelectRef, Props>(function Select({
     const inSelect = relatedTarget?.closest(`.${styles['select']}`)
     if(!inSelect) {
       setOpen(false)
+    }
+  }
+
+  const onPopupKeyDown = (e: React.KeyboardEvent) => {
+    if(e.key === 'Escape') {
+      setOpen(false)
+      focus()
+    } else if(e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+      e.preventDefault()
+      const nextIndex = focusIndex === null ? 0 : ((focusIndex + 1) % renderOptions.length)
+      focusOption(nextIndex)
+    } else if(e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+      e.preventDefault()
+      const nextIndex = focusIndex === null ? 0 : focusIndex > 0 ? focusIndex - 1 : renderOptions.length - 1
+      focusOption(nextIndex)
     }
   }
 
@@ -107,11 +139,13 @@ const Select = forwardRef<SelectRef, Props>(function Select({
         </div>
         <div
           ref={popup}
+          role='dialog'
           className={createClasses({
             [styles['select__popup']]: true,
             [styles['select__popup--open']]: open,
             [styles['select__popup--hug-contents']]: popupHugContents
-          })}>
+          })}
+          onKeyDown={onPopupKeyDown}>
           <ul className={styles['option-list']}>
             {renderOptions.map((o, index) => (
               <li className={styles['option']} key={o.name}>
@@ -120,7 +154,8 @@ const Select = forwardRef<SelectRef, Props>(function Select({
                     [styles['option__button']]: true,
                     [styles['option__button--selected']]: renderValue?.name === o.name
                   })}
-                  onClick={() => handleChange({ index, selected: o.name })}>
+                  onClick={() => handleChange({ index, selected: o.name })}
+                  ref={(el) => optionElements.current[index] = el}>
                   {o.value}
                 </button>
               </li>
