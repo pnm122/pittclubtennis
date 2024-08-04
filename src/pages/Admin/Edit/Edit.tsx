@@ -156,6 +156,7 @@ export default function Edit() {
           />
           <Datepicker
             label='Test'
+            width='150px'
             value={datepickerValue}
             onChange={(date) => { console.log(date); setDatepickerValue(date); }}
             disabledDates={(d) => isWeekend(d)}

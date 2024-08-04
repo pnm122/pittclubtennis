@@ -120,6 +120,7 @@ export default function Datepicker({
             required={required}
             placeholder={placeholder}
             focusCalendar={focusCalendar}
+            width={width}
             ref={input}
           />
           <DatepickerPopup ref={popup} />

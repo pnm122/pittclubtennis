@@ -8,6 +8,7 @@ import styles from './Datepicker.module.css'
 interface Props {
   required?: boolean
   placeholder?: string
+  width?: string
   focusCalendar: (wait: boolean) => Promise<boolean>
 }
 
@@ -18,6 +19,7 @@ export interface DatepickerInputRef {
 const DatepickerInput = forwardRef<DatepickerInputRef, Props>(function DatepickerInput({
   required,
   placeholder,
+  width,
   focusCalendar
 }: Props, ref) {
   useImperativeHandle(ref, () => ({
@@ -79,7 +81,7 @@ const DatepickerInput = forwardRef<DatepickerInputRef, Props>(function Datepicke
   }
 
   return (
-    <div className={styles['datepicker-input']}>
+    <div className={styles['datepicker-input']} style={{...(width ? { width } : {})}}>
       <Input
         placeholder={placeholder ?? 'Choose a date'}
         value={inputValue}
