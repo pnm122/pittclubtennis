@@ -43,7 +43,6 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
   return (
     <div
       role='dialog'
-      aria-modal='true'
       aria-label='Datepicker dialog'
       className={createClasses({
         [styles['datepicker-popup']]: true,
