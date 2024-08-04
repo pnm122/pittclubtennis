@@ -7,12 +7,15 @@ import Select, { SelectRef } from "components/Select/Select"
 import Calendar, { CalendarRef } from "./Calendar"
 import { addMonths, getMonth, subMonths } from "date-fns"
 import waitFor from "utils/waitFor"
+import generateId from "utils/generateId"
 
 export interface PopupRef {
   focusCalendar: () => boolean
+  id: string
 }
 
 const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
+  const id = useRef(generateId())
   const { open, setOpen, value, focusInput } = useContext(DatepickerContext)
   const [month, setMonth] = useState(value ?? new Date())
   const calendar = useRef<CalendarRef>(null)
@@ -26,7 +29,8 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
         } else {
           return false
         }
-      }
+      },
+      id: id.current
     }
   }, [])
 
@@ -51,6 +55,7 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
     <div
       role='dialog'
       aria-label='Datepicker dialog'
+      id={id.current}
       className={createClasses({
         [styles['datepicker-popup']]: true,
         [styles['datepicker-popup--open']]: open

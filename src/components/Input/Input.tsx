@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
-import styles from './Input.module.css'
+import 'formElement.css'
 import createClasses from 'utils/createClasses'
 import Error from 'components/Error/Error'
 
@@ -54,22 +54,22 @@ const Input = forwardRef<InputRef, Props>(function Input({
   const input = useRef<HTMLInputElement>(null)
 
   const inputGroupClasses = createClasses({
-    [styles['input-group']]: true,
-    [styles['input-group--error']]: !!error
+    'form-elem': true,
+    'form-elem--error': !!error
   })
 
   return (
     <div className={inputGroupClasses} style={{...(width ? { width } : {})}}>
       {!!label && (
-        <label className={styles['input-group__label']} htmlFor={name}>
+        <label className={'form-elem__label'} htmlFor={name}>
           {label}
-          {required && <span className={styles['required-star']}>*</span>}
+          {required && <span className={'required-star'}>*</span>}
         </label>
       )}
       <input
         className={createClasses({
-          [styles['input-group__input']]: true,
-          [styles['input-group__input--borderless']]: !!borderless
+          'form-elem__main-control': true,
+          'form-elem__main-control--borderless': !!borderless
         })}
         value={value}
         name={name}

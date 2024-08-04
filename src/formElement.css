@@ -1,0 +1,66 @@
+.form-elem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+  min-width: 0;
+}
+
+.form-elem__label {
+  font-size: var(--text-sm);
+  color: var(--label);
+}
+
+.form-elem--error .form-elem__label {
+  color: var(--error);
+}
+
+.form-elem__main-control {
+  padding: 0 var(--size-md);
+  height: var(--control-height-medium);
+}
+
+.form-elem__main-control--borderless {
+  border: none;
+}
+
+.form-elem__main-control--borderless:focus {
+  outline: none;
+}
+
+.form-elem__main-control:not(.form-elem__main-control--borderless) {
+  border: 1px solid var(--border);
+  border-radius: var(--rounding-small);
+}
+
+.form-elem__main-control:not(.form-elem__main-control--borderless):focus,
+.form-elem__main-control:not(.form-elem__main-control--borderless):focus-within {
+  border-color: var(--primary);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless):focus,
+.form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless):focus-within {
+  border-color: var(--error);
+  outline: 2px solid var(--error);
+  outline-offset: 3px;
+}
+
+.form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless) {
+  border-color: var(--error);
+}
+
+.form-elem__main-control--no-padding {
+  padding: 0;
+}
+
+.required-star {
+  margin-left: var(--size-xs);
+  color: red;
+  font: inherit;
+}
+
+.form-elem__main-control *::placeholder,
+.main-control__placeholder {
+  color: var(--unselected);
+}

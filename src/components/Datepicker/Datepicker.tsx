@@ -3,7 +3,7 @@ import DatepickerInput, { DatepickerInputRef } from "./DatepickerInput"
 import DatepickerPopup, { PopupRef } from "./DatepickerPopup"
 import styles from './Datepicker.module.css'
 import createClasses from "utils/createClasses"
-import { MdError } from "react-icons/md"
+import 'formElement.css'
 import Error from "components/Error/Error"
 
 interface Props {
@@ -85,8 +85,8 @@ export default function Datepicker({
 
   const onBlur = (e: React.FocusEvent) => {
     const { relatedTarget } = e
-    const inPopup = relatedTarget?.closest(`.${styles['datepicker-popup']}`)
-    const inInput = relatedTarget?.closest(`.${styles['datepicker-input']}`)
+    const inPopup = relatedTarget?.closest(`#${popup.current!.id}`)
+    const inInput = relatedTarget?.closest(`#${input.current!.id}`)
     if(!(inPopup || inInput)) {
       setOpen(false)
     }
@@ -109,13 +109,13 @@ export default function Datepicker({
     <DatepickerContext.Provider value={ctx}>
       <div
         className={createClasses({
-          [styles['datepicker']]: true,
-          [styles['datepicker--error']]: !!error
+          'form-elem': true,
+          'form-elem--error': !!error
         })}
         ref={datepicker}
         onBlur={onBlur}>
         <div className={styles['datepicker__inner']}>
-          {label && <label className={styles['datepicker__label']}>{label}</label>}
+          {label && <label className='form-elem__label'>{label}</label>}
           <DatepickerInput
             required={required}
             placeholder={placeholder}

@@ -1,8 +1,10 @@
 import createClasses from 'utils/createClasses'
 import styles from './Select.module.css'
+import 'formElement.css'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { MdKeyboardArrowUp } from 'react-icons/md'
 import Error from 'components/Error/Error'
+import generateId from 'utils/generateId'
 
 interface Props {
   /** Optional label for the select. */
@@ -10,7 +12,7 @@ interface Props {
   /** Selectable values. Optional name can be provided, which will sent on change instead. */
   options: { value: string, name?: string }[]
   /** Index or item currently selected */
-  value?: string | number
+  value?: string | number | null
   /** Callback fired when an item is selected */
   onChange: ({ index, selected }: { index: number, selected: string }) => void
   /** Placeholder for the select. By default, it says "Select" */
@@ -41,6 +43,7 @@ const Select = forwardRef<SelectRef, Props>(function Select({
     focus
   }))
 
+  const id = useRef(generateId())
   const current = useRef<HTMLDivElement>(null)
   const popup = useRef<HTMLDivElement>(null)
   const optionElements = useRef<{ [index: number]: HTMLButtonElement | null }>({})
@@ -89,7 +92,7 @@ const Select = forwardRef<SelectRef, Props>(function Select({
 
   const onBlur = (e: React.FocusEvent) => {
     const { relatedTarget } = e
-    const inSelect = relatedTarget?.closest(`.${styles['select']}`)
+    const inSelect = relatedTarget?.closest(`#${id.current}`)
     if(!inSelect) {
       setOpen(false)
     }
@@ -112,18 +115,22 @@ const Select = forwardRef<SelectRef, Props>(function Select({
 
   return (
     <div
+      id={id.current}
       className={createClasses({
-        [styles['select']]: true,
-        [styles['select--error']]: !!error
+        'form-elem': true,
+        'form-elem--error': !!error
       })}
       onBlur={onBlur}
       style={{...(width ? { width }: {})}}>
-      {label && <label htmlFor={`select-${label}`} className={styles['select__label']}>{label}</label>}
+      {label && <label htmlFor={`select-${label}`} className='form-elem__label'>{label}</label>}
       <div className={styles['select__inner']}>
         <div
           ref={current}
           id={label ? `select-${label}` : undefined}
-          className={styles['select__current']}
+          className={createClasses({
+            [styles['select__current']]: true,
+            'form-elem__main-control': true
+          })}
           onClick={() => setOpen(!open)}
           onKeyDown={(e) => onCurrentKeyDown(e)}
           role='button'
@@ -131,7 +138,13 @@ const Select = forwardRef<SelectRef, Props>(function Select({
           aria-haspopup='listbox'
           aria-pressed={open}
           aria-description='Open select options popup'>
-          <span className={styles['current-value']}>{renderValue?.name ?? placeholder}</span>
+          <span
+            className={createClasses({
+              [styles['current-value']]: !!renderValue?.name,
+              'main-control__placeholder': !renderValue?.name
+            })}>
+            {renderValue?.name ?? placeholder}
+          </span>
           <MdKeyboardArrowUp className={createClasses({
             [styles['select__arrow']]: true,
             [styles['select__arrow--flipped']]: open

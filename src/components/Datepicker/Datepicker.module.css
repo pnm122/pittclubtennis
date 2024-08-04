@@ -1,9 +1,3 @@
-.datepicker {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-sm);
-}
-
 .datepicker__inner {
   position: relative;
   display: flex;
@@ -11,35 +5,9 @@
   gap: var(--size-sm);
 }
 
-.datepicker__label {
-  font-size: var(--text-sm);
-  color: var(--label);
-}
-
-.datepicker--error .datepicker__label {
-  color: var(--error);
-}
-
-.datepicker--error .datepicker-input {
-  border-color: var(--error);
-}
-
-.datepicker--error .datepicker-input:focus-within {
-  border-color: var(--error);
-  outline-color: var(--error);
-}
-
 .datepicker-input {
   display: flex;
   align-items: center;
-  border: 1px solid var(--border);
-  border-radius: var(--rounding-small);
-}
-
-.datepicker-input:focus-within {
-  border: 1px solid var(--primary);
-  outline: 2px auto var(--primary);
-  outline-offset: 3px;
 }
 
 .datepicker-input__button {

@@ -4,6 +4,9 @@ import { DatepickerContext } from './Datepicker'
 import { formatDate } from 'date-fns'
 import { MdCalendarToday } from 'react-icons/md'
 import styles from './Datepicker.module.css'
+import 'formElement.css'
+import createClasses from 'utils/createClasses'
+import generateId from 'utils/generateId'
 
 interface Props {
   required?: boolean
@@ -14,6 +17,7 @@ interface Props {
 
 export interface DatepickerInputRef {
   focus: () => void
+  id: string
 }
 
 const DatepickerInput = forwardRef<DatepickerInputRef, Props>(function DatepickerInput({
@@ -22,10 +26,13 @@ const DatepickerInput = forwardRef<DatepickerInputRef, Props>(function Datepicke
   width,
   focusCalendar
 }: Props, ref) {
+  const id = useRef(generateId())
+
   useImperativeHandle(ref, () => ({
     focus() {
       input.current?.focus()
-    }
+    },
+    id: id.current
   }))
 
   const formatValue = (value: string | Date | null): string | null => {
@@ -81,7 +88,14 @@ const DatepickerInput = forwardRef<DatepickerInputRef, Props>(function Datepicke
   }
 
   return (
-    <div className={styles['datepicker-input']} style={{...(width ? { width } : {})}}>
+    <div
+      id={id.current}
+      className={createClasses({
+        [styles['datepicker-input']]: true,
+        'form-elem__main-control': true,
+        'form-elem__main-control--no-padding': true
+      })}
+      style={{...(width ? { width } : {})}}>
       <Input
         placeholder={placeholder ?? 'Choose a date'}
         value={inputValue}

@@ -5,7 +5,7 @@ import createClasses from 'utils/createClasses'
 import { getRoleColors } from 'utils/getRoleColors'
 import { IoMdCheckmark } from 'react-icons/io'
 import Drawer from 'components/Drawer/Drawer'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import DrawerContent from 'components/Drawer/DrawerContent'
 import { AdminMemberDrawer } from 'types/AdminMembers'
@@ -124,7 +124,7 @@ export default function Edit() {
   }, {
     value: 'last'
   }]
-  const [selectValue, setSelectValue] = useState(0)
+  const [selectValue, setSelectValue] = useState<number | null>(null)
 
   const [datepickerValue, setDatepickerValue] = useState<Date | null>(null)
 
@@ -147,15 +147,23 @@ export default function Edit() {
         </DrawerContent>
       </Drawer>
       <div className='container'>
-        <div style={{ paddingTop: '24px' }}>
+        <div style={{ paddingTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <Input
+            label='Input'
+            value=''
+            name='input'
+            onChange={() => {}}
+            width='150px'
+          />
           <Select
             options={selectOptions}
             value={selectValue}
             onChange={({ index }) => setSelectValue(index)}
             width='150px'
+            label='Select'
           />
           <Datepicker
-            label='Test'
+            label='Datepicker'
             width='150px'
             value={datepickerValue}
             onChange={(date) => { console.log(date); setDatepickerValue(date); }}
