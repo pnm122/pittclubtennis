@@ -6,6 +6,7 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md"
 import Select, { SelectRef } from "components/Select/Select"
 import Calendar, { CalendarRef } from "./Calendar"
 import { addMonths, getMonth, subMonths } from "date-fns"
+import waitFor from "utils/waitFor"
 
 export interface PopupRef {
   focusCalendar: () => boolean
@@ -40,6 +41,12 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
     }
   }
 
+  const setMonthAndInitFocusedDate = async (newMonth: Date) => {
+    setMonth(newMonth)
+    await waitFor(() => month === newMonth)
+    calendar.current?.initFocusedDate()
+  }
+
   return (
     <div
       role='dialog'
@@ -53,19 +60,19 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
         <button
           aria-label='Previous month'
           className={`${styles['popup-header__button']} with-hover-circle`}
-          onClick={() => setMonth(subMonths(month, 1))}>
+          onClick={() => setMonthAndInitFocusedDate(subMonths(month, 1))}>
           <MdArrowBack />
         </button>
         <Select
           options={months.map(m => ({ value: m }))}
           value={getMonth(month)}
-          onChange={({ selected }) => setMonth(new Date(`${selected} ${month.getFullYear()}`))}
+          onChange={({ selected }) => setMonthAndInitFocusedDate(new Date(`${selected} ${month.getFullYear()}`))}
           width='120px'
         />
         <button
           aria-label='Next month'
           className={`${styles['popup-header__button']} with-hover-circle`}
-          onClick={() => setMonth(addMonths(month, 1))}>
+          onClick={() => setMonthAndInitFocusedDate(addMonths(month, 1))}>
           <MdArrowForward />
         </button>
       </div>

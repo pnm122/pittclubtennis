@@ -13,6 +13,7 @@ interface Props {
 
 export interface CalendarRef {
   focus: () => Promise<boolean>
+  initFocusedDate: () => void
 }
 
 const Calendar = forwardRef<CalendarRef, Props>(function Calendar({
@@ -21,7 +22,8 @@ const Calendar = forwardRef<CalendarRef, Props>(function Calendar({
 }: Props, ref) {
   useImperativeHandle(ref, () => {
     return {
-      focus
+      focus,
+      initFocusedDate
     }
   })
 

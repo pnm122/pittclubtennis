@@ -154,8 +154,10 @@
   background-color: transparent !important;
 }
 
-.day--disabled.day--focused::before {
+.calendar:focus .day--disabled.day--focused::before,
+.day--disabled.day--selected::before {
   background-color: var(--unselected) !important;
+  opacity: 0.15 !important;
 }
 
 .calendar:focus .day--focused:not(.day--selected)::before {
