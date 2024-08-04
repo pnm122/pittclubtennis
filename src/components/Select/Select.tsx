@@ -1,6 +1,6 @@
 import createClasses from 'utils/createClasses'
 import styles from './Select.module.css'
-import { useRef, useState } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { MdKeyboardArrowUp } from 'react-icons/md'
 import Error from 'components/Error/Error'
 
@@ -23,7 +23,11 @@ interface Props {
   popupHugContents?: boolean
 }
 
-export default function Select({
+export interface SelectRef {
+  focus: () => void
+}
+
+const Select = forwardRef<SelectRef, Props>(function Select({
   label,
   options,
   value,
@@ -32,7 +36,13 @@ export default function Select({
   error,
   width,
   popupHugContents = false
-}: Props) {
+}: Props, ref) {
+  useImperativeHandle(ref, () => ({
+    focus() {
+      current.current?.focus()
+    }
+  }))
+
   const current = useRef<HTMLDivElement>(null)
   const popup = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
@@ -112,4 +122,6 @@ export default function Select({
       {error && <Error>{error}</Error>}
     </div>
   )
-}
+})
+
+export default Select

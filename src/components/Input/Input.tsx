@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import styles from './Input.module.css'
 import createClasses from 'utils/createClasses'
 import Error from 'components/Error/Error'
@@ -16,13 +16,18 @@ interface Props {
   onBeforeInput?: React.FormEventHandler<HTMLInputElement>
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
+  onClick?: React.MouseEventHandler<HTMLInputElement>
   error?: string
   required?: boolean
   borderless?: boolean
   width?: string
 }
 
-export default function Input({
+export interface InputRef {
+  focus: () => void
+}
+
+const Input = forwardRef<InputRef, Props>(function Input({
   placeholder,
   label,
   type,
@@ -34,11 +39,20 @@ export default function Input({
   onBeforeInput,
   onKeyDown,
   onBlur,
+  onClick,
   error,
   required,
   borderless,
   width
-}: Props) {
+}: Props, ref) {
+  useImperativeHandle(ref, () => ({
+    focus() {
+      input.current?.focus()
+    }
+  }))
+
+  const input = useRef<HTMLInputElement>(null)
+
   const inputGroupClasses = createClasses({
     [styles['input-group']]: true,
     [styles['input-group--error']]: !!error
@@ -67,9 +81,13 @@ export default function Input({
         onFocus={(e) => onFocus && onFocus(e)}
         onKeyDown={(e) => onKeyDown && onKeyDown(e)}
         onBlur={(e) => onBlur && onBlur(e)}
+        onClick={(e) => onClick && onClick(e)}
         required={required}
+        ref={input}
       />
       {!!error && <Error>{error}</Error>}
     </div>
   )
-}
+})
+
+export default Input
