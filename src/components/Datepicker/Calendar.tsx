@@ -79,6 +79,9 @@ const Calendar = forwardRef<CalendarRef, Props>(function Calendar({
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if(!focusedDate) return
+    if(['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown', 'Enter'].includes(e.key)) {
+      e.preventDefault()
+    }
     if(e.key === 'ArrowRight') {
       updateFocusedDate(addDays(focusedDate, 1))
     } else if(e.key === 'ArrowLeft') {
