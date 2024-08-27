@@ -14,6 +14,7 @@ import MemberDrawer from '../Members/MemberDrawer'
 import Select from 'components/Select/Select'
 import Datepicker from 'components/Datepicker/Datepicker'
 import { isWeekend } from 'date-fns'
+import FileDropper, { FileDropperRef } from 'components/FileDropper/FileDropper'
 
 export default function Edit() {
   const [open, setOpen] = useState(false)
@@ -128,6 +129,8 @@ export default function Edit() {
 
   const [datepickerValue, setDatepickerValue] = useState<Date | null>(null)
 
+  const fileDropper = useRef<FileDropperRef>(null)
+
   return (
     <>
       <Drawer
@@ -151,6 +154,7 @@ export default function Edit() {
           <Input
             label='Input'
             value=''
+            placeholder='Placeholder...'
             name='input'
             onChange={() => {}}
             width='150px'
@@ -168,6 +172,17 @@ export default function Edit() {
             value={datepickerValue}
             onChange={(date) => { console.log(date); setDatepickerValue(date); }}
             disabledDates={(d) => isWeekend(d)}
+          />
+          <FileDropper
+            acceptedFileTypes={['image/png', 'image/jpeg']}
+            name='file-dropper'
+            label='File Dropper'
+            onFileError={(error) => console.log(error)}
+            onChange={async () => {
+              // const data = await fileDropper.current?.getFileData()
+            }}
+            maxFileSize={1024 * 1024 * 4}
+            ref={fileDropper}
           />
         </div>
         <div style={{overflow: 'auto', marginTop: '16px'}}>
