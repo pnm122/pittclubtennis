@@ -11,7 +11,7 @@
 }
 
 .form-elem--error .form-elem__label {
-  color: var(--error);
+  color: var(--negative);
 }
 
 .form-elem__main-control {
@@ -41,13 +41,13 @@
 
 .form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless):focus,
 .form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless):focus-within {
-  border-color: var(--error);
-  outline: 2px solid var(--error);
+  border-color: var(--negative);
+  outline: 2px solid var(--negative);
   outline-offset: 3px;
 }
 
 .form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless) {
-  border-color: var(--error);
+  border-color: var(--negative);
 }
 
 .form-elem__main-control--no-padding {
@@ -60,6 +60,7 @@
   font: inherit;
 }
 
+.form-elem__main-control::placeholder,
 .form-elem__main-control *::placeholder,
 .main-control__placeholder {
   color: var(--unselected);

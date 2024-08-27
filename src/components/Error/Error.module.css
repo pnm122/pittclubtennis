@@ -18,7 +18,7 @@
 
 .error__icon,
 .error__inner {
-  color: var(--error);
+  color: var(--negative);
 }
 
 .error__icon {
