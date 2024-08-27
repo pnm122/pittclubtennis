@@ -9,8 +9,8 @@ import generateId from 'utils/generateId'
 interface Props {
   /** Optional label for the select. */
   label?: string
-  /** Selectable values. Optional name can be provided, which will sent on change instead. */
-  options: { value: string, name?: string }[]
+  /** Selectable values. Optional name can be provided, which will sent on change instead of the value, which is displayed to the user. */
+  options: string[] | { value: string, name: string }[]
   /** Index or item currently selected */
   value?: string | number | null
   /** Callback fired when an item is selected */
@@ -23,6 +23,10 @@ interface Props {
   width?: string
   /** Whether the popup should hug its contents or match the width of the select control. Defaults to false. */
   popupHugContents?: boolean
+  /**
+   * Whether the select is required.
+   */
+  required?: boolean
 }
 
 export interface SelectRef {
@@ -37,7 +41,8 @@ const Select = forwardRef<SelectRef, Props>(function Select({
   placeholder = 'Select',
   error,
   width,
-  popupHugContents = false
+  popupHugContents = false,
+  required
 }: Props, ref) {
   useImperativeHandle(ref, () => ({
     focus
@@ -50,7 +55,7 @@ const Select = forwardRef<SelectRef, Props>(function Select({
   const [open, setOpen] = useState(false)
   const [focusIndex, setFocusIndex] = useState<number | null>(null)
 
-  const renderOptions = options.map(o => ({ value: o.value, name: o.name ?? o.value }))
+  const renderOptions = options.map(o => (typeof o === 'string' ? { value: o, name: o } : { value: o.value, name: o.name ?? o.value }))
   const renderValue =
     typeof value === 'number'
       ? renderOptions[value]
@@ -122,7 +127,12 @@ const Select = forwardRef<SelectRef, Props>(function Select({
       })}
       onBlur={onBlur}
       style={{...(width ? { width }: {})}}>
-      {label && <label htmlFor={`select-${label}`} className='form-elem__label'>{label}</label>}
+      {!!label && (
+        <label className={'form-elem__label'}>
+          {label}
+          {required && <span className={'required-star'}>*</span>}
+        </label>
+      )}
       <div className={styles['select__inner']}>
         <div
           ref={current}
