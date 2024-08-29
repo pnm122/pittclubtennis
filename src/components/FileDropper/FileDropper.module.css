@@ -54,17 +54,27 @@
   align-items: center;
   gap: var(--size-sm);
   color: var(--primary);
+  min-width: 0;
 }
 
 .file-dropper--error .file-dropper__filename {
   color: var(--negative);
 }
 
+.file-dropper__filename svg {
+  min-width: 1em;
+}
+
 .file-dropper__filename span {
   color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .file-dropper__delete {
   width: 24px;
+  height: 24px;
+  min-width: 24px;
   height: 24px;
 }
