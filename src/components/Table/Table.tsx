@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Column, Row, UnionFromRecord } from "types/Table"
 import { TiArrowUnsorted, TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import createClasses from "utils/createClasses"
@@ -48,6 +48,12 @@ export default function Table<T extends Row>({
   const [sortedBy, setSortedBy] = useState<SortedBy>({})
   // Selected row keys
   const [selected, setSelected] = useState<(T['key'])[]>([])
+
+  useEffect(() => {
+    setRows(data)
+    setSortedBy({})
+    setSelected([])
+  }, [data])
 
   const getColumn = (key: string) => {
     return columns.find(c => c.key === key)
@@ -238,7 +244,13 @@ export default function Table<T extends Row>({
                           e.stopPropagation()
                           handleSelect(row)
                         }}
-                        onKeyDown={({ key }) => (key === 'Enter' || key === ' ') && handleSelect(row)}
+                        onKeyDown={(e) => {
+                          if(e.key === 'Enter' || e.key === ' ') {
+                            e.stopPropagation()
+                            e.preventDefault()
+                            handleSelect(row)
+                          }
+                        }}
                       />
                     </div>
                   </td>
