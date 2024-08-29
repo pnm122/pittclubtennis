@@ -1,0 +1,24 @@
+.member-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xl);
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-md);
+}
+
+.preview__title {
+  font-size: var(--text-lg);
+  color: var(--label);
+  margin-top: var(--size-xl);
+}
+
+.member-drawer__actions {
+  display: flex;
+  gap: var(--size-lg);
+  padding-top: var(--size-xl);
+  border-top: 1px solid var(--border);
+}

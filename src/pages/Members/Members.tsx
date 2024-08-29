@@ -59,7 +59,7 @@ export default function Members() {
   )
 }
 
-const Member = ({ name, role, year, imgSrc } : MemberType) => {
+export const Member = ({ name, role, year, imgSrc } : MemberType) => {
   return (
     <div className={styles['member']}>
       { imgSrc ? <img src={imgSrc} alt={name} /> : <img src={'images/no-image-silhouette.png'} alt={'Tennis Player Silhouette'} /> }

@@ -1,4 +1,4 @@
 export interface AdminMemberDrawer {
-  data: MemberType,
+  data: MemberType
   type: 'edit' | 'add'
 }

@@ -118,22 +118,22 @@ export default function Edit() {
     setOpen(true)
   }
 
-  const selectOptions = [{
-    value: 'test'
-  }, {
-    value: 'another'
-  }, {
-    value: 'last'
-  }]
+  const selectOptions = ['test', 'another', 'last']
   const [selectValue, setSelectValue] = useState<number | null>(null)
 
   const [datepickerValue, setDatepickerValue] = useState<Date | null>(null)
+  const [file, setFile] = useState<File | null>(null)
 
   const fileDropper = useRef<FileDropperRef>(null)
+
+  function closeDrawer(showWarning: boolean) {
+    setOpen(false)
+  }
 
   return (
     <>
       <Drawer
+        size={350}
         orientation='right'
         open={open}
         onBackdropClicked={() => setOpen(false)}>
@@ -144,7 +144,7 @@ export default function Edit() {
         <DrawerContent>
           {drawerData && (
             <>
-              <MemberDrawer {...drawerData} />
+              <MemberDrawer {...drawerData} closeDrawer={closeDrawer} />
             </>
           )}
         </DrawerContent>
@@ -178,7 +178,9 @@ export default function Edit() {
             name='file-dropper'
             label='File Dropper'
             onFileError={(error) => console.log(error)}
-            onChange={async () => {
+            value={file}
+            onChange={async (f) => {
+              setFile(f)
               // const data = await fileDropper.current?.getFileData()
             }}
             maxFileSize={1024 * 1024 * 4}
