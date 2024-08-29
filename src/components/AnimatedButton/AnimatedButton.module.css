@@ -73,6 +73,11 @@
   --link-color: white;
 }
 
+.link--ghost {
+  --link-bg: var(--button-ghost);
+  --link-color: black;
+}
+
 .link--primary[aria-disabled=true], 
 .link--secondary[aria-disabled=true] {
   --link-bg: var(--on-bg10);
