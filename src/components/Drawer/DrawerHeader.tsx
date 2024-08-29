@@ -22,7 +22,8 @@ export default function DrawerHeader({
     <div className={headerClasses}>
       <h1 className={styles["drawer-header__title"]}>{title}</h1>
       <button
-        className={styles["drawer-header__close"]}
+        aria-label='Close drawer'
+        className={`${styles["drawer-header__close"]} with-hover-circle`}
         onClick={() => onClose && onClose()}>
         <MdClose />
       </button>
