@@ -67,6 +67,7 @@ export default function MemberDrawerContent({
   const [inputs, dispatch] = useReducer(reducer, getStateFromProps({ data, type }))
   // URL to use as image source
   const [image, setImage] = useState<string | null>(null)
+  const [imageError, setImageError] = useState<string | null>(null)
 
   useEffect(() => {
     if(open) {
@@ -88,7 +89,11 @@ export default function MemberDrawerContent({
   }, [inputs.image])
 
   function handleFileUploadError(error: FileError) {
-
+    if(error.type === 'size') {
+      setImageError('Image must be less than 2 MB')
+    } else {
+      setImageError('File must be an image')
+    }
   }
 
   return (
@@ -142,9 +147,14 @@ export default function MemberDrawerContent({
         label='Image (max. size 2MB)'
         name='image-drop'
         acceptedFileTypes={['image/png', 'image/jpeg']}
+        maxFileSize={0.25 * 1024 * 1024}
         onFileError={handleFileUploadError}
+        error={imageError ?? undefined}
         value={inputs.image?.source === 'firebase' ? new File([], 'Uploaded image') : inputs.image?.source === 'local' ? inputs.image.data : null}
-        onChange={file => dispatch({ type: 'image', data: { source: 'local', data: file } })}
+        onChange={file => {
+          dispatch({ type: 'image', data: { source: 'local', data: file } })
+          setImageError(null)
+        }}
         ref={imageFileDropper}
       />
       <div className={styles['preview']}>
