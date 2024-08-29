@@ -1,161 +1,106 @@
-import Input from "components/Input/Input";
-import Select from "components/Select/Select";
-import { useEffect, useReducer, useRef, useState } from "react";
-import { AdminMemberDrawer } from "types/AdminMembers";
-import styles from './Members.module.css';
-import FileDropper, { FileDropperRef, FileError } from "components/FileDropper/FileDropper";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { Member } from "pages/Members/Members";
-import AnimatedButton from "components/AnimatedButton/AnimatedButton";
+import Drawer from 'components/Drawer/Drawer'
+import styles from './Members.module.css'
+import DrawerHeader from 'components/Drawer/DrawerHeader'
+import DrawerContent from 'components/Drawer/DrawerContent'
+import MemberDrawerContent from './MemberDrawerContent'
+import Popup from 'components/Popup/Popup'
+import { forwardRef, useImperativeHandle, useState } from 'react'
+import { AdminMemberDrawer } from 'types/AdminMembers'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
+import { MdWarning } from "react-icons/md"
 
-type Props = AdminMemberDrawer & { closeDrawer: (showWarning: boolean) => void }
+export interface MemberDrawerRef {
+  open: (data: AdminMemberDrawer) => void
+}
 
-export default function MemberDrawer({
-  data,
-  type,
-  closeDrawer
-}: Props) {
-  interface DrawerState {
-    name: string,
-    year: MemberYear,
-    role: string,
-    image: {
-      source: 'firebase',
-      data: string
-    } | {
-      source: 'local',
-      data: File | null
-    }
+let warningPromiseResolve: (close: boolean) => void
+
+const MemberDrawer = forwardRef<MemberDrawerRef>(({
+
+}, ref) => {
+  const [drawerData, setDrawerData] = useState<AdminMemberDrawer | null>(null)
+  // Track if the drawer has been edited to show a warning when trying to close the drawer
+  const [drawerEdited, setDrawerEdited] = useState(false)
+  const [showWarning, setShowWarning] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+
+  function open(data: AdminMemberDrawer) {
+    setDrawerData(data)
+    setIsOpen(true)
   }
 
-  const getStateFromProps = ({ data: { name, year, role, imgSrc } }: AdminMemberDrawer): DrawerState => {
-    return {
-      name,
-      year,
-      role: role ?? 'None',
-      image: imgSrc
-        ? { source: 'firebase', data: imgSrc }
-        : { source: 'local', data: null }
-    }
-  }
+  useImperativeHandle(ref, () => ({
+    open
+  }))
+
   
-  const reducer = (inputs: DrawerState, action: { type: keyof DrawerState | 'reset', data?: DrawerState[keyof DrawerState] }) => {
-    switch(action.type) {
-      case 'reset':
-        return getStateFromProps({ data, type })
-      case 'name':
-      case 'year':
-      case 'role':
-      case 'image':
-        return {
-          ...inputs,
-          [action.type]: action.data
-        }
-      default:
-        return inputs
+  async function closeDrawer() {
+    if(drawerEdited) {
+      setShowWarning(true)
+      const shouldCloseDrawer = await new Promise<boolean>(res => warningPromiseResolve = res)
+      if(shouldCloseDrawer) {
+        setIsOpen(false)
+        setDrawerEdited(false)
+      }
+      setShowWarning(false)
+      return
     }
-  }
 
-  const imageFileDropper = useRef<FileDropperRef>(null)
-  const [inputs, dispatch] = useReducer(reducer, getStateFromProps({ data, type }))
-  // URL to use as image source
-  const [image, setImage] = useState<string | null>(null)
-
-  useEffect(() => {
-    dispatch({ type: 'reset' })
-  }, [data])
-
-  useEffect(() => {
-    if(inputs.image.source === 'local' && inputs.image.data) {
-      setImage(URL.createObjectURL(inputs.image.data))
-    } else if(inputs.image.source === 'firebase') {
-      // getDownloadURL(ref(getStorage(), inputs.image.data)).then(res => {
-      //   setImage(res)
-      // })
-    } else {
-      setImage(null)
-    }
-  }, [inputs.image])
-
-  function handleFileUploadError(error: FileError) {
-
+    setIsOpen(false)
+    setDrawerEdited(false)
   }
 
   return (
-    <div className={styles['member-drawer']}>
-      <Input
-        name='name'
-        value={inputs.name}
-        label='Name'
-        required
-        onChange={e => dispatch({ type: 'name', data: e.target.value })}
-      />
-      <Select
-        label='Year'
-        options={[{
-          value: 'Freshman',
-          name: 'freshman'
-        }, {
-          value: 'Sophomore',
-          name: 'sophomore'
-        }, {
-          value: 'Junior',
-          name: 'junior'
-        }, {
-          value: 'Senior',
-          name: 'senior'
-        }, {
-          value: 'Graduate Student',
-          name: 'graduate student'
-        }]}
-        value={inputs.year}
-        onChange={({ selected }) => dispatch({ type: 'year', data: selected })}
-        required
-      />
-      <Select
-        label='Role'
-        options={[
-          'None',
-          'President',
-          'Vice President',
-          'Business Manager',
-          'Logistics Manager',
-          'Social Chair',
-          'Fundraising Chair',
-          'Fundraising Committee'
-        ]}
-        value={inputs.role}
-        onChange={({ selected }) => dispatch({ type: 'role', data: selected })}
-        required
-      />
-      <FileDropper
-        label='Image (max. size 2MB)'
-        name='image-drop'
-        acceptedFileTypes={['image/png', 'image/jpeg']}
-        onFileError={handleFileUploadError}
-        value={inputs.image?.source === 'firebase' ? new File([], 'Uploaded image') : inputs.image?.source === 'local' ? inputs.image.data : null}
-        onChange={file => dispatch({ type: 'image', data: { source: 'local', data: file } })}
-        ref={imageFileDropper}
-      />
-      <div className={styles['preview']}>
-        <h3 className={styles['preview__title']}>Preview</h3>
-        <Member
-          name={inputs.name}
-          role={inputs.role === 'None' ? undefined : inputs.role}
-          year={inputs.year}
-          imgSrc={image ?? undefined}
+    <>
+      <Drawer
+        size={350}
+        orientation='right'
+        open={isOpen}
+        onBackdropClicked={closeDrawer}>
+        <DrawerHeader
+          title={drawerData?.type === 'add' ? 'Add Member' : 'Edit Member'}
+          onClose={closeDrawer}
         />
-      </div>
-      <div className={styles['member-drawer__actions']}>
-        <AnimatedButton
-          text={'Save'}
-        />
-        <AnimatedButton
-          text={'Cancel'}
-          style='ghost'
-          onClick={() => closeDrawer(false)}
-        />
-      </div>
-    </div>
+        <DrawerContent>
+          {drawerData && (
+            <>
+              <MemberDrawerContent
+                {...drawerData}
+                closeDrawer={closeDrawer}
+                onEdited={() => setDrawerEdited(true)}
+              />
+            </>
+          )}
+        </DrawerContent>
+      </Drawer>
+      <Popup
+        open={showWarning}
+      >
+        <div className={styles['popup']}>
+          <div className={styles['popup__warning-label']}>
+            <MdWarning />
+            <span>Warning</span>
+          </div>
+          <div className={styles['popup__body']}>
+            <h1 className={styles['popup__title']}>You have unsaved changes!</h1>
+            <p>Are you sure you want to cancel editing? This action cannot be undone.</p>
+            <div className={styles['popup__actions']}>
+              <AnimatedButton
+                text='Delete changes'
+                style='negative'
+                onClick={() => warningPromiseResolve(true)}
+              />
+              <AnimatedButton
+                text='Keep editing'
+                style='ghost'
+                onClick={() => warningPromiseResolve(false)}
+              />
+            </div>
+          </div>
+        </div>
+      </Popup>
+    </>
   )
-}
+})
+
+export default MemberDrawer

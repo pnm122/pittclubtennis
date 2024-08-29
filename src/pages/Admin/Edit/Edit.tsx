@@ -4,21 +4,17 @@ import { Column } from 'types/Table'
 import createClasses from 'utils/createClasses'
 import { getRoleColors } from 'utils/getRoleColors'
 import { IoMdCheckmark } from 'react-icons/io'
-import Drawer from 'components/Drawer/Drawer'
 import { useRef, useState } from 'react'
-import DrawerHeader from 'components/Drawer/DrawerHeader'
-import DrawerContent from 'components/Drawer/DrawerContent'
 import { AdminMemberDrawer } from 'types/AdminMembers'
 import Input from 'components/Input/Input'
-import MemberDrawer from '../Members/MemberDrawer'
 import Select from 'components/Select/Select'
 import Datepicker from 'components/Datepicker/Datepicker'
 import { isWeekend } from 'date-fns'
 import FileDropper, { FileDropperRef } from 'components/FileDropper/FileDropper'
+import MemberDrawer, { MemberDrawerRef } from '../Members/MemberDrawer'
 
 export default function Edit() {
-  const [open, setOpen] = useState(false)
-  const [drawerData, setDrawerData] = useState<AdminMemberDrawer | null>(null)
+  const memberDrawer = useRef<MemberDrawerRef>(null)
 
   type RowData = Readonly<MemberType & { key: any }>
   
@@ -111,11 +107,10 @@ export default function Edit() {
   }]
 
   const openEditDrawer = (row: RowData) => {
-    setDrawerData({
+    memberDrawer.current?.open({
       data: row,
       type: 'edit'
     })
-    setOpen(true)
   }
 
   const selectOptions = ['test', 'another', 'last']
@@ -126,29 +121,11 @@ export default function Edit() {
 
   const fileDropper = useRef<FileDropperRef>(null)
 
-  function closeDrawer(showWarning: boolean) {
-    setOpen(false)
-  }
-
   return (
     <>
-      <Drawer
-        size={350}
-        orientation='right'
-        open={open}
-        onBackdropClicked={() => setOpen(false)}>
-        <DrawerHeader
-          title={drawerData?.type === 'add' ? 'Add Member' : 'Edit Member'}
-          onClose={() => setOpen(false)}
-        />
-        <DrawerContent>
-          {drawerData && (
-            <>
-              <MemberDrawer {...drawerData} closeDrawer={closeDrawer} />
-            </>
-          )}
-        </DrawerContent>
-      </Drawer>
+      <MemberDrawer
+        ref={memberDrawer}
+      />
       <div className='container'>
         <div style={{ paddingTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <Input
