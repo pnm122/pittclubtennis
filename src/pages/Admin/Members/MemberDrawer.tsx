@@ -66,13 +66,22 @@ const MemberDrawer = forwardRef<MemberDrawerRef>(({
             <>
               <MemberDrawerContent
                 {...drawerData}
-                closeDrawer={closeDrawer}
                 onEdited={() => setDrawerEdited(true)}
                 open={isOpen}
               />
             </>
           )}
         </DrawerContent>
+        <div className={styles['member-drawer__actions']}>
+          <AnimatedButton
+            text={'Save'}
+          />
+          <AnimatedButton
+            text={'Cancel'}
+            style='ghost'
+            onClick={() => closeDrawer()}
+          />
+        </div>
       </Drawer>
       <Popup
         open={showWarning}

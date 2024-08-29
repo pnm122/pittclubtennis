@@ -19,7 +19,7 @@
 .member-drawer__actions {
   display: flex;
   gap: var(--size-lg);
-  padding-top: var(--size-xl);
+  padding: var(--size-xl);
   border-top: 1px solid var(--border);
 }
 

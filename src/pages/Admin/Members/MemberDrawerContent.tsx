@@ -9,7 +9,6 @@ import { Member } from "pages/Members/Members";
 import AnimatedButton from "components/AnimatedButton/AnimatedButton";
 
 type Props = AdminMemberDrawer & {
-  closeDrawer: () => void,
   onEdited: () => void,
   open: boolean
 }
@@ -17,7 +16,6 @@ type Props = AdminMemberDrawer & {
 export default function MemberDrawerContent({
   data,
   type,
-  closeDrawer,
   onEdited,
   open
 }: Props) {
@@ -164,16 +162,6 @@ export default function MemberDrawerContent({
           role={inputs.role === 'None' ? undefined : inputs.role}
           year={inputs.year}
           imgSrc={image ?? undefined}
-        />
-      </div>
-      <div className={styles['member-drawer__actions']}>
-        <AnimatedButton
-          text={'Save'}
-        />
-        <AnimatedButton
-          text={'Cancel'}
-          style='ghost'
-          onClick={() => closeDrawer()}
         />
       </div>
     </div>
