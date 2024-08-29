@@ -153,7 +153,7 @@ const Select = forwardRef<SelectRef, Props>(function Select({
               [styles['current-value']]: !!renderValue?.name,
               'main-control__placeholder': !renderValue?.name
             })}>
-            {renderValue?.name ?? placeholder}
+            {renderValue?.value ?? placeholder}
           </span>
           <MdKeyboardArrowUp className={createClasses({
             [styles['select__arrow']]: true,
