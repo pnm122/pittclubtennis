@@ -1,0 +1,41 @@
+body:has(.popup--open) {
+  overflow: hidden;
+}
+
+.popup-backdrop {
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-short),
+    visibility var(--transition-short);
+}
+
+.popup-backdrop--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup {
+  --drawer-padding: var(--size-xl);
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition:
+    opacity var(--transition-short),
+    visibility var(--transition-short);
+}
+
+.popup--open {
+  opacity: 1;
+  visibility: visible;
+}
