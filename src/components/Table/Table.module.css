@@ -2,8 +2,11 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
-  overflow: hidden;
   border-radius: var(--rounding);
+}
+
+.table:not(.table--loading) {
+  overflow: hidden;
 }
 
 .table__header {
@@ -49,6 +52,20 @@
 .table__row--clickable:not(.table__row--selected):focus-visible {
   background-color: var(--hovered);
   outline: none;
+}
+
+.table__row--no-data {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  color: var(--unselected);
+  display: flex;
+  align-items: center;
+}
+
+.table__row--no-data span {
+  color: inherit;
+  font-size: inherit;
 }
 
 .header-item,
@@ -124,4 +141,8 @@
 .header-actions {
   margin-left: auto;
   gap: 8px;
+}
+
+.table__loader {
+  display: block;
 }

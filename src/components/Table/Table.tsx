@@ -5,6 +5,8 @@ import createClasses from "utils/createClasses"
 import styles from "./Table.module.css"
 import AnimatedButton from "components/AnimatedButton/AnimatedButton"
 import { MdArrowForward } from "react-icons/md";
+import { BsDatabaseFillSlash } from "react-icons/bs";
+import HorizontalLoader from "components/HorizontalLoader/HorizontalLoader"
 
 interface Action<T extends Row> {
   sentiment: 'positive' | 'neutral' | 'negative'
@@ -13,6 +15,7 @@ interface Action<T extends Row> {
 }
 
 interface Props<T extends Row> {
+  loading?: boolean
   data: T[]
   columns: Column<T>[]
   // For each key, make an object with a key of that name and the type for that key, then index by the original keys
@@ -24,6 +27,7 @@ interface Props<T extends Row> {
 }
 
 export default function Table<T extends Row>({
+  loading,
   data,
   columns,
   renderMap,
@@ -99,13 +103,16 @@ export default function Table<T extends Row>({
   }
 
   return (
-    <table className={styles["table"]}>
+    <table className={createClasses({
+      [styles["table"]]: true,
+      [styles["table--loading"]]: !!loading
+    })}>
       <thead>
         <tr className={createClasses({
           [styles["table__header"]]: true,
           [styles["table__header--selected"]]: !!selectable && selected.length !== 0
         })}>
-          {!!selectable && (
+          {!!selectable && rows.length > 0 && (
             <td
               className={createClasses({
                 [styles['header-item--checkbox']]: true,
@@ -124,7 +131,7 @@ export default function Table<T extends Row>({
               </div>
             </td>
           )}
-          {!!selectable && selected.length > 0 && (
+          {!!selectable && rows.length > 0 && selected.length > 0 && (
             <>
               <td className={styles['header-item']}>
                 <p className={styles['items-selected']}>{selected.length} items selected</p>
@@ -176,71 +183,87 @@ export default function Table<T extends Row>({
             )
           })}
         </tr>
+        {loading && (
+          <tr className={styles['table__loader']}>
+            <HorizontalLoader />
+          </tr>
+        )}
       </thead>
       <tbody>
-        {rows.map((row, index) => {
-          const rowClasses = createClasses({
+        {!loading && rows.length === 0 && (
+          <tr className={createClasses({
             [styles['table__row']]: true,
-            [styles['table__row--striped']]: index % 2 !== 0,
-            [styles['table__row--selected']]: !!selectable && selected.includes(row.key),
-            [styles['table__row--clickable']]: !!onRowClick
+            [styles['table__row--no-data']]: true
+          })}>
+            <BsDatabaseFillSlash />
+            <span>No data</span>
+          </tr>
+        )}
+        {!loading && rows.length > 0 && (
+          rows.map((row, index) => {
+            const rowClasses = createClasses({
+              [styles['table__row']]: true,
+              [styles['table__row--striped']]: index % 2 !== 0,
+              [styles['table__row--selected']]: !!selectable && selected.includes(row.key),
+              [styles['table__row--clickable']]: !!onRowClick
+            })
+  
+            const checkboxClasses = createClasses({
+              [styles['item--checkbox']]: true,
+              [styles['item']]: true
+            })
+  
+            const arrowClasses = createClasses({
+              [styles['item--arrow']]: true,
+              [styles['item']]: true
+            })
+  
+            return (
+              <tr
+                role={!!onRowClick ? 'button' : undefined}
+                tabIndex={!!onRowClick ? 0 : undefined}
+                onClick={() => !!onRowClick && onRowClick(row)}
+                onKeyDown={({ key }) => !!onRowClick && key === 'Enter' && onRowClick(row)}
+                key={row.key}
+                className={rowClasses}>
+                {!!selectable && (
+                  <td className={checkboxClasses} style={widthStyles(CHECKBOX_WIDTH)}>
+                    <div className="with-hover-circle">
+                      <div
+                        role="checkbox"
+                        aria-checked={selected.includes(row.key)}
+                        aria-label={`Select row ${index + 1}`}
+                        tabIndex={0}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleSelect(row)
+                        }}
+                        onKeyDown={({ key }) => (key === 'Enter' || key === ' ') && handleSelect(row)}
+                      />
+                    </div>
+                  </td>
+                )}
+                {columns.map(c => c.key).map(key => (
+                  <td key={key.toString()} className={styles["item"]} style={widthStyles(getColumn(key.toString())!.width)}>
+                    {renderMap && row[key] && (
+                      renderMap({
+                        [key]: row[key]
+                      } as any)
+                    )}
+                    {!renderMap && (
+                      <p className={styles["item__text"]}>{row[key].toString()}</p>
+                    )}
+                  </td>
+                ))}
+                {!!onRowClick && (
+                  <td className={arrowClasses} style={widthStyles(ROW_ARROW_WIDTH)}>
+                    <MdArrowForward />
+                  </td>
+                )}
+              </tr>
+            )
           })
-
-          const checkboxClasses = createClasses({
-            [styles['item--checkbox']]: true,
-            [styles['item']]: true
-          })
-
-          const arrowClasses = createClasses({
-            [styles['item--arrow']]: true,
-            [styles['item']]: true
-          })
-
-          return (
-            <tr
-              role={!!onRowClick ? 'button' : undefined}
-              tabIndex={!!onRowClick ? 0 : undefined}
-              onClick={() => !!onRowClick && onRowClick(row)}
-              onKeyDown={({ key }) => !!onRowClick && key === 'Enter' && onRowClick(row)}
-              key={row.key}
-              className={rowClasses}>
-              {!!selectable && (
-                <td className={checkboxClasses} style={widthStyles(CHECKBOX_WIDTH)}>
-                  <div className="with-hover-circle">
-                    <div
-                      role="checkbox"
-                      aria-checked={selected.includes(row.key)}
-                      aria-label={`Select row ${index + 1}`}
-                      tabIndex={0}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleSelect(row)
-                      }}
-                      onKeyDown={({ key }) => (key === 'Enter' || key === ' ') && handleSelect(row)}
-                    />
-                  </div>
-                </td>
-              )}
-              {columns.map(c => c.key).map(key => (
-                <td key={key.toString()} className={styles["item"]} style={widthStyles(getColumn(key.toString())!.width)}>
-                  {renderMap && row[key] && (
-                    renderMap({
-                      [key]: row[key]
-                    } as any)
-                  )}
-                  {!renderMap && (
-                    <p className={styles["item__text"]}>{row[key].toString()}</p>
-                  )}
-                </td>
-              ))}
-              {!!onRowClick && (
-                <td className={arrowClasses} style={widthStyles(ROW_ARROW_WIDTH)}>
-                  <MdArrowForward />
-                </td>
-              )}
-            </tr>
-          )
-        })}
+        )}
       </tbody>
     </table>
   )
