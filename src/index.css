@@ -66,24 +66,24 @@ body {
   --text-3xl: 2.25rem;
   --text-4xl: 3rem;
 
-  --size-xs: 0.125rem;
-  --size-sm: 0.25rem;
-  --size-md: 0.5rem;
-  --size-lg: 0.75rem;
-  --size-xl: 1rem;
-  --size-2xl: 1.5rem;
-  --size-3xl: 2.5rem;
-  --size-4xl: 4rem;
-  --size-5xl: 8rem;
+  --size-xs: 2px;
+  --size-sm: 4px;
+  --size-md: 8px;
+  --size-lg: 12px;
+  --size-xl: 16px;
+  --size-2xl: 24px;
+  --size-3xl: 40px;
+  --size-4xl: 64px;
+  --size-5xl: 128px;
 
-  --section-gap: 6rem;
+  --section-gap: 96px;
   --page-vert-pad: var(--size-2xl);
   --rounding: var(--size-md);
-  --rounding-small: 0.1875rem;
+  --rounding-small: 3px;
 
-  --control-height-small: 1.75rem;
-  --control-height-medium: 2.5rem;
-  --control-height-large: 3rem;
+  --control-height-small: 28px;
+  --control-height-medium: 40px;
+  --control-height-large: 48px;
 
   --transition-timing: cubic-bezier(0.19, 1, 0.22, 1);
   --transition-short: 0.25s var(--transition-timing);
