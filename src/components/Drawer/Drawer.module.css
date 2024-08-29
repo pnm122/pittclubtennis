@@ -69,6 +69,7 @@ body:has(.drawer--open) {
   justify-content: space-between;
   gap: var(--size-lg);
   width: 100%;
+  border-bottom: 1px solid var(--border);
 }
 
 .drawer-header__title {
@@ -96,8 +97,4 @@ body:has(.drawer--open) {
   padding: var(--drawer-padding);
   overflow: auto;
   flex: 1;
-}
-
-.drawer-header + .drawer-content {
-  padding: 0 var(--drawer-padding) var(--drawer-padding);
 }
