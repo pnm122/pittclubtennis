@@ -32,7 +32,7 @@ export default function Drawer({
     [css[`drawer--${orientation}`]]: true,
     [css['drawer--open']]: open,
     [css['drawer--detached']]: style === 'detached',
-    ...(className ? { [css[className]]: true } : {})
+    ...(className ? { [className]: true } : {})
   })
 
   const backdropClasses = createClasses({
