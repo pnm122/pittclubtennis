@@ -8,13 +8,18 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { Member } from "pages/Members/Members";
 import AnimatedButton from "components/AnimatedButton/AnimatedButton";
 
-type Props = AdminMemberDrawer & { closeDrawer: () => void, onEdited: () => void }
+type Props = AdminMemberDrawer & {
+  closeDrawer: () => void,
+  onEdited: () => void,
+  open: boolean
+}
 
 export default function MemberDrawerContent({
   data,
   type,
   closeDrawer,
-  onEdited
+  onEdited,
+  open
 }: Props) {
   interface DrawerState {
     name: string,
@@ -64,8 +69,10 @@ export default function MemberDrawerContent({
   const [image, setImage] = useState<string | null>(null)
 
   useEffect(() => {
-    dispatch({ type: 'reset' })
-  }, [data])
+    if(open) {
+      dispatch({ type: 'reset' })
+    }
+  }, [open])
 
   useEffect(() => {
     if(inputs.image.source === 'local' && inputs.image.data) {
@@ -74,6 +81,7 @@ export default function MemberDrawerContent({
       // getDownloadURL(ref(getStorage(), inputs.image.data)).then(res => {
       //   setImage(res)
       // })
+      setImage(null)
     } else {
       setImage(null)
     }

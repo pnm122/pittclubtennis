@@ -68,6 +68,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef>(({
                 {...drawerData}
                 closeDrawer={closeDrawer}
                 onEdited={() => setDrawerEdited(true)}
+                open={isOpen}
               />
             </>
           )}
