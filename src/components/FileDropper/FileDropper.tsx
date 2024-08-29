@@ -38,6 +38,10 @@ interface Props {
    */
   maxFileSize?: number
   /**
+   * Currently selected file.
+   */
+  value: File | null
+  /**
    * Callback for when the user updates the file by either uploading or deleting the uploaded file.
    */
   onChange: (file: File | null) => void
@@ -53,6 +57,10 @@ interface Props {
    * Whether this file dropper must have a file to continue.
    */
   required?: boolean
+  /**
+   * Width of the file dropper.
+   */
+  width?: string
 }
 
 export interface FileDropperRef {
@@ -64,13 +72,14 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
   acceptedFileTypes,
   onFileError,
   maxFileSize = 64 * 1024 * 1024,
+  value,
   onChange,
   label,
   error,
-  required
+  required,
+  width
 }, ref) {
   const input = useRef<HTMLInputElement>(null)
-  const [file, setFile] = useState<File | null>(null)
   const [fileHovering, setFileHovering] = useState(false)
 
   useImperativeHandle(ref, () => ({
@@ -78,7 +87,7 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
   }))
 
   const getFileData = async () => {
-    if(!file) return null
+    if(!value) return null
 
     const reader = new FileReader()
     let resolve: (value: string | ArrayBuffer | null) => void
@@ -87,7 +96,7 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
       resolve(e.target?.result ?? null)
     })
 
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(value)
     return await promise
   }
 
@@ -118,7 +127,6 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
         }
       })
     }
-    setFile(newFile)
     onChange(newFile)
   }
 
@@ -138,24 +146,31 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
   }
 
   return (
-    <div className={createClasses({
+    <div
+    style={width ? { width } : undefined}
+    className={createClasses({
       'form-elem': true,
       'form-elem--error': !!error
     })}>
-      {label && <label className='form-elem__label'>{label}</label>}
+      {!!label && (
+        <label className={'form-elem__label'} htmlFor={name}>
+          {label}
+          {required && <span className={'required-star'}>*</span>}
+        </label>
+      )}
       <div
-        onDragEnter={() => file === null && handleDragEnter()}
-        onDragLeave={() => file === null && handleDragLeave()}
+        onDragEnter={() => value === null && handleDragEnter()}
+        onDragLeave={() => value === null && handleDragLeave()}
         onDragOver={e => e.preventDefault()}
-        onDrop={e => file === null && handleDrop(e)}
+        onDrop={e => value === null && handleDrop(e)}
         className={createClasses({
           'form-elem__main-control': true,
           [styles['file-dropper']]: true,
           [styles['file-dropper--file-hover']]: fileHovering,
-          [styles['file-dropper--has-file']]: file !== null,
+          [styles['file-dropper--has-file']]: value !== null,
           [styles['file-dropper--error']]: !!error
         })}>
-        {file === null ? (
+        {value === null ? (
           <>
             <MdUpload className={styles['file-dropper__icon']} />
             {fileHovering ? (
@@ -172,7 +187,7 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
           <>
             <div className={styles['file-dropper__filename']}>
               <MdInsertDriveFile />
-              <span>{file.name}</span>
+              <span>{value.name}</span>
             </div>
             <button
               className={createClasses({
