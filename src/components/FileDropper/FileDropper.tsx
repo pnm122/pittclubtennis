@@ -43,6 +43,7 @@ interface Props {
   value: File | null
   /**
    * Callback for when the user updates the file by either uploading or deleting the uploaded file.
+   * Fires before onFileError.
    */
   onChange: (file: File | null) => void
   /**
@@ -106,8 +107,10 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
   }
 
   const updateFile = (newFile: File | null) => {
+    onChange(newFile)
+
     if(newFile && !acceptedFileTypes.includes(newFile.type)) {
-      return onFileError({
+      onFileError({
         type: 'file-type',
         details: {
           file: newFile,
@@ -118,7 +121,7 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
     }
     
     if(newFile && newFile.size > maxFileSize) {
-      return onFileError({
+      onFileError({
         type: 'size',
         details: {
           file: newFile,
@@ -127,7 +130,6 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
         }
       })
     }
-    onChange(newFile)
   }
 
   const handleDragEnter = () => {
