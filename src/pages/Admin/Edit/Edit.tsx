@@ -125,6 +125,7 @@ export default function Edit() {
     <>
       <MemberDrawer
         ref={memberDrawer}
+        onSave={(data) => console.log(data)}
       />
       <div className='container'>
         <div style={{ paddingTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>

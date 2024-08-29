@@ -2,9 +2,9 @@ import Drawer from 'components/Drawer/Drawer'
 import styles from './Members.module.css'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import DrawerContent from 'components/Drawer/DrawerContent'
-import MemberDrawerContent from './MemberDrawerContent'
+import MemberDrawerContent, { MemberDrawerContentRef, MemberDrawerState } from './MemberDrawerContent'
 import Popup from 'components/Popup/Popup'
-import { forwardRef, useImperativeHandle, useState } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { AdminMemberDrawer } from 'types/AdminMembers'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { MdWarning } from "react-icons/md"
@@ -13,16 +13,21 @@ export interface MemberDrawerRef {
   open: (data: AdminMemberDrawer) => void
 }
 
+interface Props {
+  onSave: (data: MemberDrawerState) => void
+}
+
 let warningPromiseResolve: (close: boolean) => void
 
-const MemberDrawer = forwardRef<MemberDrawerRef>(({
-
+const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
+  onSave
 }, ref) => {
   const [drawerData, setDrawerData] = useState<AdminMemberDrawer | null>(null)
   // Track if the drawer has been edited to show a warning when trying to close the drawer
   const [drawerEdited, setDrawerEdited] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const memberDrawerContent = useRef<MemberDrawerContentRef>(null)
 
   function open(data: AdminMemberDrawer) {
     setDrawerData(data)
@@ -50,6 +55,10 @@ const MemberDrawer = forwardRef<MemberDrawerRef>(({
     setDrawerEdited(false)
   }
 
+  function save() {
+    onSave(memberDrawerContent.current!.getState())
+  }
+
   return (
     <>
       <Drawer
@@ -68,6 +77,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef>(({
                 {...drawerData}
                 onEdited={() => setDrawerEdited(true)}
                 open={isOpen}
+                ref={memberDrawerContent}
               />
             </>
           )}
@@ -75,6 +85,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef>(({
         <div className={styles['member-drawer__actions']}>
           <AnimatedButton
             text={'Save'}
+            onClick={save}
           />
           <AnimatedButton
             text={'Cancel'}
