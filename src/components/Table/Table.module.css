@@ -55,12 +55,15 @@
 }
 
 .table__row--no-data {
+  display: block;
+}
+
+.table__row--no-data td {
   height: 40px;
   display: flex;
   align-items: center;
+  gap: var(--size-md);
   color: var(--unselected);
-  display: flex;
-  align-items: center;
 }
 
 .table__row--no-data span {
@@ -143,6 +146,7 @@
   gap: 8px;
 }
 
-.table__loader {
+.table__loader,
+.table__loader td {
   display: block;
 }

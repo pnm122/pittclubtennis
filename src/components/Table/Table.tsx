@@ -191,7 +191,9 @@ export default function Table<T extends Row>({
         </tr>
         {loading && (
           <tr className={styles['table__loader']}>
-            <HorizontalLoader />
+            <td>
+              <HorizontalLoader />
+            </td>
           </tr>
         )}
       </thead>
@@ -201,8 +203,10 @@ export default function Table<T extends Row>({
             [styles['table__row']]: true,
             [styles['table__row--no-data']]: true
           })}>
-            <BsDatabaseFillSlash />
-            <span>No data</span>
+            <td>
+              <BsDatabaseFillSlash />
+              <span>No data</span>
+            </td>
           </tr>
         )}
         {!loading && rows.length > 0 && (
