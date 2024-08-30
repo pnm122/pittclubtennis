@@ -20,58 +20,25 @@ const getMembers = async () => {
       members.push(data)
     }
 
-    // Sort members
-    // President --> VP --> Business Manager --> Logistics Manager --> Social Chair --> Fundraising Chair --> Fundraising Committee
-    let presidents : MemberType[] = []
-    let vicePresidents : MemberType[] = []
-    let business : MemberType[] = []
-    let logistics : MemberType[] = []
-    let socials : MemberType[] = []
-    let fundChairs : MemberType[] = []
-    let fundCommittee : MemberType[] = []
-    let other : MemberType[] = []
+    const sortOrder = {
+      'FUNDRAISING COMMITTEE': 1,
+      'FUNDRAISING CHAIR': 2,
+      'SOCIAL CHAIR': 3,
+      'LOGISTICS MANAGER': 4,
+      'BUSINESS MANAGER': 5,
+      'VICE PRESIDENT': 6,
+      'PRESIDENT': 7
+    } as const
 
-    members.forEach(m => {
-      switch(m.role) {
-        case 'President':
-          presidents.push(m)
-          break
-        case 'Vice President':
-          vicePresidents.push(m)
-          break
-        case 'Business Manager':
-          business.push(m)
-          break
-        case 'Logistics Manager':
-          logistics.push(m)
-          break
-        case 'Social Chair':
-          socials.push(m)
-          break
-        case 'Fundraising Chair':
-          fundChairs.push(m)
-          break
-        case 'Fundraising Committee':
-          fundCommittee.push(m)
-          break
-        default:
-          other.push(m)
-          break
-      }
-    })
+    function getSortOrder(role: string | undefined) {
+      if(!role) return -1
 
-    let sortedMembers : MemberType[] = []
+      const order = sortOrder[role.toUpperCase() as keyof typeof sortOrder]
+      if(!order) return -1
+      return order
+    }
 
-    sortedMembers.push(...presidents)
-    sortedMembers.push(...vicePresidents)
-    sortedMembers.push(...business)
-    sortedMembers.push(...logistics)
-    sortedMembers.push(...socials)
-    sortedMembers.push(...fundChairs)
-    sortedMembers.push(...fundCommittee)
-    sortedMembers.push(...other)
-    
-    return sortedMembers
+    return members.sort((a, b) => getSortOrder(b.role) - getSortOrder(a.role))
   })
 }
 
