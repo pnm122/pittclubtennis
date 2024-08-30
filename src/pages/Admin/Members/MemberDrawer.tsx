@@ -8,6 +8,7 @@ import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { MdWarning } from "react-icons/md"
 import { QueryDocumentSnapshot } from 'firebase/firestore'
+import { MemberType } from 'types/MemberType'
 
 export interface AdminMemberDrawer {
   data: MemberType
@@ -17,10 +18,11 @@ export interface AdminMemberDrawer {
 
 export interface MemberDrawerRef {
   open: (data: AdminMemberDrawer) => void
+  close: () => void
 }
 
 interface Props {
-  onSave: (data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) => void
+  onSave: (data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) => Promise<void>
 }
 
 let warningPromiseResolve: (close: boolean) => void
@@ -33,6 +35,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
   const [drawerEdited, setDrawerEdited] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
   const memberDrawerContent = useRef<MemberDrawerContentRef>(null)
 
   function open(data: AdminMemberDrawer) {
@@ -41,9 +44,14 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
   }
 
   useImperativeHandle(ref, () => ({
-    open
+    open,
+    close
   }))
 
+  function close() {
+    setIsOpen(false)
+    setDrawerEdited(false)
+  }
   
   async function closeDrawer() {
     if(drawerEdited) {
@@ -61,8 +69,15 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
     setDrawerEdited(false)
   }
 
-  function save() {
-    onSave(memberDrawerContent.current!.getState())
+  async function save() {
+    if(!memberDrawerContent.current?.isValid()) {
+      console.log(memberDrawerContent.current?.isValid())
+      console.log('invalid')
+      return
+    }
+    setIsSaving(true)
+    await onSave(memberDrawerContent.current!.getState())
+    setIsSaving(false)
   }
 
   return (
@@ -92,6 +107,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
           <AnimatedButton
             text={'Save'}
             onClick={save}
+            loading={isSaving}
           />
           <AnimatedButton
             text={'Cancel'}

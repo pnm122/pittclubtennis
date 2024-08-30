@@ -6,9 +6,11 @@ import FileDropper, { FileDropperRef, FileError } from "components/FileDropper/F
 import { Member } from "pages/Members/Members";
 import { QueryDocumentSnapshot } from "firebase/firestore";
 import { AdminMemberDrawer } from "./MemberDrawer";
+import { MemberYear } from "types/MemberType";
 
 export interface MemberDrawerContentRef {
   getState: () => { state: MemberDrawerState, doc: QueryDocumentSnapshot }
+  isValid: () => boolean
 }
 
 type Props = AdminMemberDrawer & {
@@ -72,7 +74,8 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
   const [imageError, setImageError] = useState<string | null>(null)
 
   useImperativeHandle(ref, () => ({
-    getState: () => ({ state: inputs, doc })
+    getState: () => ({ state: inputs, doc }),
+    isValid: () => !!inputs.name && !!inputs.role && !!inputs.year && !imageError
   }))
 
   useEffect(() => {

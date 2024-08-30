@@ -2,12 +2,13 @@ import { collection, getDocs, getFirestore, QueryDocumentSnapshot } from "fireba
 import { StorageError } from 'firebase/storage'
 import queryWithErrors from "./queryWithErrors"
 import { FirebaseError } from "firebase/app"
+import { MemberType } from "types/MemberType"
 
 const getMembers = async () => {
   const db = getFirestore()
 
   return queryWithErrors<{ data: MemberType, doc: QueryDocumentSnapshot }[], FirebaseError | StorageError>(async () => {
-    const m = await getDocs(collection(db, 'members'))
+    const m = await getDocs(collection(db, 'TEST_members'))
     const members = m.docs.map(doc => {
       return {
         data: doc.data() as unknown as MemberType,

@@ -9,6 +9,8 @@ import MemberDrawer, { MemberDrawerRef } from './MemberDrawer'
 import getMembers from 'utils/firebase/getMembers'
 import { MemberDrawerState } from './MemberDrawerContent'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
+import setMember from 'utils/firebase/setMember'
+import { MemberType } from 'types/MemberType'
 
 
 export default function Members() {
@@ -68,8 +70,14 @@ export default function Members() {
     })
   }
 
-  function onSave(data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) {
-    console.log(data)
+  async function onSave(data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) {
+    console.log('saving...', data.state)
+    const { success } = await setMember(data.state, data.doc)
+    if(success) {
+      memberDrawer.current?.close()
+      setLoading(true)
+      fetchMembers()
+    }
   }
 
   return (
@@ -101,7 +109,7 @@ export default function Members() {
               } else if('role' in value) {
                 const roleClasses = createClasses({
                   [styles['member__role']]: true,
-                  [styles['member__role--none']]: !!!value.role
+                  [styles['member__role--none']]: !!!value.role || value.role === 'None'
                 })
                 const { bg, text } = getRoleColors(value.role)
     
