@@ -7,12 +7,15 @@ import { IoMdCheckmark } from 'react-icons/io'
 import { useEffect, useRef, useState } from 'react'
 import MemberDrawer, { MemberDrawerRef } from './MemberDrawer'
 import getMembers from 'utils/firebase/getMembers'
+import { MemberDrawerState } from './MemberDrawerContent'
+import { QueryDocumentSnapshot } from 'firebase/firestore'
 
-type RowData = Readonly<MemberType & { key: any }>
 
 export default function Members() {
+  type RowData = Readonly<MemberType & { key: any }>
+
   const memberDrawer = useRef<MemberDrawerRef>(null)
-  const [memberData, setMemberData] = useState<RowData[]>([])
+  const [memberData, setMemberData] = useState<{ data: MemberType, doc: QueryDocumentSnapshot }[]>([])
   const [loading, setLoading] = useState(true)
   const columns: Column<RowData>[] = [{
     key: 'name',
@@ -53,10 +56,7 @@ export default function Members() {
       console.error(res.error)
       return
     } else if(res) {
-      setMemberData(res.data.map(m => ({
-        ...m,
-        key: m.imgSrc
-      })))
+      setMemberData(res.data)
     }
   }
 
@@ -67,17 +67,21 @@ export default function Members() {
     })
   }
 
+  function onSave(data: MemberDrawerState) {
+
+  }
+
   return (
     <>
       <MemberDrawer
         ref={memberDrawer}
-        onSave={(data) => console.log(data)}
+        onSave={onSave}
       />
       <div className='container'>
         <h1 className='admin-page-title'>Members</h1>
         <div style={{overflow: 'auto', marginTop: '16px'}}>
           <Table
-            data={memberData}
+            data={memberData.map(m => ({ ...m.data, key: m.doc.id }))}
             columns={columns}
             loading={loading}
             selectable

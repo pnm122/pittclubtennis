@@ -1,16 +1,18 @@
-import { collection, getDocs, getFirestore } from "firebase/firestore"
-import { StorageError, getDownloadURL, getStorage, ref } from 'firebase/storage'
+import { collection, getDocs, getFirestore, QueryDocumentSnapshot } from "firebase/firestore"
+import { StorageError } from 'firebase/storage'
 import queryWithErrors from "./queryWithErrors"
 import { FirebaseError } from "firebase/app"
 
-const getMembers = async (options?: { getDownloadURLs: boolean }) => {
+const getMembers = async () => {
   const db = getFirestore()
-  const storage = getStorage()
 
-  return queryWithErrors<MemberType[], FirebaseError | StorageError>(async () => {
+  return queryWithErrors<{ data: MemberType, doc: QueryDocumentSnapshot }[], FirebaseError | StorageError>(async () => {
     const m = await getDocs(collection(db, 'members'))
     const members = m.docs.map(doc => {
-      return doc.data() as unknown as MemberType
+      return {
+        data: doc.data() as unknown as MemberType,
+        doc
+      }
     })
 
     const sortOrder = {
@@ -31,7 +33,7 @@ const getMembers = async (options?: { getDownloadURLs: boolean }) => {
       return order
     }
 
-    return members.sort((a, b) => getSortOrder(b.role) - getSortOrder(a.role))
+    return members.sort((a, b) => getSortOrder(b.data.role) - getSortOrder(a.data.role))
   })
 }
 

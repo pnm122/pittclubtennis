@@ -14,7 +14,7 @@ export default function Members() {
         return
       }
 
-      setMembers(res.data)
+      setMembers(res.data.map(d => d.data))
       setLoading(false)
     })
   }, [])
