@@ -84,10 +84,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
     if(inputs.image.source === 'local' && inputs.image.data) {
       setImage(URL.createObjectURL(inputs.image.data))
     } else if(inputs.image.source === 'firebase') {
-      // getDownloadURL(ref(getStorage(), inputs.image.data)).then(res => {
-      //   setImage(res)
-      // })
-      setImage(null)
+      setImage(inputs.image.data)
     } else {
       setImage(null)
     }
@@ -152,7 +149,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
         label='Image (max. size 2MB)'
         name='image-drop'
         acceptedFileTypes={['image/png', 'image/jpeg']}
-        maxFileSize={0.25 * 1024 * 1024}
+        maxFileSize={2 * 1024 * 1024}
         onFileError={handleFileUploadError}
         error={imageError ?? undefined}
         value={inputs.image?.source === 'firebase' ? new File([], 'Uploaded image') : inputs.image?.source === 'local' ? inputs.image.data : null}
