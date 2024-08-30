@@ -18,10 +18,8 @@ export default function Login() {
     
     const auth = getAuth()
 
+    // redirect handled by authStateChanged
     signInWithEmailAndPassword(auth, email, pass)
-    .then(_ => {
-      // handled by onAuthStateChanged
-    })
     .catch(e => {
       setLoading(false)
       

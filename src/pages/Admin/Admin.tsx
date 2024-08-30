@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import styles from './Admin.module.css'
 import Loader from "components/Loader/Loader";
 import Header from "components/Header/Header";
 import AnimatedButton from "components/AnimatedButton/AnimatedButton";
+import './admin.css'
 
 export default function Admin() {
   const adminLinks = [{
-    path: '/admin/edit/tournaments',
+    path: '/admin/tournaments',
     name: 'Tournaments'
   }, {
-    path: '/admin/edit/members',
+    path: '/admin/members',
     name: 'Members'
   }]
 
@@ -22,7 +23,7 @@ export default function Admin() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, () => {
       if(auth.currentUser) {
-        navigate('/admin/edit')
+        navigate('/admin/members')
       } else {
         navigate('/admin/login')
       }
@@ -44,7 +45,7 @@ export default function Admin() {
   }
 
   const adminHeaderTitle = (
-    <Link to='/admin/edit' id='header-title'>Dashboard</Link>
+    <span id='header-title'>Dashboard</span>
   )
 
   const adminRightSlot = (

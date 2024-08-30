@@ -17,7 +17,7 @@ import Fundraisers from 'pages/Fundraisers/Fundraisers'
 import PageLayout from 'layout/PageLayout'
 import Admin from 'pages/Admin/Admin';
 import Login from 'pages/Admin/Login/Login';
-import Edit from 'pages/Admin/Edit/Edit';
+import AdminMembers from 'pages/Admin/Members/Members';
 
 function App() {
   const location = useLocation()
@@ -89,7 +89,7 @@ function App() {
         </Route>
         <Route path="/admin" element={<Admin />}>
           <Route path="login" element={<Login />} />
-          <Route path="edit" element={<Edit />} />
+          <Route path="members" element={<AdminMembers />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
