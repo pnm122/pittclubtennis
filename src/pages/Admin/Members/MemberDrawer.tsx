@@ -5,16 +5,22 @@ import DrawerContent from 'components/Drawer/DrawerContent'
 import MemberDrawerContent, { MemberDrawerContentRef, MemberDrawerState } from './MemberDrawerContent'
 import Popup from 'components/Popup/Popup'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { AdminMemberDrawer } from 'types/AdminMembers'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { MdWarning } from "react-icons/md"
+import { QueryDocumentSnapshot } from 'firebase/firestore'
+
+export interface AdminMemberDrawer {
+  data: MemberType
+  doc: QueryDocumentSnapshot
+  type: 'edit' | 'add'
+}
 
 export interface MemberDrawerRef {
   open: (data: AdminMemberDrawer) => void
 }
 
 interface Props {
-  onSave: (data: MemberDrawerState) => void
+  onSave: (data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) => void
 }
 
 let warningPromiseResolve: (close: boolean) => void

@@ -1,30 +1,30 @@
 import Input from "components/Input/Input";
 import Select from "components/Select/Select";
 import { forwardRef, useEffect, useImperativeHandle, useReducer, useRef, useState } from "react";
-import { AdminMemberDrawer } from "types/AdminMembers";
 import styles from './Members.module.css';
 import FileDropper, { FileDropperRef, FileError } from "components/FileDropper/FileDropper";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { Member } from "pages/Members/Members";
+import { QueryDocumentSnapshot } from "firebase/firestore";
+import { AdminMemberDrawer } from "./MemberDrawer";
 
 export interface MemberDrawerContentRef {
-  getState: () => MemberDrawerState
+  getState: () => { state: MemberDrawerState, doc: QueryDocumentSnapshot }
 }
 
 type Props = AdminMemberDrawer & {
-  onEdited: () => void,
+  onEdited: () => void
   open: boolean
 }
 
 export interface MemberDrawerState {
-  name: string,
-  year: MemberYear,
-  role: string,
+  name: string
+  year: MemberYear
+  role: string
   image: {
-    source: 'firebase',
+    source: 'firebase'
     data: string
   } | {
-    source: 'local',
+    source: 'local'
     data: File | null
   }
 }
@@ -32,6 +32,7 @@ export interface MemberDrawerState {
 const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
   data,
   type,
+  doc,
   onEdited,
   open
 }, ref) => {
@@ -49,7 +50,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
   const reducer = (inputs: MemberDrawerState, action: { type: keyof MemberDrawerState | 'reset', data?: MemberDrawerState[keyof MemberDrawerState] }) => {
     switch(action.type) {
       case 'reset':
-        return getStateFromProps({ data, type })
+        return getStateFromProps({ data, type, doc })
       case 'name':
       case 'year':
       case 'role':
@@ -65,13 +66,13 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
   }
 
   const imageFileDropper = useRef<FileDropperRef>(null)
-  const [inputs, dispatch] = useReducer(reducer, getStateFromProps({ data, type }))
+  const [inputs, dispatch] = useReducer(reducer, getStateFromProps({ data, type, doc }))
   // URL to use as image source
   const [image, setImage] = useState<string | null>(null)
   const [imageError, setImageError] = useState<string | null>(null)
 
   useImperativeHandle(ref, () => ({
-    getState: () => inputs
+    getState: () => ({ state: inputs, doc })
   }))
 
   useEffect(() => {

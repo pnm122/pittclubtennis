@@ -63,12 +63,13 @@ export default function Members() {
   const openEditDrawer = (row: RowData) => {
     memberDrawer.current?.open({
       data: row,
-      type: 'edit'
+      type: 'edit',
+      doc: memberData.find(m => m.doc.id === row.key)!.doc
     })
   }
 
-  function onSave(data: MemberDrawerState) {
-
+  function onSave(data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) {
+    console.log(data)
   }
 
   return (
