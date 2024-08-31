@@ -1,6 +1,6 @@
 import { collection, getDocs, getFirestore, QueryDocumentSnapshot } from "firebase/firestore"
 import { StorageError } from 'firebase/storage'
-import queryWithErrors from "./queryWithErrors"
+import queryWithErrors from "../queryWithErrors"
 import { FirebaseError } from "firebase/app"
 import { MemberType } from "types/MemberType"
 

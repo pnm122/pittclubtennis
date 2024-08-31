@@ -1,7 +1,8 @@
-import getMembers from 'utils/firebase/getMembers'
+import getMembers from 'utils/firebase/members/getMembers'
 import styles from './Members.module.css'
 import { useEffect, useState } from 'react'
 import Skeleton from 'components/Skeleton/Skeleton'
+import { MemberType } from 'types/MemberType'
 
 export default function Members() {
   const [members, setMembers] = useState<MemberType[] | null>(null)

@@ -6,11 +6,12 @@ import { getRoleColors } from 'utils/getRoleColors'
 import { IoMdCheckmark } from 'react-icons/io'
 import { useEffect, useRef, useState } from 'react'
 import MemberDrawer, { MemberDrawerRef } from './MemberDrawer'
-import getMembers from 'utils/firebase/getMembers'
+import getMembers from 'utils/firebase/members/getMembers'
 import { MemberDrawerState } from './MemberDrawerContent'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
-import setMember from 'utils/firebase/setMember'
+import setMember from 'utils/firebase/members/setMember'
 import { MemberType } from 'types/MemberType'
+import deleteMembers from 'utils/firebase/members/deleteMembers'
 
 
 export default function Members() {
@@ -52,6 +53,7 @@ export default function Members() {
   }, [])
 
   async function fetchMembers() {
+    setLoading(true)
     const res = await getMembers()
     setLoading(false)
     if(res.error) {
@@ -75,7 +77,16 @@ export default function Members() {
     const { success } = await setMember(data.state, data.doc)
     if(success) {
       memberDrawer.current?.close()
-      setLoading(true)
+      fetchMembers()
+    }
+  }
+
+  async function onDelete(rows: Readonly<MemberType & { key: any }>[]) {
+    const docsToDelete = rows.map(r =>
+      memberData.find(({ data: { name, role, year }}) => r.name === name && r.role === role && r.year === year)!.doc
+    )
+    const { success } = await deleteMembers(docsToDelete)
+    if(success) {
       fetchMembers()
     }
   }
@@ -97,7 +108,7 @@ export default function Members() {
             selectedActions={[{
               name: 'Delete',
               sentiment: 'negative',
-              onClick: (selectedRows) => console.log(selectedRows)
+              onClick: onDelete
             }]}
             onRowClick={(row) => openEditDrawer(row)}
             renderMap={(value) => {

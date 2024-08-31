@@ -1,10 +1,9 @@
 import { deleteField, getDoc, QueryDocumentSnapshot, updateDoc } from "firebase/firestore";
 import { MemberType, SetMemberType } from "types/MemberType";
-import uploadToStorage from "./storage/uploadToStorage";
-import deleteFromStorage from "./storage/deleteFromStorage";
-import updateInDatabase from "./database/updateInDatabase";
-import addToDatabase from "./database/addToDatabase";
-import { ref } from "firebase/storage";
+import uploadToStorage from "../storage/uploadToStorage";
+import deleteFromStorage from "../storage/deleteFromStorage";
+import updateInDatabase from "../database/updateInDatabase";
+import addToDatabase from "../database/addToDatabase";
 
 export default async function setMember(data: SetMemberType, doc?: QueryDocumentSnapshot): FirebaseUtilityReturn<null> {
   let newData: Record<string, any> = { name: data.name, role: data.role, year: data.year }
