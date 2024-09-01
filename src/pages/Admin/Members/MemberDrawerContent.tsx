@@ -5,15 +5,15 @@ import styles from './Members.module.css';
 import FileDropper, { FileDropperRef, FileError } from "components/FileDropper/FileDropper";
 import { Member } from "pages/Members/Members";
 import { QueryDocumentSnapshot } from "firebase/firestore";
-import { AdminMemberDrawer } from "./MemberDrawer";
+import { AdminMemberDrawer, DrawerData } from "./MemberDrawer";
 import { MemberYear } from "types/MemberType";
 
 export interface MemberDrawerContentRef {
-  getState: () => { state: MemberDrawerState, doc: QueryDocumentSnapshot }
+  getState: () => { state: MemberDrawerState, doc?: QueryDocumentSnapshot }
   isValid: () => boolean
 }
 
-type Props = AdminMemberDrawer & {
+type Props = DrawerData & {
   onEdited: () => void
   open: boolean
 }
@@ -38,7 +38,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
   onEdited,
   open
 }, ref) => {
-  const getStateFromProps = ({ data: { name, year, role, imgSrc } }: AdminMemberDrawer): MemberDrawerState => {
+  const getStateFromProps = ({ data: { name, year, role, imgSrc } }: DrawerData): MemberDrawerState => {
     return {
       name,
       year,
@@ -167,7 +167,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(({
         <h3 className={styles['preview__title']}>Preview</h3>
         <Member
           name={inputs.name}
-          role={inputs.role === 'None' ? undefined : inputs.role}
+          role={inputs.role === 'None' ? '' : inputs.role}
           year={inputs.year}
           imgSrc={image ?? undefined}
         />

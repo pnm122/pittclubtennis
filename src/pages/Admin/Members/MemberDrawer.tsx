@@ -10,9 +10,17 @@ import { MdWarning } from "react-icons/md"
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import { MemberType } from 'types/MemberType'
 
-export interface AdminMemberDrawer {
+export type AdminMemberDrawer = {
   data: MemberType
   doc: QueryDocumentSnapshot
+  type: 'edit'
+} | {
+  type: 'add'
+}
+
+export interface DrawerData {
+  data: MemberType
+  doc?: QueryDocumentSnapshot
   type: 'edit' | 'add'
 }
 
@@ -22,7 +30,7 @@ export interface MemberDrawerRef {
 }
 
 interface Props {
-  onSave: (data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) => Promise<void>
+  onSave: (data: { state: MemberDrawerState, doc?: QueryDocumentSnapshot }) => Promise<void>
 }
 
 let warningPromiseResolve: (close: boolean) => void
@@ -30,7 +38,7 @@ let warningPromiseResolve: (close: boolean) => void
 const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
   onSave
 }, ref) => {
-  const [drawerData, setDrawerData] = useState<AdminMemberDrawer | null>(null)
+  const [drawerData, setDrawerData] = useState<DrawerData | null>(null)
   // Track if the drawer has been edited to show a warning when trying to close the drawer
   const [drawerEdited, setDrawerEdited] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
@@ -39,7 +47,18 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
   const memberDrawerContent = useRef<MemberDrawerContentRef>(null)
 
   function open(data: AdminMemberDrawer) {
-    setDrawerData(data)
+    if(data.type === 'edit') {
+      setDrawerData(data)
+    } else {
+      setDrawerData({
+        ...data,
+        data: {
+          name: '',
+          role: 'None',
+          year: 'freshman'
+        }
+      })
+    }
     setIsOpen(true)
   }
 

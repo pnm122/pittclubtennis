@@ -1,4 +1,4 @@
-import styles from '../Admin.module.css'
+import styles from './Members.module.css'
 import Table, { TableRef } from 'components/Table/Table'
 import { Column } from 'types/Table'
 import createClasses from 'utils/createClasses'
@@ -83,8 +83,14 @@ export default function Members() {
     })
   }
 
-  async function onSave(data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) {
-    const { success } = await setMember(data.state)
+  const openAddMemberDrawer = () => {
+    memberDrawer.current?.open({
+      type: 'add'
+    })
+  }
+
+  async function onSave(data: { state: MemberDrawerState, doc?: QueryDocumentSnapshot }) {
+    const { success } = await setMember(data.state, data.doc)
     if(success) {
       memberDrawer.current?.close()
       fetchMembers()
@@ -162,6 +168,12 @@ export default function Members() {
             }}
           />
         </div>
+        <AnimatedButton
+          text='Add member'
+          type='button'
+          className={styles['add-member']}
+          onClick={openAddMemberDrawer}
+        />
       </div>
     </>
   )
