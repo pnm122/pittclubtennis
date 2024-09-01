@@ -1,10 +1,10 @@
 import getNotification from 'utils/firebase/getNotification'
-import styles from './Notification.module.css'
+import styles from './ClubTennisNotification.module.css'
 import { useEffect, useState } from 'react'
 import NotificationType from 'types/NotificationType'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 
-export default function Notification() {
+export default function ClubTennisNotification() {
   const [notif, setNotif] = useState<NotificationType | null>(null)
   const [showing, setShowing] = useState(false)
 
