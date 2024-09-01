@@ -1,18 +1,11 @@
-import { useEffect, useState } from "react"
+import { forwardRef, useEffect, useState, ForwardedRef, useImperativeHandle } from "react"
 import { Column, Row, UnionFromRecord } from "types/Table"
 import { TiArrowUnsorted, TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import createClasses from "utils/createClasses"
 import styles from "./Table.module.css"
-import AnimatedButton from "components/AnimatedButton/AnimatedButton"
 import { MdArrowForward } from "react-icons/md";
 import { BsDatabaseFillSlash } from "react-icons/bs";
 import HorizontalLoader from "components/HorizontalLoader/HorizontalLoader"
-
-interface Action<T extends Row> {
-  sentiment: 'positive' | 'neutral' | 'negative'
-  name: string
-  onClick: (selectedRows: T[]) => void
-}
 
 interface Props<T extends Row> {
   loading?: boolean
@@ -23,10 +16,14 @@ interface Props<T extends Row> {
   onRowClick?: (row: T) => void
   selectable?: boolean
   onRowSelect?: (row: T | T[], selected: boolean) => void
-  selectedActions?: Action<T>[]
+  selectedActions?: React.ReactNode | React.ReactNode[]
 }
 
-export default function Table<T extends Row>({
+export interface TableRef<T extends Row> {
+  getSelectedRows: () => T[]
+}
+
+function Table<T extends Row>({
   loading,
   data,
   columns,
@@ -35,7 +32,7 @@ export default function Table<T extends Row>({
   selectable,
   onRowSelect,
   selectedActions
-}: Props<T>) {
+}: Props<T>, ref: ForwardedRef<TableRef<T>>) {
   const CHECKBOX_WIDTH = 32 as const
   const ROW_ARROW_WIDTH = 32 as const
 
@@ -48,6 +45,14 @@ export default function Table<T extends Row>({
   const [sortedBy, setSortedBy] = useState<SortedBy>({})
   // Selected row keys
   const [selected, setSelected] = useState<(T['key'])[]>([])
+
+  const getSelectedRows = () => {
+    return rows.filter(row => selected.includes(row.key))
+  }
+
+  useImperativeHandle(ref, () => ({
+    getSelectedRows
+  }))
 
   useEffect(() => {
     setRows(data)
@@ -144,15 +149,7 @@ export default function Table<T extends Row>({
               </td>
               {selectedActions && (
                 <td className={createClasses({ [styles['header-item']]: true, [styles['header-actions']]: true })}>
-                  {selectedActions.map(({ sentiment, name, onClick }) => (
-                    <AnimatedButton
-                      key={name}
-                      text={name}
-                      size='small'
-                      style={sentiment === 'neutral' ? 'primary' : sentiment}
-                      onClick={() => onClick(rows.filter(row => selected.includes(row.key)))}
-                    />
-                  ))}
+                  {selectedActions}
                 </td>
               )}
             </>
@@ -284,3 +281,7 @@ export default function Table<T extends Row>({
     </table>
   )
 }
+
+export default forwardRef(Table) as <T extends Row>(
+  props: Props<T> & React.RefAttributes<TableRef<T>>
+) => React.ReactElement;

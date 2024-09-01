@@ -1,5 +1,5 @@
 import styles from '../Admin.module.css'
-import Table from 'components/Table/Table'
+import Table, { TableRef } from 'components/Table/Table'
 import { Column } from 'types/Table'
 import createClasses from 'utils/createClasses'
 import { getRoleColors } from 'utils/getRoleColors'
@@ -12,14 +12,21 @@ import { QueryDocumentSnapshot } from 'firebase/firestore'
 import setMember from 'utils/firebase/members/setMember'
 import { MemberType } from 'types/MemberType'
 import deleteMembers from 'utils/firebase/members/deleteMembers'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 
 
 export default function Members() {
   type RowData = Readonly<MemberType & { key: any }>
 
+  const table = useRef<TableRef<RowData>>(null)
   const memberDrawer = useRef<MemberDrawerRef>(null)
   const [memberData, setMemberData] = useState<{ data: MemberType, doc: QueryDocumentSnapshot }[]>([])
+  // Derived directly from memberData, used in table
+  const [tableData, setTableData] = useState<RowData[]>([])
+  // Whether the page is waiting for members to load
   const [loading, setLoading] = useState(true)
+  // Whether the page is waiting for members to be deleted
+  const [isDeleting, setIsDeleting] = useState(false)
   const columns: Column<RowData>[] = [{
     key: 'name',
     name: 'Name',
@@ -52,6 +59,10 @@ export default function Members() {
     fetchMembers()
   }, [])
 
+  useEffect(() => {
+    setTableData(memberData.map(m => ({ ...m.data, key: m.doc.id })))
+  }, [memberData])
+
   async function fetchMembers() {
     setLoading(true)
     const res = await getMembers()
@@ -73,19 +84,23 @@ export default function Members() {
   }
 
   async function onSave(data: { state: MemberDrawerState, doc: QueryDocumentSnapshot }) {
-    console.log('saving...', data.state)
-    const { success } = await setMember(data.state, data.doc)
+    const { success } = await setMember(data.state)
     if(success) {
       memberDrawer.current?.close()
       fetchMembers()
     }
   }
 
-  async function onDelete(rows: Readonly<MemberType & { key: any }>[]) {
+  async function onDelete() {
+    const rows = table.current!.getSelectedRows()
+
     const docsToDelete = rows.map(r =>
       memberData.find(({ data: { name, role, year }}) => r.name === name && r.role === role && r.year === year)!.doc
     )
+
+    setIsDeleting(true)
     const { success } = await deleteMembers(docsToDelete)
+    setIsDeleting(false)
     if(success) {
       fetchMembers()
     }
@@ -101,15 +116,21 @@ export default function Members() {
         <h1 className='admin-page-title'>Members</h1>
         <div style={{overflow: 'auto', marginTop: '16px'}}>
           <Table
-            data={memberData.map(m => ({ ...m.data, key: m.doc.id }))}
+            ref={table}
+            data={tableData}
             columns={columns}
             loading={loading}
             selectable
-            selectedActions={[{
-              name: 'Delete',
-              sentiment: 'negative',
-              onClick: onDelete
-            }]}
+            selectedActions={
+              <AnimatedButton
+                type='button'
+                text='Delete'
+                size='small'
+                style='negative'
+                loading={isDeleting}
+                onClick={onDelete}
+              />
+            }
             onRowClick={(row) => openEditDrawer(row)}
             renderMap={(value) => {
               if(!value) return
