@@ -142,7 +142,7 @@ function Table<T extends Row>({
               </div>
             </td>
           )}
-          {!!selectable && rows.length > 0 && selected.length > 0 && (
+          {!!selectable && rows.length > 0 && selected.length > 0 && !loading && (
             <>
               <td className={styles['header-item']}>
                 <p className={styles['items-selected']}>{selected.length} items selected</p>
@@ -154,7 +154,7 @@ function Table<T extends Row>({
               )}
             </>
           )}
-          {(!!!selectable || selected.length === 0) && columns.map(h => {
+          {(!!!selectable || selected.length === 0 || loading) && columns.map(h => {
             const sortedNatural = h.key === sortedBy.key && sortedBy.direction === 'natural'
             const sortedReverse = h.key === sortedBy.key && sortedBy.direction === 'reverse'
             const sortButtonClasses = createClasses({

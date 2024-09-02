@@ -11,6 +11,8 @@
 
 .table__header {
   border-bottom: 1px solid var(--border);
+  border-top-left-radius: var(--rounding);
+  border-top-right-radius: var(--rounding);
 }
 
 .table__header--selected {
