@@ -5,8 +5,13 @@
 }
 
 .skeleton::after {
-  content: "";
-  background: linear-gradient(to right, transparent, var(--shine-color), transparent);
+  content: '';
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--shine-color),
+    transparent
+  );
   opacity: 0.33;
   position: absolute;
   width: 100%;

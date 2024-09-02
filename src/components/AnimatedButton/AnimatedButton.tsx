@@ -37,23 +37,23 @@ export default function AnimatedButton({
   loading,
   submit,
   onClick
-} : Props) {
+}: Props) {
   const classes = createClasses({
     [styles['link']]: true,
     [styles[`link--${size}`]]: true,
     [styles[`link--${style}`]]: true,
     [styles['link--full-width']]: !!fullWidth,
     [styles['link--loading']]: !!loading,
-    ...(Object.fromEntries((className ?? '').split(' ').map(c => [c, true])))
+    ...Object.fromEntries((className ?? '').split(' ').map(c => [c, true]))
   })
 
   const loaderColors: Record<typeof style, string> = {
-    'primary': 'white',
-    'secondary': 'var(--primary)',
-    'accent': 'black',
-    'ghost': 'black',
-    'negative': 'white',
-    'positive': 'white'
+    primary: 'white',
+    secondary: 'var(--primary)',
+    accent: 'black',
+    ghost: 'black',
+    negative: 'white',
+    positive: 'white'
   }
 
   const innerJSX = loading ? (
@@ -64,23 +64,23 @@ export default function AnimatedButton({
   ) : (
     <>
       {beforeText}
-        <span
-          className={styles['link__inner']}
-          data-text={text}>
-          {text}
-        </span>
+      <span
+        className={styles['link__inner']}
+        data-text={text}>
+        {text}
+      </span>
       {afterText}
     </>
   )
 
   return type === 'link' ? (
-    <Link 
+    <Link
       to={href ?? '#'}
       id={id}
       aria-disabled={disabled}
       target={newTab ? '_blank' : undefined}
       rel={newTab ? 'noopener noreferrer' : undefined}
-      onClick={(e) => !disabled && !loading && onClick && onClick(e)}
+      onClick={e => !disabled && !loading && onClick && onClick(e)}
       className={classes}>
       {innerJSX}
     </Link>
@@ -89,10 +89,9 @@ export default function AnimatedButton({
       type={submit ? 'submit' : undefined}
       id={id}
       aria-disabled={disabled}
-      onClick={(e) => !disabled && !loading && onClick && onClick(e)}
+      onClick={e => !disabled && !loading && onClick && onClick(e)}
       className={classes}>
       {innerJSX}
     </button>
   )
 }
-

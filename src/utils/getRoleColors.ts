@@ -1,4 +1,4 @@
-export type RoleColors = { bg: string, text: string }
+export type RoleColors = { bg: string; text: string }
 
 export const roleColors: { [role: string]: RoleColors } = {
   'President': {
@@ -36,8 +36,8 @@ export const roleColors: { [role: string]: RoleColors } = {
 } as const
 
 export const getRoleColors = (role: string | undefined) => {
-  if(!role) return roleColors['default']
+  if (!role) return roleColors['default']
   const colors = roleColors[role]
-  if(!colors) return roleColors['default']
+  if (!colors) return roleColors['default']
   return colors
 }

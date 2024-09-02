@@ -41,7 +41,7 @@ export default function Popup({
         />
       )}
       <div
-        role="dialog"
+        role='dialog'
         className={drawerClasses}
         style={{
           zIndex: 1000

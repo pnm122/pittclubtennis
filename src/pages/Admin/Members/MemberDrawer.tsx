@@ -2,21 +2,26 @@ import Drawer from 'components/Drawer/Drawer'
 import styles from './Members.module.css'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import DrawerContent from 'components/Drawer/DrawerContent'
-import MemberDrawerContent, { MemberDrawerContentRef, MemberDrawerState } from './MemberDrawerContent'
+import MemberDrawerContent, {
+  MemberDrawerContentRef,
+  MemberDrawerState
+} from './MemberDrawerContent'
 import Popup from 'components/Popup/Popup'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
-import { MdWarning } from "react-icons/md"
+import { MdWarning } from 'react-icons/md'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import { MemberType } from 'types/MemberType'
 
-export type AdminMemberDrawer = {
-  data: MemberType
-  doc: QueryDocumentSnapshot
-  type: 'edit'
-} | {
-  type: 'add'
-}
+export type AdminMemberDrawer =
+  | {
+      data: MemberType
+      doc: QueryDocumentSnapshot
+      type: 'edit'
+    }
+  | {
+      type: 'add'
+    }
 
 export interface DrawerData {
   data: MemberType
@@ -30,14 +35,15 @@ export interface MemberDrawerRef {
 }
 
 interface Props {
-  onSave: (data: { state: MemberDrawerState, doc?: QueryDocumentSnapshot }) => Promise<void>
+  onSave: (data: {
+    state: MemberDrawerState
+    doc?: QueryDocumentSnapshot
+  }) => Promise<void>
 }
 
 let warningPromiseResolve: (close: boolean) => void
 
-const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
-  onSave
-}, ref) => {
+const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
   const [drawerData, setDrawerData] = useState<DrawerData | null>(null)
   // Track if the drawer has been edited to show a warning when trying to close the drawer
   const [drawerEdited, setDrawerEdited] = useState(false)
@@ -47,7 +53,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
   const memberDrawerContent = useRef<MemberDrawerContentRef>(null)
 
   function open(data: AdminMemberDrawer) {
-    if(data.type === 'edit') {
+    if (data.type === 'edit') {
       setDrawerData(data)
     } else {
       setDrawerData({
@@ -71,12 +77,14 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
     setIsOpen(false)
     setDrawerEdited(false)
   }
-  
+
   async function closeDrawer() {
-    if(drawerEdited) {
+    if (drawerEdited) {
       setShowWarning(true)
-      const shouldCloseDrawer = await new Promise<boolean>(res => warningPromiseResolve = res)
-      if(shouldCloseDrawer) {
+      const shouldCloseDrawer = await new Promise<boolean>(
+        res => (warningPromiseResolve = res)
+      )
+      if (shouldCloseDrawer) {
         setIsOpen(false)
         setDrawerEdited(false)
       }
@@ -89,7 +97,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
   }
 
   async function save() {
-    if(!memberDrawerContent.current?.isValid()) {
+    if (!memberDrawerContent.current?.isValid()) {
       console.log(memberDrawerContent.current?.isValid())
       console.log('invalid')
       return
@@ -135,17 +143,20 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({
           />
         </div>
       </Drawer>
-      <Popup
-        open={showWarning}
-      >
+      <Popup open={showWarning}>
         <div className={styles['popup']}>
           <div className={styles['popup__warning-label']}>
             <MdWarning />
             <span>Warning</span>
           </div>
           <div className={styles['popup__body']}>
-            <h1 className={styles['popup__title']}>You have unsaved changes!</h1>
-            <p>Are you sure you want to cancel editing? This action cannot be undone.</p>
+            <h1 className={styles['popup__title']}>
+              You have unsaved changes!
+            </h1>
+            <p>
+              Are you sure you want to cancel editing? This action cannot be
+              undone.
+            </p>
             <div className={styles['popup__actions']}>
               <AnimatedButton
                 text='Delete changes'

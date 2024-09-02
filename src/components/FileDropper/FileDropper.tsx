@@ -4,21 +4,23 @@ import createClasses from 'utils/createClasses'
 import { MdClose, MdInsertDriveFile, MdUpload } from 'react-icons/md'
 import Error from 'components/Error/Error'
 
-export type FileError = {
-  type: 'size'
-  details: {
-    file: File
-    uploadedFileSize: number
-    maxFileSize: number
-  }
-} | {
-  type: 'file-type'
-  details: {
-    file: File
-    uploadedFileType: string
-    acceptedFileTypes: string[]
-  }
-}
+export type FileError =
+  | {
+      type: 'size'
+      details: {
+        file: File
+        uploadedFileSize: number
+        maxFileSize: number
+      }
+    }
+  | {
+      type: 'file-type'
+      details: {
+        file: File
+        uploadedFileType: string
+        acceptedFileTypes: string[]
+      }
+    }
 
 interface Props {
   /**
@@ -68,18 +70,21 @@ export interface FileDropperRef {
   getFileData: () => Promise<string | ArrayBuffer | null>
 }
 
-const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
-  name,
-  acceptedFileTypes,
-  onFileError,
-  maxFileSize = 64 * 1024 * 1024,
-  value,
-  onChange,
-  label,
-  error,
-  required,
-  width
-}, ref) {
+const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper(
+  {
+    name,
+    acceptedFileTypes,
+    onFileError,
+    maxFileSize = 64 * 1024 * 1024,
+    value,
+    onChange,
+    label,
+    error,
+    required,
+    width
+  },
+  ref
+) {
   const input = useRef<HTMLInputElement>(null)
   const [fileHovering, setFileHovering] = useState(false)
 
@@ -88,11 +93,13 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
   }))
 
   const getFileData = async () => {
-    if(!value) return null
+    if (!value) return null
 
     const reader = new FileReader()
     let resolve: (value: string | ArrayBuffer | null) => void
-    const promise = new Promise<string | ArrayBuffer | null>(res => resolve = res)
+    const promise = new Promise<string | ArrayBuffer | null>(
+      res => (resolve = res)
+    )
     reader.addEventListener('load', e => {
       resolve(e.target?.result ?? null)
     })
@@ -109,7 +116,7 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
   const updateFile = (newFile: File | null) => {
     onChange(newFile)
 
-    if(newFile && !acceptedFileTypes.includes(newFile.type)) {
+    if (newFile && !acceptedFileTypes.includes(newFile.type)) {
       onFileError({
         type: 'file-type',
         details: {
@@ -119,8 +126,8 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
         }
       })
     }
-    
-    if(newFile && newFile.size > maxFileSize) {
+
+    if (newFile && newFile.size > maxFileSize) {
       onFileError({
         type: 'size',
         details: {
@@ -149,13 +156,15 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
 
   return (
     <div
-    style={width ? { width } : undefined}
-    className={createClasses({
-      'form-elem': true,
-      'form-elem--error': !!error
-    })}>
+      style={width ? { width } : undefined}
+      className={createClasses({
+        'form-elem': true,
+        'form-elem--error': !!error
+      })}>
       {!!label && (
-        <label className={'form-elem__label'} htmlFor={name}>
+        <label
+          className={'form-elem__label'}
+          htmlFor={name}>
           {label}
           {required && <span className={'required-star'}>*</span>}
         </label>
@@ -181,7 +190,12 @@ const FileDropper = forwardRef<FileDropperRef, Props>(function FileDropper({
               </span>
             ) : (
               <span className={styles['file-dropper__text']}>
-                Drop file here or <label htmlFor={name} className={styles['file-dropper__upload-file']}>browse files</label>
+                Drop file here or{' '}
+                <label
+                  htmlFor={name}
+                  className={styles['file-dropper__upload-file']}>
+                  browse files
+                </label>
               </span>
             )}
           </>

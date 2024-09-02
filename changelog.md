@@ -40,7 +40,7 @@
 - Alt name for social links
 - Footer h6 --> span
 - More descriptive text on homepage: Learn More --> About Us
-- Replace __ with 100 on tryouts page
+- Replace \_\_ with 100 on tryouts page
 
 ## 1.0.1
 

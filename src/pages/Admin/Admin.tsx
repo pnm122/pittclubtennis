@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import styles from './Admin.module.css'
-import Loader from "components/Loader/Loader";
-import Header from "components/Header/Header";
-import AnimatedButton from "components/AnimatedButton/AnimatedButton";
+import Loader from 'components/Loader/Loader'
+import Header from 'components/Header/Header'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import './admin.css'
 
 export default function Admin() {
-  const adminLinks = [{
-    path: '/admin/tournaments',
-    name: 'Tournaments'
-  }, {
-    path: '/admin/members',
-    name: 'Members'
-  }]
+  const adminLinks = [
+    {
+      path: '/admin/tournaments',
+      name: 'Tournaments'
+    },
+    {
+      path: '/admin/members',
+      name: 'Members'
+    }
+  ]
 
   const auth = getAuth()
   const navigate = useNavigate()
@@ -22,12 +25,12 @@ export default function Admin() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, () => {
-      if(auth.currentUser) {
+      if (auth.currentUser) {
         navigate('/admin/members')
       } else {
         navigate('/admin/login')
       }
-  
+
       setLoading(false)
     })
 
@@ -39,14 +42,12 @@ export default function Admin() {
   const logOut = async () => {
     try {
       await auth.signOut()
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
 
-  const adminHeaderTitle = (
-    <span id='header-title'>Dashboard</span>
-  )
+  const adminHeaderTitle = <span id='header-title'>Dashboard</span>
 
   const adminRightSlot = (
     <AnimatedButton
@@ -59,11 +60,9 @@ export default function Admin() {
 
   return (
     <>
-      { loading ? (
+      {loading ? (
         <div id={styles['loader']}>
-          <Loader 
-            size={32}
-          />
+          <Loader size={32} />
         </div>
       ) : (
         <>

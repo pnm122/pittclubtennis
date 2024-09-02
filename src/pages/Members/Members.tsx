@@ -10,7 +10,7 @@ export default function Members() {
 
   useEffect(() => {
     getMembers().then(res => {
-      if(res.error || !res.data) {
+      if (res.error || !res.data) {
         // TODO: show error
         return
       }
@@ -39,18 +39,16 @@ export default function Members() {
           <h2 className='title'>Members</h2>
           <div className='content fade-in'>
             <div id={styles['members']}>
-              { loading ? (
+              {loading ? (
                 <MembersSkeleton />
-              ) : (
-                members ? (
-                  members.length > 0 ? (
-                    membersRender
-                  ) : (
-                    <p>Members coming soon!</p>
-                  )
+              ) : members ? (
+                members.length > 0 ? (
+                  membersRender
                 ) : (
-                  <p className='error'>Error loading members.</p>
+                  <p>Members coming soon!</p>
                 )
+              ) : (
+                <p className='error'>Error loading members.</p>
               )}
             </div>
           </div>
@@ -60,10 +58,20 @@ export default function Members() {
   )
 }
 
-export const Member = ({ name, role, year, imgSrc } : MemberType) => {
+export const Member = ({ name, role, year, imgSrc }: MemberType) => {
   return (
     <div className={styles['member']}>
-      { imgSrc ? <img src={imgSrc} alt={name} /> : <img src={'images/no-image-silhouette.png'} alt={'Tennis Player Silhouette'} /> }
+      {imgSrc ? (
+        <img
+          src={imgSrc}
+          alt={name}
+        />
+      ) : (
+        <img
+          src={'images/no-image-silhouette.png'}
+          alt={'Tennis Player Silhouette'}
+        />
+      )}
       <h3>{name}</h3>
       <h6>{role}</h6>
       <span>{year}</span>
@@ -72,16 +80,17 @@ export const Member = ({ name, role, year, imgSrc } : MemberType) => {
 }
 
 const MembersSkeleton = () => {
-  let skeletons : React.ReactNode[] = []
+  let skeletons: React.ReactNode[] = []
   const NUM_MEMBERS_EXPECTED = 35
 
-  for(let i = 0; i < NUM_MEMBERS_EXPECTED; i++) {
-    skeletons.push(<Skeleton key={i} aspectRatio='3/4' />)
+  for (let i = 0; i < NUM_MEMBERS_EXPECTED; i++) {
+    skeletons.push(
+      <Skeleton
+        key={i}
+        aspectRatio='3/4'
+      />
+    )
   }
 
-  return (
-    <>
-      {skeletons}
-    </>
-  )
+  return <>{skeletons}</>
 }

@@ -1,4 +1,5 @@
-.tournament, .tournament-skeleton {
+.tournament,
+.tournament-skeleton {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -17,7 +18,8 @@
 }
 
 @media (width > 656px) {
-  .tournament, .tournament-skeleton {
+  .tournament,
+  .tournament-skeleton {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -28,7 +30,7 @@
   }
 }
 
-.tournament:not(:first-of-type), 
+.tournament:not(:first-of-type),
 .tournament-skeleton:not(:first-of-type) {
   padding-top: var(--size-xl);
 }

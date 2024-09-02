@@ -1,6 +1,6 @@
-import { FirestoreError, doc, getDoc, getFirestore } from "firebase/firestore"
-import queryWithErrors from "./queryWithErrors"
-import TryoutsType from "types/TryoutsType"
+import { FirestoreError, doc, getDoc, getFirestore } from 'firebase/firestore'
+import queryWithErrors from './queryWithErrors'
+import TryoutsType from 'types/TryoutsType'
 
 const getTryoutsInfo = () => {
   const db = getFirestore()

@@ -2,7 +2,7 @@ const queryWithErrors = async <T, S>(callback: () => Promise<T>) => {
   try {
     const data = await callback()
     return { data }
-  } catch(error) {
+  } catch (error) {
     return { error: error as S }
   }
 }

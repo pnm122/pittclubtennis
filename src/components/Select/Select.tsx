@@ -1,7 +1,13 @@
 import createClasses from 'utils/createClasses'
 import styles from './Select.module.css'
 import 'formElement.css'
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState
+} from 'react'
 import { MdKeyboardArrowUp } from 'react-icons/md'
 import Error from 'components/Error/Error'
 import generateId from 'utils/generateId'
@@ -10,11 +16,11 @@ interface Props {
   /** Optional label for the select. */
   label?: string
   /** Selectable values. Optional name can be provided, which will sent on change instead of the value, which is displayed to the user. */
-  options: string[] | { value: string, name: string }[]
+  options: string[] | { value: string; name: string }[]
   /** Index or item currently selected */
   value?: string | number | null
   /** Callback fired when an item is selected */
-  onChange: ({ index, selected }: { index: number, selected: string }) => void
+  onChange: ({ index, selected }: { index: number; selected: string }) => void
   /** Placeholder for the select. By default, it says "Select" */
   placeholder?: string
   /** Error to show for the select */
@@ -33,17 +39,20 @@ export interface SelectRef {
   focus: () => void
 }
 
-const Select = forwardRef<SelectRef, Props>(function Select({
-  label,
-  options,
-  value,
-  onChange,
-  placeholder = 'Select',
-  error,
-  width,
-  popupHugContents = false,
-  required
-}: Props, ref) {
+const Select = forwardRef<SelectRef, Props>(function Select(
+  {
+    label,
+    options,
+    value,
+    onChange,
+    placeholder = 'Select',
+    error,
+    width,
+    popupHugContents = false,
+    required
+  }: Props,
+  ref
+) {
   useImperativeHandle(ref, () => ({
     focus
   }))
@@ -51,11 +60,17 @@ const Select = forwardRef<SelectRef, Props>(function Select({
   const id = useRef(generateId())
   const current = useRef<HTMLDivElement>(null)
   const popup = useRef<HTMLDivElement>(null)
-  const optionElements = useRef<{ [index: number]: HTMLButtonElement | null }>({})
+  const optionElements = useRef<{ [index: number]: HTMLButtonElement | null }>(
+    {}
+  )
   const [open, setOpen] = useState(false)
   const [focusIndex, setFocusIndex] = useState<number | null>(null)
 
-  const renderOptions = options.map(o => (typeof o === 'string' ? { value: o, name: o } : { value: o.value, name: o.name ?? o.value }))
+  const renderOptions = options.map(o =>
+    typeof o === 'string'
+      ? { value: o, name: o }
+      : { value: o.value, name: o.name ?? o.value }
+  )
   const renderValue =
     typeof value === 'number'
       ? renderOptions[value]
@@ -66,7 +81,7 @@ const Select = forwardRef<SelectRef, Props>(function Select({
   }
 
   useEffect(() => {
-    if(!open) setFocusIndex(-1)
+    if (!open) setFocusIndex(-1)
   }, [open])
 
   const focusOption = (index: number) => {
@@ -74,21 +89,26 @@ const Select = forwardRef<SelectRef, Props>(function Select({
     optionElements.current[index]?.focus()
   }
 
-  const handleChange = (value: { index: number, selected: string }) => {
+  const handleChange = (value: { index: number; selected: string }) => {
     setOpen(false)
     onChange(value)
     current.current?.focus()
   }
 
   const getSelectedIndex = () => {
-    return renderValue ? renderOptions.findIndex(o => o.name === renderValue.name) : -1
+    return renderValue
+      ? renderOptions.findIndex(o => o.name === renderValue.name)
+      : -1
   }
 
   const onCurrentKeyDown = async (e: React.KeyboardEvent) => {
-    if(e.key === 'Enter' || e.key === ' ') {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       setOpen(o => !o)
-    } else if((e.key === 'ArrowDown' && renderOptions.length > 0) || (e.key === 'Tab' && !e.shiftKey && open)) {
+    } else if (
+      (e.key === 'ArrowDown' && renderOptions.length > 0) ||
+      (e.key === 'Tab' && !e.shiftKey && open)
+    ) {
       e.preventDefault()
       const selectedIndex = getSelectedIndex()
       focusOption(selectedIndex === -1 ? 0 : selectedIndex)
@@ -98,22 +118,28 @@ const Select = forwardRef<SelectRef, Props>(function Select({
   const onBlur = (e: React.FocusEvent) => {
     const { relatedTarget } = e
     const inSelect = relatedTarget?.closest(`#${id.current}`)
-    if(!inSelect) {
+    if (!inSelect) {
       setOpen(false)
     }
   }
 
   const onPopupKeyDown = (e: React.KeyboardEvent) => {
-    if(e.key === 'Escape') {
+    if (e.key === 'Escape') {
       setOpen(false)
       focus()
-    } else if(e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+    } else if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
       e.preventDefault()
-      const nextIndex = focusIndex === null ? 0 : ((focusIndex + 1) % renderOptions.length)
+      const nextIndex =
+        focusIndex === null ? 0 : (focusIndex + 1) % renderOptions.length
       focusOption(nextIndex)
-    } else if(e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+    } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
       e.preventDefault()
-      const nextIndex = focusIndex === null ? 0 : focusIndex > 0 ? focusIndex - 1 : renderOptions.length - 1
+      const nextIndex =
+        focusIndex === null
+          ? 0
+          : focusIndex > 0
+            ? focusIndex - 1
+            : renderOptions.length - 1
       focusOption(nextIndex)
     }
   }
@@ -126,7 +152,7 @@ const Select = forwardRef<SelectRef, Props>(function Select({
         'form-elem--error': !!error
       })}
       onBlur={onBlur}
-      style={{...(width ? { width }: {})}}>
+      style={{ ...(width ? { width } : {}) }}>
       {!!label && (
         <label className={'form-elem__label'}>
           {label}
@@ -142,7 +168,7 @@ const Select = forwardRef<SelectRef, Props>(function Select({
             'form-elem__main-control': true
           })}
           onClick={() => setOpen(!open)}
-          onKeyDown={(e) => onCurrentKeyDown(e)}
+          onKeyDown={e => onCurrentKeyDown(e)}
           role='button'
           tabIndex={0}
           aria-haspopup='listbox'
@@ -155,10 +181,12 @@ const Select = forwardRef<SelectRef, Props>(function Select({
             })}>
             {renderValue?.value ?? placeholder}
           </span>
-          <MdKeyboardArrowUp className={createClasses({
-            [styles['select__arrow']]: true,
-            [styles['select__arrow--flipped']]: open
-          })} />
+          <MdKeyboardArrowUp
+            className={createClasses({
+              [styles['select__arrow']]: true,
+              [styles['select__arrow--flipped']]: open
+            })}
+          />
         </div>
         <div
           ref={popup}
@@ -171,14 +199,17 @@ const Select = forwardRef<SelectRef, Props>(function Select({
           onKeyDown={onPopupKeyDown}>
           <ul className={styles['option-list']}>
             {renderOptions.map((o, index) => (
-              <li className={styles['option']} key={o.name}>
+              <li
+                className={styles['option']}
+                key={o.name}>
                 <button
                   className={createClasses({
                     [styles['option__button']]: true,
-                    [styles['option__button--selected']]: renderValue?.name === o.name
+                    [styles['option__button--selected']]:
+                      renderValue?.name === o.name
                   })}
                   onClick={() => handleChange({ index, selected: o.name })}
-                  ref={(el) => optionElements.current[index] = el}>
+                  ref={el => (optionElements.current[index] = el)}>
                   {o.value}
                 </button>
               </li>

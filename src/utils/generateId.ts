@@ -3,5 +3,8 @@ export default function generateId() {
     return String.fromCharCode(65 + Math.floor(Math.random() * 26))
   }
 
-  return (new Array(12)).fill('').map(() => randomLetter()).join('')
+  return new Array(12)
+    .fill('')
+    .map(() => randomLetter())
+    .join('')
 }

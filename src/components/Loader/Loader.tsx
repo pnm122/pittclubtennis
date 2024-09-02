@@ -5,17 +5,24 @@ interface Props {
   color?: string
 }
 
-export default function Loader({ size, color = 'var(--primary)' } : Props) {
+export default function Loader({ size, color = 'var(--primary)' }: Props) {
   return (
     <svg
-      style={{ 
-        '--size': `${size}px`,
-      } as React.CSSProperties}
+      style={
+        {
+          '--size': `${size}px`
+        } as React.CSSProperties
+      }
       className={styles['loader']}
-      viewBox="0 0 225 225"
-      xmlns="http://www.w3.org/2000/svg">
-      <circle cx="112.5" cy="112.5" fill="none"
-        r="100" strokeWidth="25" stroke={color}
+      viewBox='0 0 225 225'
+      xmlns='http://www.w3.org/2000/svg'>
+      <circle
+        cx='112.5'
+        cy='112.5'
+        fill='none'
+        r='100'
+        strokeWidth='25'
+        stroke={color}
       />
     </svg>
   )

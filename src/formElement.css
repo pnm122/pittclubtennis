@@ -34,20 +34,27 @@
 }
 
 .form-elem__main-control:not(.form-elem__main-control--borderless):focus,
-.form-elem__main-control:not(.form-elem__main-control--borderless):focus-within {
+.form-elem__main-control:not(
+    .form-elem__main-control--borderless
+  ):focus-within {
   border-color: var(--primary);
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
-.form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless):focus,
-.form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless):focus-within {
+.form-elem--error
+  .form-elem__main-control:not(.form-elem__main-control--borderless):focus,
+.form-elem--error
+  .form-elem__main-control:not(
+    .form-elem__main-control--borderless
+  ):focus-within {
   border-color: var(--negative);
   outline: 2px solid var(--negative);
   outline-offset: 3px;
 }
 
-.form-elem--error .form-elem__main-control:not(.form-elem__main-control--borderless) {
+.form-elem--error
+  .form-elem__main-control:not(.form-elem__main-control--borderless) {
   border-color: var(--negative);
 }
 

@@ -1,4 +1,4 @@
-import { DocumentReference, updateDoc } from "firebase/firestore";
+import { DocumentReference, updateDoc } from 'firebase/firestore'
 
 export default async function updateInDatabase<T extends Record<string, any>>(
   ref: DocumentReference,
@@ -10,7 +10,7 @@ export default async function updateInDatabase<T extends Record<string, any>>(
       success: true,
       data: null
     }
-  } catch(error) {
+  } catch (error) {
     return {
       success: false,
       data: {

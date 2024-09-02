@@ -15,15 +15,14 @@ export default function Login() {
     e.preventDefault()
 
     setLoading(true)
-    
+
     const auth = getAuth()
 
     // redirect handled by authStateChanged
-    signInWithEmailAndPassword(auth, email, pass)
-    .catch(e => {
+    signInWithEmailAndPassword(auth, email, pass).catch(e => {
       setLoading(false)
-      
-      switch(e.code) {
+
+      switch (e.code) {
         case 'auth/wrong-password':
         case 'auth/user-not-found':
           setError('Incorrect login details.')
@@ -37,8 +36,13 @@ export default function Login() {
 
   return (
     <main id={styles['login']}>
-      <img src='/images/logo_blue_gold.png' alt='Club Tennis Logo' />
-      <form id={styles['login-form']} onSubmit={handleSubmit}>
+      <img
+        src='/images/logo_blue_gold.png'
+        alt='Club Tennis Logo'
+      />
+      <form
+        id={styles['login-form']}
+        onSubmit={handleSubmit}>
         <Input
           label='Email'
           value={email}

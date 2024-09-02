@@ -78,8 +78,8 @@
   --link-color: black;
 }
 
-.link--primary[aria-disabled=true], 
-.link--secondary[aria-disabled=true] {
+.link--primary[aria-disabled='true'],
+.link--secondary[aria-disabled='true'] {
   --link-bg: var(--on-bg10);
   --link-color: var(--on-bg50);
   cursor: default;
@@ -107,10 +107,10 @@
   white-space: nowrap;
 }
 
-.link__inner:not([aria-disabled=true])::before {
+.link__inner:not([aria-disabled='true'])::before {
   content: attr(data-text);
 }
 
-.link:not([aria-disabled=true]):hover .link__inner {
+.link:not([aria-disabled='true']):hover .link__inner {
   transform: translateY(calc(-1 * (100% + 1em)));
 }

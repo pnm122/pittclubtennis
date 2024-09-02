@@ -22,40 +22,52 @@ export default function Members() {
 
   const table = useRef<TableRef<RowData>>(null)
   const memberDrawer = useRef<MemberDrawerRef>(null)
-  const [memberData, setMemberData] = useState<{ data: MemberType, doc: QueryDocumentSnapshot }[]>([])
+  const [memberData, setMemberData] = useState<
+    { data: MemberType; doc: QueryDocumentSnapshot }[]
+  >([])
   // Derived directly from memberData, used in table
   const [tableData, setTableData] = useState<RowData[]>([])
   // Whether the page is waiting for members to load
   const [loading, setLoading] = useState(true)
   // Whether the page is waiting for members to be deleted
   const [isDeleting, setIsDeleting] = useState(false)
-  const columns: Column<RowData>[] = [{
-    key: 'name',
-    name: 'Name',
-    width: 250,
-    sort: (a: RowData['name'], b: RowData['name']) => a.localeCompare(b)
-  }, {
-    key: 'year',
-    name: 'Year',
-    width: 125,
-    sort: (a: RowData['name'], b: RowData['name']) => {
-      const order = ['graduate student', 'senior', 'junior', 'sophomore', 'freshman']
-      const aIndex = order.findIndex(o => o.toUpperCase() === a.toUpperCase())
-      const bIndex = order.findIndex(o => o.toUpperCase() === b.toUpperCase())
-      return aIndex === bIndex ? 0 : aIndex > bIndex ? 1 : -1;
+  const columns: Column<RowData>[] = [
+    {
+      key: 'name',
+      name: 'Name',
+      width: 250,
+      sort: (a: RowData['name'], b: RowData['name']) => a.localeCompare(b)
+    },
+    {
+      key: 'year',
+      name: 'Year',
+      width: 125,
+      sort: (a: RowData['name'], b: RowData['name']) => {
+        const order = [
+          'graduate student',
+          'senior',
+          'junior',
+          'sophomore',
+          'freshman'
+        ]
+        const aIndex = order.findIndex(o => o.toUpperCase() === a.toUpperCase())
+        const bIndex = order.findIndex(o => o.toUpperCase() === b.toUpperCase())
+        return aIndex === bIndex ? 0 : aIndex > bIndex ? 1 : -1
+      }
+    },
+    {
+      key: 'role',
+      name: 'Role',
+      width: 190
+    },
+    {
+      key: 'imgSrc',
+      name: 'Image Uploaded',
+      width: 175,
+      sort: (a: RowData['imgSrc'], b: RowData['imgSrc']) =>
+        a === b ? 0 : b && !a ? 1 : -1
     }
-  }, {
-    key: 'role',
-    name: 'Role',
-    width: 190
-  }, {
-    key: 'imgSrc',
-    name: 'Image Uploaded',
-    width: 175,
-    sort: (a: RowData['imgSrc'], b: RowData['imgSrc']) => (
-      a === b ? 0 : b && !a ? 1 : -1
-    )
-  }]
+  ]
 
   useEffect(() => {
     fetchMembers()
@@ -69,10 +81,10 @@ export default function Members() {
     setLoading(true)
     const res = await getMembers()
     setLoading(false)
-    if(res.error) {
+    if (res.error) {
       console.error(res.error)
       return
-    } else if(res) {
+    } else if (res) {
       setMemberData(res.data)
     }
   }
@@ -91,9 +103,12 @@ export default function Members() {
     })
   }
 
-  async function onSave(data: { state: MemberDrawerState, doc?: QueryDocumentSnapshot }) {
+  async function onSave(data: {
+    state: MemberDrawerState
+    doc?: QueryDocumentSnapshot
+  }) {
     const { success, data: setData } = await setMember(data.state, data.doc)
-    if(success) {
+    if (success) {
       pushNotification({
         type: 'success',
         text: `Successfully ${data.doc ? 'updated' : 'created'} member ${data.state.name}!`
@@ -114,14 +129,18 @@ export default function Members() {
   async function onDelete() {
     const rows = table.current!.getSelectedRows()
 
-    const docsToDelete = rows.map(r =>
-      memberData.find(({ data: { name, role, year }}) => r.name === name && r.role === role && r.year === year)!.doc
+    const docsToDelete = rows.map(
+      r =>
+        memberData.find(
+          ({ data: { name, role, year } }) =>
+            r.name === name && r.role === role && r.year === year
+        )!.doc
     )
 
     setIsDeleting(true)
     const { success, data } = await deleteMembers(docsToDelete)
     setIsDeleting(false)
-    if(success) {
+    if (success) {
       pushNotification({
         type: 'success',
         text: `Successfully deleted ${docsToDelete.length} member${docsToDelete.length > 1 ? 's' : ''}!`
@@ -146,7 +165,7 @@ export default function Members() {
       />
       <div className='container'>
         <h1 className='admin-page-title'>Members</h1>
-        <div style={{overflow: 'auto', marginTop: '16px'}}>
+        <div style={{ overflow: 'auto', marginTop: '16px' }}>
           <Table
             ref={table}
             data={tableData}
@@ -163,24 +182,30 @@ export default function Members() {
                 onClick={onDelete}
               />
             }
-            onRowClick={(row) => openEditDrawer(row)}
-            renderMap={(value) => {
-              if(!value) return
-              if('name' in value) {
+            onRowClick={row => openEditDrawer(row)}
+            renderMap={value => {
+              if (!value) return
+              if ('name' in value) {
                 return <p className={styles['member__name']}>{value.name}</p>
-              } else if('year' in value) {
+              } else if ('year' in value) {
                 return <p className={styles['member__year']}>{value.year}</p>
-              } else if('role' in value) {
+              } else if ('role' in value) {
                 const roleClasses = createClasses({
                   [styles['member__role']]: true,
-                  [styles['member__role--none']]: !!!value.role || value.role === 'None'
+                  [styles['member__role--none']]:
+                    !!!value.role || value.role === 'None'
                 })
                 const { bg, text } = getRoleColors(value.role)
-    
+
                 return (
-                  <p 
-                    className={roleClasses} 
-                    style={{ '--role-text-color': text, '--role-bg-color': bg } as React.CSSProperties}>
+                  <p
+                    className={roleClasses}
+                    style={
+                      {
+                        '--role-text-color': text,
+                        '--role-bg-color': bg
+                      } as React.CSSProperties
+                    }>
                     {!!value.role ? value.role : 'None'}
                   </p>
                 )
@@ -189,7 +214,9 @@ export default function Members() {
                   <div className={styles['uploaded-checkmark']}>
                     <IoMdCheckmark />
                   </div>
-                ) : <></>
+                ) : (
+                  <></>
+                )
               }
             }}
           />

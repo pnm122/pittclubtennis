@@ -1,13 +1,21 @@
-import { collection, getDocs, getFirestore, QueryDocumentSnapshot } from "firebase/firestore"
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  QueryDocumentSnapshot
+} from 'firebase/firestore'
 import { StorageError } from 'firebase/storage'
-import queryWithErrors from "../queryWithErrors"
-import { FirebaseError } from "firebase/app"
-import { MemberType } from "types/MemberType"
+import queryWithErrors from '../queryWithErrors'
+import { FirebaseError } from 'firebase/app'
+import { MemberType } from 'types/MemberType'
 
 const getMembers = async () => {
   const db = getFirestore()
 
-  return queryWithErrors<{ data: MemberType, doc: QueryDocumentSnapshot }[], FirebaseError | StorageError>(async () => {
+  return queryWithErrors<
+    { data: MemberType; doc: QueryDocumentSnapshot }[],
+    FirebaseError | StorageError
+  >(async () => {
     const m = await getDocs(collection(db, 'TEST_members'))
     const members = m.docs.map(doc => {
       return {
@@ -27,14 +35,16 @@ const getMembers = async () => {
     } as const
 
     function getSortOrder(role: string | undefined) {
-      if(!role) return -1
+      if (!role) return -1
 
       const order = sortOrder[role.toUpperCase() as keyof typeof sortOrder]
-      if(!order) return -1
+      if (!order) return -1
       return order
     }
 
-    return members.sort((a, b) => getSortOrder(b.data.role) - getSortOrder(a.data.role))
+    return members.sort(
+      (a, b) => getSortOrder(b.data.role) - getSortOrder(a.data.role)
+    )
   })
 }
 

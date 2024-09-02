@@ -12,7 +12,7 @@ export default function Fundraisers() {
 
   useEffect(() => {
     getFundraisers().then(res => {
-      if(res.error || !res.data) {
+      if (res.error || !res.data) {
         // console.error(res.error)
         setLoading(false)
         return
@@ -26,35 +26,33 @@ export default function Fundraisers() {
   return (
     <main>
       <section>
-        <div className="container two-cols">
+        <div className='container two-cols'>
           <h2 className='title'>Fundraisers</h2>
           <div className='content fade-in'>
             <p>
-              We need your support! Fundraisers help us afford practices, attend tournaments, 
-              among other club expenses. Check out our fundraisers below to see how you can help 
-              us today!
+              We need your support! Fundraisers help us afford practices, attend
+              tournaments, among other club expenses. Check out our fundraisers
+              below to see how you can help us today!
             </p>
-            { loading ? (
+            {loading ? (
               <>
                 <FundraiserSkeleton />
                 <FundraiserSkeleton />
               </>
+            ) : fundraisers ? (
+              fundraisers.map((f, index) => {
+                return (
+                  <Fundraiser
+                    key={index}
+                    name={f.name}
+                    description={f.description}
+                    linkLocation={f.linkLocation}
+                    linkTitle={f.linkTitle}
+                  />
+                )
+              })
             ) : (
-              fundraisers ? (
-                fundraisers.map((f, index) => {
-                  return (
-                    <Fundraiser
-                      key={index}
-                      name={f.name}
-                      description={f.description}
-                      linkLocation={f.linkLocation}
-                      linkTitle={f.linkTitle}
-                    />
-                  )
-                })
-              ) : (
-                <p className='error'>Error loading fundraisers.</p>
-              )
+              <p className='error'>Error loading fundraisers.</p>
             )}
           </div>
         </div>
@@ -63,13 +61,18 @@ export default function Fundraisers() {
   )
 }
 
-const Fundraiser = ({ name, description, linkLocation, linkTitle } : FundraiserType) => {
+const Fundraiser = ({
+  name,
+  description,
+  linkLocation,
+  linkTitle
+}: FundraiserType) => {
   return (
     <div className={styles['fundraiser']}>
       <h3>{name}</h3>
       <p>{description}</p>
       <AnimatedButton
-        href={linkLocation} 
+        href={linkLocation}
         text={linkTitle}
         afterText={<RxExternalLink />}
         newTab
@@ -81,11 +84,26 @@ const Fundraiser = ({ name, description, linkLocation, linkTitle } : FundraiserT
 const FundraiserSkeleton = () => {
   return (
     <div className={styles['fundraiser-skeleton']}>
-      <Skeleton width='200px' height='var(--text-xl)' />
-      <Skeleton width='100%' height='var(--text-md)' />
-      <Skeleton width='90%' height='var(--text-md)' />
-      <Skeleton width='30%' height='var(--text-md)' />
-      <Skeleton width='125px' height='var(--size-3xl)' />
+      <Skeleton
+        width='200px'
+        height='var(--text-xl)'
+      />
+      <Skeleton
+        width='100%'
+        height='var(--text-md)'
+      />
+      <Skeleton
+        width='90%'
+        height='var(--text-md)'
+      />
+      <Skeleton
+        width='30%'
+        height='var(--text-md)'
+      />
+      <Skeleton
+        width='125px'
+        height='var(--size-3xl)'
+      />
     </div>
   )
 }

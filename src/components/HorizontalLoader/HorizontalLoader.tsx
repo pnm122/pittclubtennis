@@ -5,14 +5,12 @@ interface Props {
   className?: string
 }
 
-export default function HorizontalLoader({
-  className
-}: Props) {
+export default function HorizontalLoader({ className }: Props) {
   return (
-    <div className={createClasses({
-      [styles['loader']]: true,
-      ...(className ? {[className]: true} : {})
-    })}>
-    </div>
+    <div
+      className={createClasses({
+        [styles['loader']]: true,
+        ...(className ? { [className]: true } : {})
+      })}></div>
   )
 }

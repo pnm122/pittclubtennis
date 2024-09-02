@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import 'header.css'
 
 interface Props {
-  links: { path: string, name: string }[]
+  links: { path: string; name: string }[]
   leftSlot?: React.ReactNode
   rightSlot?: React.ReactNode
 }
@@ -16,7 +16,7 @@ export default function Header({ links, leftSlot, rightSlot }: Props) {
   }, [location.pathname])
 
   return (
-    <header 
+    <header
       className='container'
       aria-expanded={active}>
       <div id='header-inner'>
@@ -24,8 +24,8 @@ export default function Header({ links, leftSlot, rightSlot }: Props) {
         <div id='header-right'>
           <NavLinks links={links} />
           {rightSlot}
-          <button 
-            onClick={() => setActive(!active)} 
+          <button
+            onClick={() => setActive(!active)}
             aria-label='Toggle navigation'
             id='toggle-nav'>
             <div className='hamburger-line'></div>
@@ -34,7 +34,9 @@ export default function Header({ links, leftSlot, rightSlot }: Props) {
           </button>
         </div>
       </div>
-      <div id='header-close' onClick={() => setActive(false)}></div>
+      <div
+        id='header-close'
+        onClick={() => setActive(false)}></div>
     </header>
   )
 }

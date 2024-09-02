@@ -1,4 +1,4 @@
-import { deleteDoc, DocumentReference } from "firebase/firestore";
+import { deleteDoc, DocumentReference } from 'firebase/firestore'
 
 export default async function deleteFromDatabase(
   ref: DocumentReference
@@ -9,7 +9,7 @@ export default async function deleteFromDatabase(
       success: true,
       data: null
     }
-  } catch(error) {
+  } catch (error) {
     return {
       success: false,
       data: {

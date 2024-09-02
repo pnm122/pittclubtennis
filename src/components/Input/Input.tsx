@@ -9,7 +9,7 @@ interface Props {
   type?: React.InputHTMLAttributes<HTMLInputElement>['type']
   name: string
   value?: string
-  selection?: { start: number, end: number }
+  selection?: { start: number; end: number }
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onSelect?: React.ReactEventHandler<HTMLInputElement>
   onFocus?: React.FocusEventHandler<HTMLInputElement>
@@ -27,24 +27,27 @@ export interface InputRef {
   focus: () => void
 }
 
-const Input = forwardRef<InputRef, Props>(function Input({
-  placeholder,
-  label,
-  type,
-  name,
-  value,
-  onChange,
-  onSelect,
-  onFocus,
-  onBeforeInput,
-  onKeyDown,
-  onBlur,
-  onClick,
-  error,
-  required,
-  borderless,
-  width
-}: Props, ref) {
+const Input = forwardRef<InputRef, Props>(function Input(
+  {
+    placeholder,
+    label,
+    type,
+    name,
+    value,
+    onChange,
+    onSelect,
+    onFocus,
+    onBeforeInput,
+    onKeyDown,
+    onBlur,
+    onClick,
+    error,
+    required,
+    borderless,
+    width
+  }: Props,
+  ref
+) {
   useImperativeHandle(ref, () => ({
     focus() {
       input.current?.focus()
@@ -59,9 +62,13 @@ const Input = forwardRef<InputRef, Props>(function Input({
   })
 
   return (
-    <div className={inputGroupClasses} style={{...(width ? { width } : {})}}>
+    <div
+      className={inputGroupClasses}
+      style={{ ...(width ? { width } : {}) }}>
       {!!label && (
-        <label className={'form-elem__label'} htmlFor={name}>
+        <label
+          className={'form-elem__label'}
+          htmlFor={name}>
           {label}
           {required && <span className={'required-star'}>*</span>}
         </label>
@@ -75,13 +82,13 @@ const Input = forwardRef<InputRef, Props>(function Input({
         name={name}
         type={type}
         placeholder={placeholder}
-        onBeforeInput={(e) => onBeforeInput && onBeforeInput(e)}
-        onChange={(e) => onChange && onChange(e)}
-        onSelect={(e) => onSelect && onSelect(e)}
-        onFocus={(e) => onFocus && onFocus(e)}
-        onKeyDown={(e) => onKeyDown && onKeyDown(e)}
-        onBlur={(e) => onBlur && onBlur(e)}
-        onClick={(e) => onClick && onClick(e)}
+        onBeforeInput={e => onBeforeInput && onBeforeInput(e)}
+        onChange={e => onChange && onChange(e)}
+        onSelect={e => onSelect && onSelect(e)}
+        onFocus={e => onFocus && onFocus(e)}
+        onKeyDown={e => onKeyDown && onKeyDown(e)}
+        onBlur={e => onBlur && onBlur(e)}
+        onClick={e => onClick && onClick(e)}
         required={required}
         ref={input}
       />

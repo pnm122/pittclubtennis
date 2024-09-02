@@ -1,10 +1,16 @@
-import { createContext, SetStateAction, useEffect, useRef, useState } from "react"
-import DatepickerInput, { DatepickerInputRef } from "./DatepickerInput"
-import DatepickerPopup, { PopupRef } from "./DatepickerPopup"
+import {
+  createContext,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
+import DatepickerInput, { DatepickerInputRef } from './DatepickerInput'
+import DatepickerPopup, { PopupRef } from './DatepickerPopup'
 import styles from './Datepicker.module.css'
-import createClasses from "utils/createClasses"
+import createClasses from 'utils/createClasses'
 import 'formElement.css'
-import Error from "components/Error/Error"
+import Error from 'components/Error/Error'
 
 interface Props {
   value: Date | null
@@ -19,17 +25,13 @@ interface Props {
 }
 
 export const DEFAULT_DATEPICKER_FORMAT = 'MM/dd/yyyy' as const
-export type DatepickerContextType =
-  Required<
-    Pick<
-      Props,
-      'value' | 'onChange' | 'disabledDates' | 'error' | 'format'
-    >
-  > & {
-    open: boolean,
-    setOpen: React.Dispatch<SetStateAction<boolean>>
-    focusInput: () => void
-  }
+export type DatepickerContextType = Required<
+  Pick<Props, 'value' | 'onChange' | 'disabledDates' | 'error' | 'format'>
+> & {
+  open: boolean
+  setOpen: React.Dispatch<SetStateAction<boolean>>
+  focusInput: () => void
+}
 export const DatepickerContext = createContext<DatepickerContextType>({
   value: null,
   onChange: () => {},
@@ -41,7 +43,20 @@ export const DatepickerContext = createContext<DatepickerContextType>({
   focusInput: () => {}
 })
 
-export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as const
+export const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+] as const
 
 let resolveRenderPromise: (() => void) | null = null
 
@@ -62,7 +77,7 @@ export default function Datepicker({
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if(resolveRenderPromise) {
+    if (resolveRenderPromise) {
       resolveRenderPromise()
       resolveRenderPromise = null
     }
@@ -75,7 +90,7 @@ export default function Datepicker({
   }
 
   const focusCalendar = async (wait: boolean) => {
-    if(wait) await waitForRender()
+    if (wait) await waitForRender()
     return !!popup.current?.focusCalendar()
   }
 
@@ -87,7 +102,7 @@ export default function Datepicker({
     const { relatedTarget } = e
     const inPopup = relatedTarget?.closest(`#${popup.current!.id}`)
     const inInput = relatedTarget?.closest(`#${input.current!.id}`)
-    if(!(inPopup || inInput)) {
+    if (!(inPopup || inInput)) {
       setOpen(false)
     }
   }

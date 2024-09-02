@@ -5,7 +5,9 @@ import { gsap } from 'gsap'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import getTournaments from 'utils/firebase/getTournaments'
 import TournamentType from 'types/TournamentType'
-import Tournament, { TournamentSkeleton } from 'components/Tournament/Tournament'
+import Tournament, {
+  TournamentSkeleton
+} from 'components/Tournament/Tournament'
 import filterUpcoming from 'utils/filterUpcoming'
 import { textFrom, textTo } from 'utils/animation/textAnimation'
 import { fadeFrom, fadeTo } from 'utils/animation/fadeAnimation'
@@ -26,10 +28,10 @@ const Hero = () => {
   const tl = useRef<GSAPTimeline | null>()
 
   useLayoutEffect(() => {
-    if(!hero.current) return
+    if (!hero.current) return
 
     window.onscroll = () => {
-      if(!tennisball.current) return
+      if (!tennisball.current) return
 
       const x = -1 * (window.scrollY / 4.5)
       const y = -1 * (window.scrollY / 12)
@@ -56,33 +58,45 @@ const Hero = () => {
   }, [hero.current])
 
   return (
-    <section id={styles['hero-wrapper']} className='hero'>
-      <div 
-        id={styles['hero']} 
+    <section
+      id={styles['hero-wrapper']}
+      className='hero'>
+      <div
+        id={styles['hero']}
         className='container'
         ref={hero}>
         <div id={styles['hero-content']}>
           <h1 className='hero-text split'>Club Tennis at Pitt</h1>
-          <p className='hero-fade-in'>We're a student-run competitive co-ed club sports team
-            at the University of Pittsburgh.
+          <p className='hero-fade-in'>
+            We're a student-run competitive co-ed club sports team at the
+            University of Pittsburgh.
           </p>
           <div id={styles['hero-buttons']}>
-            <AnimatedButton href='/tryouts' text='Join' size='large' className='hero-fade-in'></AnimatedButton>
-            <AnimatedButton href='/about' text='About Us' size='large' style='secondary' className='hero-fade-in'></AnimatedButton>
+            <AnimatedButton
+              href='/tryouts'
+              text='Join'
+              size='large'
+              className='hero-fade-in'></AnimatedButton>
+            <AnimatedButton
+              href='/about'
+              text='About Us'
+              size='large'
+              style='secondary'
+              className='hero-fade-in'></AnimatedButton>
           </div>
         </div>
         <div id={styles['hero-img-wrap']}>
           <picture>
-            <source 
-              type="image/webp" 
-              srcSet="images/hero.webp"></source>
-            <source 
-              type="image/png"
-              src='images/hero.png' 
+            <source
+              type='image/webp'
+              srcSet='images/hero.webp'></source>
+            <source
+              type='image/png'
+              src='images/hero.png'
               id={styles['hero-img']}
               className='hero-fade-in'></source>
-            <img 
-              src='images/hero.png' 
+            <img
+              src='images/hero.png'
               alt='Player hitting a ball'
               id={styles['hero-img']}
               className='hero-fade-in'></img>
@@ -93,8 +107,8 @@ const Hero = () => {
             id={styles['hero-img']}
             className='hero-fade-in'
           /> */}
-          <img 
-            src='images/tennisball.png' 
+          <img
+            src='images/tennisball.png'
             alt='Tennis ball'
             ref={tennisball}
             id={styles['tennis-ball']}
@@ -109,18 +123,22 @@ const Hero = () => {
 const About = () => {
   return (
     <section>
-      <div id={styles['about']} className='container two-cols'>
+      <div
+        id={styles['about']}
+        className='container two-cols'>
         <h2 className='title'>Our Club</h2>
         <div className='content fade-in'>
           <div id={styles['about-paragraph']}>
-            <p>On September 14th, 2006, the Pittsburgh Club Tennis Team was born, holding 
-              its first tryout and marking the beginning of a new, competitive club sport 
-              at the University of Pittsburgh. Since then, Pitt Club Tennis has grown 
-              tremendously. Today, we have roughly 35 members, hold practices 3 times a 
-              week at Alpha Tennis and Fitness, and attend tournaments all across the 
-              nation!</p>
-            <AnimatedButton 
-              href='/about' 
+            <p>
+              On September 14th, 2006, the Pittsburgh Club Tennis Team was born,
+              holding its first tryout and marking the beginning of a new,
+              competitive club sport at the University of Pittsburgh. Since
+              then, Pitt Club Tennis has grown tremendously. Today, we have
+              roughly 35 members, hold practices 3 times a week at Alpha Tennis
+              and Fitness, and attend tournaments all across the nation!
+            </p>
+            <AnimatedButton
+              href='/about'
               text='About Us'
             />
           </div>
@@ -136,7 +154,7 @@ const Tournaments = () => {
 
   useEffect(() => {
     getTournaments().then(res => {
-      if(!res.data) {
+      if (!res.data) {
         // console.error(res.error)
         return
       }
@@ -153,7 +171,7 @@ const Tournaments = () => {
         <h2 className='title'>Upcoming Tournaments</h2>
         <div className='content fade-in'>
           <div>
-            { tournaments ? (
+            {tournaments ? (
               tournaments.map((t, index) => {
                 return (
                   <Tournament
@@ -167,18 +185,19 @@ const Tournaments = () => {
                   />
                 )
               })
+            ) : loading ? (
+              <>
+                <TournamentSkeleton />
+                <TournamentSkeleton />
+              </>
             ) : (
-              loading ? (
-                <>
-                  <TournamentSkeleton />
-                  <TournamentSkeleton />
-                </>
-              ) : (
-                <p>No upcoming tournaments.</p>
-              )
+              <p>No upcoming tournaments.</p>
             )}
           </div>
-          <AnimatedButton href='/tournaments' text='See All Tournaments' />
+          <AnimatedButton
+            href='/tournaments'
+            text='See All Tournaments'
+          />
         </div>
       </div>
     </section>

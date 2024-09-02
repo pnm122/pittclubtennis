@@ -1,7 +1,14 @@
-import Notification from "components/Notification/Notification";
-import { createContext, PropsWithChildren, useEffect, useLayoutEffect, useRef, useState } from "react";
+import Notification from 'components/Notification/Notification'
+import {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react'
 import styles from 'components/Notification/Notification.module.css'
-import gsap from "gsap/all";
+import gsap from 'gsap/all'
 
 export interface SingleNotification {
   /**
@@ -53,7 +60,9 @@ export interface NotificationContext {
 }
 
 export const notificationContext = createContext<NotificationContext>({
-  push() { return -1 },
+  push() {
+    return -1
+  },
   clear() {},
   remove() {}
 })
@@ -70,10 +79,10 @@ export function NotificationContextProvider({ children }: PropsWithChildren) {
 
   /** View transition */
   function vt(callback: () => void) {
-    if(!(document as any).startViewTransition) {
+    if (!(document as any).startViewTransition) {
       callback()
     } else {
-      (document as any).startViewTransition(() => callback())
+      ;(document as any).startViewTransition(() => callback())
     }
   }
 
@@ -83,17 +92,17 @@ export function NotificationContextProvider({ children }: PropsWithChildren) {
     return id
   }
 
-  function clear() {
-
-  }
+  function clear() {}
 
   function remove(id: number) {
     vt(() => setNotifications(notifs => notifs.filter(n => n.id !== id)))
   }
-  
+
   return (
     <notificationContext.Provider value={{ push, clear, remove }}>
-      <div className={styles['notifications']} ref={notificationsContainer}>
+      <div
+        className={styles['notifications']}
+        ref={notificationsContainer}>
         {notifications.map(n => (
           <Notification
             key={n.id}

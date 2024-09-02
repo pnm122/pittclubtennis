@@ -11,7 +11,8 @@
 }
 
 .member {
-  background: var(--on-bg10) linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.67));
+  background: var(--on-bg10)
+    linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.67));
   border-radius: var(--rounding);
   aspect-ratio: 3/4;
   overflow: hidden;

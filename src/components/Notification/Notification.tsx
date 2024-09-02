@@ -1,11 +1,15 @@
-import { notificationContext, NotificationContext, SingleNotification } from 'context/NotificationContext'
+import {
+  notificationContext,
+  NotificationContext,
+  SingleNotification
+} from 'context/NotificationContext'
 import styles from './Notification.module.css'
 import { useContext, useEffect, useState } from 'react'
 import createClasses from 'utils/createClasses'
-import { MdWarning } from "react-icons/md"
-import { MdError } from "react-icons/md"
-import { IoCheckmarkCircleSharp } from "react-icons/io5"
-import { MdClose } from "react-icons/md"
+import { MdWarning } from 'react-icons/md'
+import { MdError } from 'react-icons/md'
+import { IoCheckmarkCircleSharp } from 'react-icons/io5'
+import { MdClose } from 'react-icons/md'
 
 export default function Notification({
   timeout = 5000,
@@ -18,7 +22,7 @@ export default function Notification({
   const { remove } = useContext<NotificationContext>(notificationContext)
 
   useEffect(() => {
-    if(timeout < 0) return
+    if (timeout < 0) return
 
     const t = setTimeout(() => {
       remove(id)

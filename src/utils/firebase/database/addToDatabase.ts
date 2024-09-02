@@ -1,4 +1,9 @@
-import { addDoc, collection, DocumentReference, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  DocumentReference,
+  getFirestore
+} from 'firebase/firestore'
 
 export default async function addToDatabase<T extends Record<string, any>>(
   collectionName: string,
@@ -13,7 +18,7 @@ export default async function addToDatabase<T extends Record<string, any>>(
         doc
       }
     }
-  } catch(error) {
+  } catch (error) {
     return {
       success: false,
       data: {

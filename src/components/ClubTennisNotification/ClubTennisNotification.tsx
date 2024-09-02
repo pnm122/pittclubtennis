@@ -10,7 +10,7 @@ export default function ClubTennisNotification() {
 
   useEffect(() => {
     getNotification().then(res => {
-      if(res.error || !res.data) {
+      if (res.error || !res.data) {
         return
       }
 
@@ -20,7 +20,9 @@ export default function ClubTennisNotification() {
   }, [])
 
   return (
-    <div id={styles['notif-outer']} aria-hidden={!showing}>
+    <div
+      id={styles['notif-outer']}
+      aria-hidden={!showing}>
       <div className='container'>
         {notif && notif.active ? (
           <div id={styles['notif']}>
@@ -29,18 +31,22 @@ export default function ClubTennisNotification() {
               <p>{notif.message}</p>
             </div>
             <div id={styles['buttons']}>
-              <AnimatedButton 
-                href={notif.link} 
+              <AnimatedButton
+                href={notif.link}
                 text={notif.linkTitle}
                 newTab={notif.linkNewTab}
                 onClick={() => setShowing(false)}
               />
-              <button 
+              <button
                 onClick={() => setShowing(false)}
-                id={styles['hide-button']}>Hide</button>
+                id={styles['hide-button']}>
+                Hide
+              </button>
             </div>
           </div>
-        ) : <></>}
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   )

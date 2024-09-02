@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import styles from './Tournaments.module.css'
 import TournamentType from 'types/TournamentType'
 import getTournaments from 'utils/firebase/getTournaments'
-import Tournament, { TournamentSkeleton } from 'components/Tournament/Tournament'
+import Tournament, {
+  TournamentSkeleton
+} from 'components/Tournament/Tournament'
 import filterUpcoming from 'utils/filterUpcoming'
 import Skeleton from 'components/Skeleton/Skeleton'
 
@@ -12,7 +14,7 @@ export default function Tournaments() {
 
   useEffect(() => {
     getTournaments().then(res => {
-      if(!res.data) {
+      if (!res.data) {
         // console.error(res.error)
         return
       }
@@ -23,22 +25,26 @@ export default function Tournaments() {
     })
   }, [])
 
-  let { upcoming, past} = filterUpcoming(tournaments)
+  let { upcoming, past } = filterUpcoming(tournaments)
 
   return (
     <main>
       <section>
-        <div className="container two-cols">
-          <h2 className='title' id={styles['title']}>Tournaments</h2>
+        <div className='container two-cols'>
+          <h2
+            className='title'
+            id={styles['title']}>
+            Tournaments
+          </h2>
           <div className='content fade-in'>
             <p>
-              We attend as many tournaments as we can. Check out the tournaments we've played in and 
-              the ones we're going to attend!
+              We attend as many tournaments as we can. Check out the tournaments
+              we've played in and the ones we're going to attend!
             </p>
             <div id={styles['tournaments']}>
-              { tournaments ? (
+              {tournaments ? (
                 <>
-                  { upcoming ? (
+                  {upcoming ? (
                     <div className={styles['tournament-section']}>
                       <h3>Upcoming</h3>
                       <div>
@@ -60,7 +66,7 @@ export default function Tournaments() {
                   ) : (
                     <></>
                   )}
-                  { past ? (
+                  {past ? (
                     <div className={styles['tournament-section']}>
                       <h3>Past Tournaments</h3>
                       <div>
@@ -83,29 +89,33 @@ export default function Tournaments() {
                     <></>
                   )}
                 </>
+              ) : loading ? (
+                <>
+                  <div className={styles['tournament-section']}>
+                    <Skeleton
+                      width='225px'
+                      height='var(--text-xl)'
+                    />
+                    <div>
+                      <TournamentSkeleton />
+                      <TournamentSkeleton />
+                    </div>
+                  </div>
+                  <div className={styles['tournament-section']}>
+                    <Skeleton
+                      width='325px'
+                      height='var(--text-xl)'
+                    />
+                    <div>
+                      <TournamentSkeleton />
+                      <TournamentSkeleton />
+                      <TournamentSkeleton />
+                      <TournamentSkeleton />
+                    </div>
+                  </div>
+                </>
               ) : (
-                loading ? (
-                  <>
-                    <div className={styles['tournament-section']}>
-                      <Skeleton width='225px' height='var(--text-xl)' />
-                      <div>
-                        <TournamentSkeleton />
-                        <TournamentSkeleton />
-                      </div>
-                    </div>
-                    <div className={styles['tournament-section']}>
-                      <Skeleton width='325px' height='var(--text-xl)' />
-                      <div>
-                        <TournamentSkeleton />
-                        <TournamentSkeleton />
-                        <TournamentSkeleton />
-                        <TournamentSkeleton />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <p>No tournaments found.</p>
-                )
+                <p>No tournaments found.</p>
               )}
             </div>
           </div>

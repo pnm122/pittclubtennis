@@ -1,8 +1,8 @@
-import { getMonth, isSameMonth } from "date-fns"
+import { getMonth, isSameMonth } from 'date-fns'
 import styles from './Datepicker.module.css'
-import createClasses from "utils/createClasses"
-import { useContext } from "react"
-import { DatepickerContext, months } from "./Datepicker"
+import createClasses from 'utils/createClasses'
+import { useContext } from 'react'
+import { DatepickerContext, months } from './Datepicker'
 
 interface Props {
   date: Date
@@ -22,7 +22,9 @@ export default function CalendarDay({
   const { onChange } = useContext(DatepickerContext)
 
   return (
-    <td className={styles['day-cell']} role="gridcell">
+    <td
+      className={styles['day-cell']}
+      role='gridcell'>
       {isSameMonth(date, month) && (
         <button
           tabIndex={-1}

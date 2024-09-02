@@ -9,7 +9,7 @@ const getFundraisers = async () => {
   const q = await queryWithErrors<FundraiserType[], FirebaseError>(async () => {
     const t = await getDocs(collection(db, 'fundraisers'))
     const docs = t.docs
-    let fundraisers = docs.map(d => {
+    const fundraisers = docs.map(d => {
       return d.data() as FundraiserType
     })
 

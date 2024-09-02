@@ -1,6 +1,11 @@
-import { MemberDrawerState } from "pages/Admin/Members/MemberDrawerContent"
+import { MemberDrawerState } from 'pages/Admin/Members/MemberDrawerContent'
 
-export type MemberYear = 'freshman' | 'sophomore' | 'junior' | 'senior' | 'graduate student'
+export type MemberYear =
+  | 'freshman'
+  | 'sophomore'
+  | 'junior'
+  | 'senior'
+  | 'graduate student'
 
 export interface MemberType {
   name: string

@@ -9,10 +9,12 @@
     stroke-dasharray: 0, 100000;
     stroke-dashoffset: 0;
     rotate: 0deg;
-  } 50% {
+  }
+  50% {
     stroke-dasharray: calc(1.33 * 3.14159 * 100px), 100000;
     stroke-dashoffset: calc(-0.67 * 3.14159 * 100px);
-  } to {
+  }
+  to {
     stroke-dasharray: 0, 100000;
     stroke-dashoffset: calc(-2 * 3.14159 * 100px);
     rotate: 360deg;

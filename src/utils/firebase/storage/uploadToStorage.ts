@@ -1,11 +1,14 @@
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage"
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
-export default async function uploadToStorage(path: string, data: Blob): FirebaseUtilityReturn<{
+export default async function uploadToStorage(
+  path: string,
+  data: Blob
+): FirebaseUtilityReturn<{
   downloadURL: string
 }> {
   const storage = getStorage()
 
-  try { 
+  try {
     const newStorageRef = ref(storage, path)
     await uploadBytes(newStorageRef, data)
     const downloadURL = await getDownloadURL(newStorageRef)
@@ -15,7 +18,7 @@ export default async function uploadToStorage(path: string, data: Blob): Firebas
         downloadURL
       }
     }
-  } catch(error) {
+  } catch (error) {
     return {
       success: false,
       data: {

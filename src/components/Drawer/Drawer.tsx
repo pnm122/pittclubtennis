@@ -55,13 +55,19 @@ export default function Drawer({
         />
       )}
       <div
-        role="dialog"
+        role='dialog'
         className={drawerClasses}
         style={{
           zIndex: 999,
           backgroundColor: 'var(--bg)',
-          width: ['left', 'right'].includes(orientation) && size ? `${size}px` : undefined,
-          height: ['top', 'bottom'].includes(orientation) && size ? `${size}px` : undefined,
+          width:
+            ['left', 'right'].includes(orientation) && size
+              ? `${size}px`
+              : undefined,
+          height:
+            ['top', 'bottom'].includes(orientation) && size
+              ? `${size}px`
+              : undefined,
           ...styles
         }}>
         {children}
