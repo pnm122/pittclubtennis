@@ -134,24 +134,24 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
           label='Year'
           options={[
             {
-              value: 'Freshman',
-              name: 'freshman'
+              value: 'freshman',
+              name: 'Freshman'
             },
             {
-              value: 'Sophomore',
-              name: 'sophomore'
+              value: 'sophomore',
+              name: 'Sophomore'
             },
             {
-              value: 'Junior',
-              name: 'junior'
+              value: 'junior',
+              name: 'Junior'
             },
             {
-              value: 'Senior',
-              name: 'senior'
+              value: 'senior',
+              name: 'Senior'
             },
             {
-              value: 'Graduate Student',
-              name: 'graduate student'
+              value: 'graduate student',
+              name: 'Graduate Student'
             }
           ]}
           value={inputs.year}

@@ -15,12 +15,12 @@ import generateId from 'utils/generateId'
 interface Props {
   /** Optional label for the select. */
   label?: string
-  /** Selectable values. Optional name can be provided, which will sent on change instead of the value, which is displayed to the user. */
-  options: readonly string[] | readonly { value: string; name: string }[]
+  /** Selectable values. Optional value can be provided, which will sent on change instead of the name, which is displayed to the user. */
+  options: readonly string[] | readonly { value: any; name: string }[]
   /** Index or item currently selected */
   value?: string | number | null
   /** Callback fired when an item is selected */
-  onChange: ({ index, selected }: { index: number; selected: string }) => void
+  onChange: ({ index, selected }: { index: number; selected: any }) => void
   /** Placeholder for the select. By default, it says "Select" */
   placeholder?: string
   /** Error to show for the select */
@@ -74,7 +74,7 @@ const Select = forwardRef<SelectRef, Props>(function Select(
   const renderValue =
     typeof value === 'number'
       ? renderOptions[value]
-      : renderOptions.find(o => o.name === value)
+      : renderOptions.find(o => o.value === value)
 
   const focus = () => {
     current.current?.focus()
@@ -89,7 +89,7 @@ const Select = forwardRef<SelectRef, Props>(function Select(
     optionElements.current[index]?.focus()
   }
 
-  const handleChange = (value: { index: number; selected: string }) => {
+  const handleChange = (value: { index: number; selected: any }) => {
     setOpen(false)
     onChange(value)
     current.current?.focus()
@@ -179,7 +179,7 @@ const Select = forwardRef<SelectRef, Props>(function Select(
               [styles['current-value']]: !!renderValue?.name,
               'main-control__placeholder': !renderValue?.name
             })}>
-            {renderValue?.value ?? placeholder}
+            {renderValue?.name ?? placeholder}
           </span>
           <MdKeyboardArrowUp
             className={createClasses({
@@ -201,17 +201,17 @@ const Select = forwardRef<SelectRef, Props>(function Select(
             {renderOptions.map((o, index) => (
               <li
                 className={styles['option']}
-                key={o.name}>
+                key={o.value}>
                 <button
                   type='button'
                   className={createClasses({
                     [styles['option__button']]: true,
                     [styles['option__button--selected']]:
-                      renderValue?.name === o.name
+                      renderValue?.value === o.value
                   })}
-                  onClick={() => handleChange({ index, selected: o.name })}
+                  onClick={() => handleChange({ index, selected: o.value })}
                   ref={el => (optionElements.current[index] = el)}>
-                  {o.value}
+                  {o.name}
                 </button>
               </li>
             ))}
