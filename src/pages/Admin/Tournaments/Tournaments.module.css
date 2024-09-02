@@ -1,0 +1,30 @@
+.table-item {
+  font-size: var(--text-sm);
+}
+
+.table-item--other {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.table-item--link {
+  --hover-circle-scale: 2;
+  font-size: var(--text-md);
+  position: relative;
+}
+
+.table-item--link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  scale: 2;
+}
+
+.table-item--placement {
+  margin: 0;
+}
+
+.table-item--none {
+  color: var(--unselected);
+}

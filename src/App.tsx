@@ -18,6 +18,7 @@ import PageLayout from 'layout/PageLayout'
 import Admin from 'pages/Admin/Admin'
 import Login from 'pages/Admin/Login/Login'
 import AdminMembers from 'pages/Admin/Members/Members'
+import AdminTournaments from 'pages/Admin/Tournaments/Tournaments'
 import { NotificationContextProvider } from 'context/NotificationContext'
 
 function App() {
@@ -117,6 +118,10 @@ function App() {
             <Route
               path='members'
               element={<AdminMembers />}
+            />
+            <Route
+              path='tournaments'
+              element={<AdminTournaments />}
             />
           </Route>
           <Route
