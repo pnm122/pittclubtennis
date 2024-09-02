@@ -13,6 +13,15 @@
   -webkit-text-size-adjust: 100%;
 }
 
+::view-transition(:root) {
+  /* Prevent the default animation,
+  so both views remain opacity:1 throughout the transition */
+  animation: none;
+  /* Use normal blending,
+  so the new view sits on top and obscures the old view */
+  mix-blend-mode: normal;
+}
+
 body {
   --primaryRGB: 0, 53, 148;
   --primary: rgb(var(--primaryRGB));

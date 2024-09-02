@@ -4,7 +4,7 @@ import { Column } from 'types/Table'
 import createClasses from 'utils/createClasses'
 import { getRoleColors } from 'utils/getRoleColors'
 import { IoMdCheckmark } from 'react-icons/io'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import MemberDrawer, { MemberDrawerRef } from './MemberDrawer'
 import getMembers from 'utils/firebase/members/getMembers'
 import { MemberDrawerState } from './MemberDrawerContent'
@@ -13,10 +13,12 @@ import setMember from 'utils/firebase/members/setMember'
 import { MemberType } from 'types/MemberType'
 import deleteMembers from 'utils/firebase/members/deleteMembers'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
-
+import { notificationContext } from 'context/NotificationContext'
 
 export default function Members() {
   type RowData = Readonly<MemberType & { key: any }>
+
+  const { push: pushNotification } = useContext(notificationContext)
 
   const table = useRef<TableRef<RowData>>(null)
   const memberDrawer = useRef<MemberDrawerRef>(null)
@@ -90,10 +92,22 @@ export default function Members() {
   }
 
   async function onSave(data: { state: MemberDrawerState, doc?: QueryDocumentSnapshot }) {
-    const { success } = await setMember(data.state, data.doc)
+    const { success, data: setData } = await setMember(data.state, data.doc)
     if(success) {
+      pushNotification({
+        type: 'success',
+        text: `Successfully created member ${data.state.name}!`
+      })
       memberDrawer.current?.close()
       fetchMembers()
+    } else {
+      pushNotification({
+        type: 'error',
+        text: `Failed to create member ${data.state.name}!`,
+        subtext: (setData.error as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
     }
   }
 
@@ -105,10 +119,22 @@ export default function Members() {
     )
 
     setIsDeleting(true)
-    const { success } = await deleteMembers(docsToDelete)
+    const { success, data } = await deleteMembers(docsToDelete)
     setIsDeleting(false)
     if(success) {
+      pushNotification({
+        type: 'success',
+        text: `Successfully deleted ${docsToDelete.length} member${docsToDelete.length > 1 ? 's' : ''}!`
+      })
       fetchMembers()
+    } else {
+      pushNotification({
+        type: 'error',
+        text: `Failed to delete documents!`,
+        subtext: (data.error as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
     }
   }
 
