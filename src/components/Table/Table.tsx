@@ -22,7 +22,7 @@ interface Props<T extends Row> {
   data: T[]
   columns: Column<T>[]
   // For each key, make an object with a key of that name and the type for that key, then index by the original keys
-  renderMap?: (value: UnionFromRecord<Omit<T, 'key'>>) => React.ReactNode
+  renderMap?: (value: UnionFromRecord<Omit<T, 'key'>>, row: T) => React.ReactNode
   onRowClick?: (row: T) => void
   selectable?: boolean
   onRowSelect?: (row: T | T[], selected: boolean) => void
@@ -319,7 +319,7 @@ function Table<T extends Row>(
                           row[key] &&
                           renderMap({
                             [key]: row[key]
-                          } as any)}
+                          } as any, row)}
                         {!renderMap && (
                           <p className={styles['item__text']}>
                             {row[key].toString()}

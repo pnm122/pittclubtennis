@@ -80,6 +80,7 @@
   align-items: center;
   overflow: auto;
   scrollbar-width: thin;
+  padding-block: 8px;
 }
 
 .header-item:first-of-type,
