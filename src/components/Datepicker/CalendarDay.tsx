@@ -27,6 +27,7 @@ export default function CalendarDay({
       role='gridcell'>
       {isSameMonth(date, month) && (
         <button
+          type='button'
           tabIndex={-1}
           aria-label={`${months[getMonth(month)]} ${date.getDate()}`}
           aria-disabled={disabled}

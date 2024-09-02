@@ -117,6 +117,7 @@ const DatepickerInput = forwardRef<DatepickerInputRef, Props>(
           borderless
         />
         <button
+          type='button'
           aria-label='Open datepicker dialog'
           aria-haspopup={true}
           aria-pressed={open}

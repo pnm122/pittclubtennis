@@ -70,13 +70,14 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
       onKeyDown={onKeyDown}>
       <div className={styles['popup-header']}>
         <button
+          type='button'
           aria-label='Previous month'
           className={`${styles['popup-header__button']} with-hover-circle`}
           onClick={() => setMonthAndInitFocusedDate(subMonths(month, 1))}>
           <MdArrowBack />
         </button>
         <Select
-          options={months.map(m => ({ value: m }))}
+          options={months}
           value={getMonth(month)}
           onChange={({ selected }) =>
             setMonthAndInitFocusedDate(
@@ -86,6 +87,7 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
           width='120px'
         />
         <button
+          type='button'
           aria-label='Next month'
           className={`${styles['popup-header__button']} with-hover-circle`}
           onClick={() => setMonthAndInitFocusedDate(addMonths(month, 1))}>

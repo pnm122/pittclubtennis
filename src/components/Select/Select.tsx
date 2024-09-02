@@ -16,7 +16,7 @@ interface Props {
   /** Optional label for the select. */
   label?: string
   /** Selectable values. Optional name can be provided, which will sent on change instead of the value, which is displayed to the user. */
-  options: string[] | { value: string; name: string }[]
+  options: readonly string[] | readonly { value: string; name: string }[]
   /** Index or item currently selected */
   value?: string | number | null
   /** Callback fired when an item is selected */
@@ -203,6 +203,7 @@ const Select = forwardRef<SelectRef, Props>(function Select(
                 className={styles['option']}
                 key={o.name}>
                 <button
+                  type='button'
                   className={createClasses({
                     [styles['option__button']]: true,
                     [styles['option__button--selected']]:
