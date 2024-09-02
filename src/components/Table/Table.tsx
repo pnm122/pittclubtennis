@@ -22,7 +22,10 @@ interface Props<T extends Row> {
   data: T[]
   columns: Column<T>[]
   // For each key, make an object with a key of that name and the type for that key, then index by the original keys
-  renderMap?: (value: UnionFromRecord<Omit<T, 'key'>>, row: T) => React.ReactNode
+  renderMap?: (
+    value: UnionFromRecord<Omit<T, 'key'>>,
+    row: T
+  ) => React.ReactNode
   onRowClick?: (row: T) => void
   selectable?: boolean
   onRowSelect?: (row: T | T[], selected: boolean) => void
@@ -130,7 +133,12 @@ function Table<T extends Row>(
   }
 
   return (
-    <div style={{ maxWidth, overflow: 'auto', display: maxWidth ? 'block' : 'contents' }}>
+    <div
+      style={{
+        maxWidth,
+        overflow: 'auto',
+        display: maxWidth ? 'block' : 'contents'
+      }}>
       <table
         className={createClasses({
           [styles['table']]: true,
@@ -207,7 +215,7 @@ function Table<T extends Row>(
                     sortedNatural || sortedReverse,
                   'with-hover-circle': true
                 })
-  
+
                 return (
                   <td
                     className={styles['header-item']}
@@ -262,17 +270,17 @@ function Table<T extends Row>(
                   !!selectable && selected.includes(row.key),
                 [styles['table__row--clickable']]: !!onRowClick
               })
-  
+
               const checkboxClasses = createClasses({
                 [styles['item--checkbox']]: true,
                 [styles['item']]: true
               })
-  
+
               const arrowClasses = createClasses({
                 [styles['item--arrow']]: true,
                 [styles['item']]: true
               })
-  
+
               return (
                 <tr
                   role={!!onRowClick ? 'button' : undefined}
@@ -308,26 +316,30 @@ function Table<T extends Row>(
                       </div>
                     </td>
                   )}
-                  {columns
-                    .map(({key}) => (
-                      <td
-                        key={key.toString()}
-                        className={createClasses({
-                          [styles['item']]: true,
-                          [styles['item--allow-overflow']]: !!getColumn(key.toString())!.allowOverflow
-                        })}
-                        style={widthStyles(getColumn(key.toString())!.width)}>
-                        {renderMap &&
-                          renderMap({
+                  {columns.map(({ key }) => (
+                    <td
+                      key={key.toString()}
+                      className={createClasses({
+                        [styles['item']]: true,
+                        [styles['item--allow-overflow']]: !!getColumn(
+                          key.toString()
+                        )!.allowOverflow
+                      })}
+                      style={widthStyles(getColumn(key.toString())!.width)}>
+                      {renderMap &&
+                        renderMap(
+                          {
                             [key]: row[key]
-                          } as any, row)}
-                        {!renderMap && (
-                          <p className={styles['item__text']}>
-                            {row[key].toString()}
-                          </p>
+                          } as any,
+                          row
                         )}
-                      </td>
-                    ))}
+                      {!renderMap && (
+                        <p className={styles['item__text']}>
+                          {row[key].toString()}
+                        </p>
+                      )}
+                    </td>
+                  ))}
                   {!!onRowClick && (
                     <td
                       className={arrowClasses}

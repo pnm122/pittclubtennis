@@ -27,7 +27,7 @@ export default function Admin() {
     const unsubscribe = onAuthStateChanged(auth, () => {
       if (auth.currentUser && location.pathname === '/admin/login') {
         navigate('/admin/members')
-      } else if(!auth.currentUser) {
+      } else if (!auth.currentUser) {
         navigate('/admin/login')
       }
 

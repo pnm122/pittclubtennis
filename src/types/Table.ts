@@ -12,7 +12,7 @@ export type Column<
   key: K
   name: string
   width: number
-  /** 
+  /**
    * Whether to allow content to overflow from each item box within the column
    * @default false
    */
