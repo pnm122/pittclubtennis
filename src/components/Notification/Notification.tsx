@@ -2,7 +2,8 @@ import { notificationContext, NotificationContext, SingleNotification } from 'co
 import styles from './Notification.module.css'
 import { useContext, useEffect, useState } from 'react'
 import createClasses from 'utils/createClasses'
-import { BiSolidError } from "react-icons/bi"
+import { MdWarning } from "react-icons/md"
+import { MdError } from "react-icons/md"
 import { IoCheckmarkCircleSharp } from "react-icons/io5"
 import { MdClose } from "react-icons/md"
 
@@ -10,7 +11,7 @@ export default function Notification({
   timeout = 5000,
   text,
   id,
-  type,
+  type = 'default',
   dismissable
 }: SingleNotification) {
   const { remove } = useContext<NotificationContext>(notificationContext)
@@ -37,7 +38,8 @@ export default function Notification({
         [styles[`notification--${type}`]]: true
       })}>
       <div className={styles['notification__inner']}>
-        {type === 'error' && <BiSolidError />}
+        {type === 'error' && <MdError />}
+        {type === 'default' && <MdWarning />}
         {type === 'success' && <IoCheckmarkCircleSharp />}
         <span>{text}</span>
       </div>
