@@ -1,37 +1,20 @@
-#loader {
+.loader {
   width: var(--size);
   height: var(--size);
-  border-radius: 999px;
-  background-color: var(--bgColor);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  animation: 0.75s linear infinite load;
-}
-
-#loader::after {
-  content: '';
-  width: var(--size);
-  height: var(--size);
-  border-radius: 999px;
-  background: conic-gradient(var(--color) 0%, var(--color) 33%, transparent 33%, transparent 100%);
-  position: absolute;
-}
-
-#loader-inner {
-  background-color: var(--innerColor);
-  width: calc(var(--size) * 0.8);
-  height: calc(var(--size) * 0.8);
-  border-radius: 999px;
-  position: relative;
-  z-index: 999;
+  animation: load 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 }
 
 @keyframes load {
   from {
+    stroke-dasharray: 0, 100000;
+    stroke-dashoffset: 0;
     rotate: 0deg;
+  } 50% {
+    stroke-dasharray: calc(1.33 * 3.14159 * 100px), 100000;
+    stroke-dashoffset: calc(-0.67 * 3.14159 * 100px);
   } to {
+    stroke-dasharray: 0, 100000;
+    stroke-dashoffset: calc(-2 * 3.14159 * 100px);
     rotate: 360deg;
   }
 }

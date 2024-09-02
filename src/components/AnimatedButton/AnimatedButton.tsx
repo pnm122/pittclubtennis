@@ -47,10 +47,19 @@ export default function AnimatedButton({
     ...(Object.fromEntries((className ?? '').split(' ').map(c => [c, true])))
   })
 
+  const loaderColors: Record<typeof style, string> = {
+    'primary': 'white',
+    'secondary': 'var(--primary)',
+    'accent': 'black',
+    'ghost': 'black',
+    'negative': 'white',
+    'positive': 'white'
+  }
+
   const innerJSX = loading ? (
     <Loader
       size={size === 'small' ? 16 : size === 'medium' ? 18 : 24}
-      style={style === 'primary' ? 'on-primary' : style === 'secondary' ? 'on-secondary' : 'default'}
+      color={loaderColors[style]}
     />
   ) : (
     <>

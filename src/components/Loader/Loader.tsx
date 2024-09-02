@@ -2,35 +2,21 @@ import styles from './Loader.module.css'
 
 interface Props {
   size: number
-  style?: 'default' | 'on-primary' | 'on-secondary'
+  color?: string
 }
 
-export default function Loader({ size, style = 'default' } : Props) {
-  const { bgColor, color, innerColor } =
-    style === 'default' ? {
-      bgColor: 'var(--primary)',
-      color: 'var(--secondary)',
-      innerColor: 'var(--bg)'
-    } : style === 'on-primary' ? {
-      bgColor: 'var(--primary)',
-      color: 'var(--bg)',
-      innerColor: 'var(--primary)'
-    } : {
-      bgColor: 'var(--secondary75)',
-      color: 'var(--primary)',
-      innerColor: 'var(--secondary)'
-    }
-  
+export default function Loader({ size, color = 'var(--primary)' } : Props) {
   return (
-    <div 
-    id={styles['loader']} 
-    style={{ 
-      '--size': `${size}px`,
-      '--bgColor': bgColor,
-      '--color': color,
-      '--innerColor': innerColor,
-    } as React.CSSProperties}>
-      <div id={styles['loader-inner']} />
-    </div>
+    <svg
+      style={{ 
+        '--size': `${size}px`,
+      } as React.CSSProperties}
+      className={styles['loader']}
+      viewBox="0 0 225 225"
+      xmlns="http://www.w3.org/2000/svg">
+      <circle cx="112.5" cy="112.5" fill="none"
+        r="100" stroke-width="25" stroke={color}
+      />
+    </svg>
   )
 }
