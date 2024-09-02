@@ -18,6 +18,7 @@ import PageLayout from 'layout/PageLayout'
 import Admin from 'pages/Admin/Admin';
 import Login from 'pages/Admin/Login/Login';
 import AdminMembers from 'pages/Admin/Members/Members';
+import { NotificationContextProvider } from 'context/NotificationContext';
 
 function App() {
   const location = useLocation()
@@ -78,21 +79,23 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Routes>
-        <Route element={<PageLayout />}>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/tryouts" element={<Tryouts />} />
-          <Route path="/tournaments" element={<Tournaments />} />
-          <Route path="/fundraisers" element={<Fundraisers />} />
-          <Route path="/members" element={<Members />} />
-        </Route>
-        <Route path="/admin" element={<Admin />}>
-          <Route path="login" element={<Login />} />
-          <Route path="members" element={<AdminMembers />} />
-        </Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <NotificationContextProvider>
+        <Routes>
+          <Route element={<PageLayout />}>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/tryouts" element={<Tryouts />} />
+            <Route path="/tournaments" element={<Tournaments />} />
+            <Route path="/fundraisers" element={<Fundraisers />} />
+            <Route path="/members" element={<Members />} />
+          </Route>
+          <Route path="/admin" element={<Admin />}>
+            <Route path="login" element={<Login />} />
+            <Route path="members" element={<AdminMembers />} />
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </NotificationContextProvider>
     </ThemeProvider>
   )
 }
