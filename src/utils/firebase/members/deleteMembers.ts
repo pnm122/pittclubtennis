@@ -11,7 +11,7 @@ export default async function deleteMembers(docs: QueryDocumentSnapshot[]): Fire
       const deleteRes = await deleteFromStorage(data.imgSrc)
 
       if(!deleteRes.success) {
-        return deleteRes
+        console.warn(`Failed to delete image for ${data.name}, is the image still in storage?`, deleteRes.data.error)
       }
     }
 
