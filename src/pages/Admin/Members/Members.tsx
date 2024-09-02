@@ -96,14 +96,14 @@ export default function Members() {
     if(success) {
       pushNotification({
         type: 'success',
-        text: `Successfully created member ${data.state.name}!`
+        text: `Successfully ${data.doc ? 'updated' : 'created'} member ${data.state.name}!`
       })
       memberDrawer.current?.close()
       fetchMembers()
     } else {
       pushNotification({
         type: 'error',
-        text: `Failed to create member ${data.state.name}!`,
+        text: `Failed to ${data.doc ? 'updated' : 'created'} member ${data.state.name}!`,
         subtext: (setData.error as any).toString(),
         timeout: -1,
         dismissable: true
