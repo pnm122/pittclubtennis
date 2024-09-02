@@ -15,7 +15,7 @@ export default function Loader({ size, color = 'var(--primary)' } : Props) {
       viewBox="0 0 225 225"
       xmlns="http://www.w3.org/2000/svg">
       <circle cx="112.5" cy="112.5" fill="none"
-        r="100" stroke-width="25" stroke={color}
+        r="100" strokeWidth="25" stroke={color}
       />
     </svg>
   )
