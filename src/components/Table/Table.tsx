@@ -309,8 +309,7 @@ function Table<T extends Row>(
                     </td>
                   )}
                   {columns
-                    .map(c => c.key)
-                    .map(key => (
+                    .map(({key}) => (
                       <td
                         key={key.toString()}
                         className={createClasses({
@@ -319,7 +318,6 @@ function Table<T extends Row>(
                         })}
                         style={widthStyles(getColumn(key.toString())!.width)}>
                         {renderMap &&
-                          row[key] &&
                           renderMap({
                             [key]: row[key]
                           } as any, row)}

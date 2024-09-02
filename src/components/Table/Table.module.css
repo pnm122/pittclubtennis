@@ -78,6 +78,9 @@
   min-height: 36px;
   display: flex;
   align-items: center;
+}
+
+.item {
   padding-block: 8px;
 }
 
