@@ -78,9 +78,13 @@
   min-height: 36px;
   display: flex;
   align-items: center;
+  padding-block: 8px;
+}
+
+.header-item,
+.item:not(.item--allow-overflow) {
   overflow: auto;
   scrollbar-width: thin;
-  padding-block: 8px;
 }
 
 .header-item:first-of-type,

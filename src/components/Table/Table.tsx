@@ -313,7 +313,10 @@ function Table<T extends Row>(
                     .map(key => (
                       <td
                         key={key.toString()}
-                        className={styles['item']}
+                        className={createClasses({
+                          [styles['item']]: true,
+                          [styles['item--allow-overflow']]: !!getColumn(key.toString())!.allowOverflow
+                        })}
                         style={widthStyles(getColumn(key.toString())!.width)}>
                         {renderMap &&
                           row[key] &&
