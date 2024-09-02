@@ -44,13 +44,34 @@
 
 .notification__inner {
   display: flex;
-  align-items: center;
   gap: var(--size-sm);
+}
+
+.notification__inner svg {
+  min-width: 1em;
+  min-height: 1.2em;
+}
+
+.notification__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+}
+
+.text {
+  font-weight: 500;
+  line-height: 1.2em;
+}
+
+.subtext {
+  font-size: var(--text-sm);
 }
 
 .notification__close {
   width: 24px;
   height: 24px;
+  min-width: 24px;
+  min-height: 24px;
 }
 
 ::view-transition-group(notification-1) {

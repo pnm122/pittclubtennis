@@ -10,6 +10,7 @@ import { MdClose } from "react-icons/md"
 export default function Notification({
   timeout = 5000,
   text,
+  subtext,
   id,
   type = 'default',
   dismissable
@@ -41,7 +42,10 @@ export default function Notification({
         {type === 'error' && <MdError />}
         {type === 'default' && <MdWarning />}
         {type === 'success' && <IoCheckmarkCircleSharp />}
-        <span>{text}</span>
+        <div className={styles['notification__text']}>
+          <span className={styles['text']}>{text}</span>
+          <span className={styles['subtext']}>{subtext}</span>
+        </div>
       </div>
       {dismissable && (
         <button
