@@ -9,7 +9,10 @@ import { Column } from 'types/Table'
 import { formatDate } from 'date-fns'
 import createClasses from 'utils/createClasses'
 import { MdOpenInNew } from 'react-icons/md'
-import TournamentsDrawer, { TournamentsDrawerData, TournamentsDrawerRef } from './TournamentsDrawer'
+import TournamentsDrawer, {
+  TournamentsDrawerData,
+  TournamentsDrawerRef
+} from './TournamentsDrawer'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import setTournament from 'utils/firebase/tournaments/setTournament'
@@ -108,13 +111,16 @@ export default function Tournaments() {
     tournamentsDrawer.current!.open({ ...rowData, type: 'edit' })
   }
 
-  async function onSave(data: Omit<TournamentsDrawerData, "type">) {
+  async function onSave(data: Omit<TournamentsDrawerData, 'type'>) {
     const { doc, placement, ...saveData } = data
-    const saveRes = await setTournament({
-      ...saveData,
-      ...(placement ? { placement } : {})
-    }, doc)
-    if(!saveRes.success) {
+    const saveRes = await setTournament(
+      {
+        ...saveData,
+        ...(placement ? { placement } : {})
+      },
+      doc
+    )
+    if (!saveRes.success) {
       pushNotification({
         type: 'error',
         text: `Failed to ${doc ? 'update' : 'add'} tournament!`,
@@ -137,7 +143,7 @@ export default function Tournaments() {
     const deleteRes = await deleteDocuments(docsToDelete)
     setIsDeleting(false)
 
-    if(!deleteRes.success) {
+    if (!deleteRes.success) {
       pushNotification({
         type: 'error',
         text: `Failed to delete tournaments!`,

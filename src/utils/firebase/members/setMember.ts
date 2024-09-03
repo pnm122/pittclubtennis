@@ -28,7 +28,6 @@ export default async function setMember(
       }
 
       newData.imgSrc = uploadRes.data.downloadURL
-      console.log('uploaded new image to:', newData.imgSrc)
       return uploadRes
     }
   }
@@ -44,7 +43,6 @@ export default async function setMember(
       }
       // Has to be marked with deleteField() because simply calling updateDoc() without the imgSrc field will not delete the field
       newData.imgSrc = deleteField()
-      console.log('deleted old image:', deleteRes.data.deletedRef.fullPath)
     }
 
     const uploadRes = await maybeUploadNewImage()
@@ -56,7 +54,6 @@ export default async function setMember(
     if (!updateRes.success) {
       return updateRes
     }
-    console.log('updated document to:', newData)
   } else {
     const uploadRes = await maybeUploadNewImage()
     if (uploadRes && !uploadRes.success) {
@@ -67,7 +64,6 @@ export default async function setMember(
     if (!addRes.success) {
       return addRes
     }
-    console.log('added document:', newData)
   }
 
   return { success: true, data: null }

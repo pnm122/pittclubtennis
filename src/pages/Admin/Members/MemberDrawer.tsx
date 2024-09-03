@@ -98,8 +98,6 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
 
   async function save() {
     if (!memberDrawerContent.current?.isValid()) {
-      console.log(memberDrawerContent.current?.isValid())
-      console.log('invalid')
       return
     }
     setIsSaving(true)

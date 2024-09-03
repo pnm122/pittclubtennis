@@ -10,7 +10,6 @@ export default async function deleteMembers(
     (async (): FirebaseUtilityReturn<null> => {
       const data = doc.data() as MemberType
       if (data.imgSrc) {
-        console.log('deleting image for:', data.name)
         const deleteRes = await deleteFromStorage(data.imgSrc)
 
         if (!deleteRes.success) {
@@ -21,14 +20,12 @@ export default async function deleteMembers(
         }
       }
 
-      console.log('deleting data for:', data.name)
       const deleteRes = await deleteFromDatabase(doc.ref)
       return deleteRes
     })()
   )
 
   const results = await Promise.all(promises)
-  console.log('finished deleting')
   const errors = results.filter(res => !res.success).map(f => f.data.error)
   if (errors.length !== 0) {
     return {
