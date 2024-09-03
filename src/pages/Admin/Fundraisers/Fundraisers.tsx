@@ -105,28 +105,28 @@ export default function Fundraisers() {
     return true
   }
 
-  // async function onDelete() {
-  //   const rows = table.current!.getSelectedRows()
-  //   const docsToDelete = rows.map(r => r.doc)
+  async function onDelete() {
+    const rows = table.current!.getSelectedRows()
+    const docsToDelete = rows.map(r => r.doc)
 
-  //   setIsDeleting(true)
-  //   const deleteRes = await deleteDocuments(docsToDelete)
-  //   setIsDeleting(false)
+    setIsDeleting(true)
+    const deleteRes = await deleteDocuments(docsToDelete)
+    setIsDeleting(false)
 
-  //   if (!deleteRes.success) {
-  //     pushNotification({
-  //       type: 'error',
-  //       text: `Failed to delete tournaments!`,
-  //       subtext: (deleteRes.data.error as any).toString(),
-  //       timeout: -1,
-  //       dismissable: true
-  //     })
-  //     return false
-  //   }
+    if (!deleteRes.success) {
+      pushNotification({
+        type: 'error',
+        text: `Failed to delete fundraisers!`,
+        subtext: (deleteRes.data.error as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
+      return false
+    }
 
-  //   fetchTournaments()
-  //   return true
-  // }
+    fetchFundraisers()
+    return true
+  }
 
   return (
     <div className='container'>
@@ -145,7 +145,7 @@ export default function Fundraisers() {
             style='negative'
             size='small'
             loading={isDeleting}
-            // onClick={onDelete}
+            onClick={onDelete}
           />
         ]}
         maxWidth='100%'
