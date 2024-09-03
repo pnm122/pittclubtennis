@@ -12,6 +12,7 @@ import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { MdWarning } from 'react-icons/md'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import { MemberType } from 'types/MemberType'
+import EditWarningPopup from '../EditWarningPopup/EditWarningPopup'
 
 export type AdminMemberDrawer =
   | {
@@ -141,35 +142,10 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
           />
         </div>
       </Drawer>
-      <Popup open={showWarning}>
-        <div className={styles['popup']}>
-          <div className={styles['popup__warning-label']}>
-            <MdWarning />
-            <span>Warning</span>
-          </div>
-          <div className={styles['popup__body']}>
-            <h1 className={styles['popup__title']}>
-              You have unsaved changes!
-            </h1>
-            <p>
-              Are you sure you want to cancel editing? This action cannot be
-              undone.
-            </p>
-            <div className={styles['popup__actions']}>
-              <AnimatedButton
-                text='Delete changes'
-                style='negative'
-                onClick={() => warningPromiseResolve(true)}
-              />
-              <AnimatedButton
-                text='Keep editing'
-                style='ghost'
-                onClick={() => warningPromiseResolve(false)}
-              />
-            </div>
-          </div>
-        </div>
-      </Popup>
+      <EditWarningPopup
+        open={showWarning}
+        close={warningPromiseResolve}
+      />
     </>
   )
 })
