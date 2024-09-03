@@ -173,7 +173,6 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
       )
       if (hasError) {
         pushNotification({
-          type: 'default',
           text: 'Please fix all errors before saving!'
         })
         return

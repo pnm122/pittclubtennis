@@ -7,12 +7,13 @@ import MemberDrawerContent, {
   MemberDrawerState
 } from './MemberDrawerContent'
 import Popup from 'components/Popup/Popup'
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useContext, useImperativeHandle, useRef, useState } from 'react'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { MdWarning } from 'react-icons/md'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import { MemberType } from 'types/MemberType'
 import EditWarningPopup from '../EditWarningPopup/EditWarningPopup'
+import { notificationContext } from 'context/NotificationContext'
 
 export type AdminMemberDrawer =
   | {
@@ -52,6 +53,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const memberDrawerContent = useRef<MemberDrawerContentRef>(null)
+  const { push: pushNotification } = useContext(notificationContext)
 
   function open(data: AdminMemberDrawer) {
     if (data.type === 'edit') {
@@ -98,7 +100,10 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
   }
 
   async function save() {
-    if (!memberDrawerContent.current?.isValid()) {
+    if (!memberDrawerContent.current?.checkValidity()) {
+      pushNotification({
+        text: 'Please fix all errors before saving!'
+      })
       return
     }
     setIsSaving(true)

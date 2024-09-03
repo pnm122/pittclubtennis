@@ -15,12 +15,12 @@ import FileDropper, {
 } from 'components/FileDropper/FileDropper'
 import { Member } from 'pages/Members/Members'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
-import { AdminMemberDrawer, DrawerData } from './MemberDrawer'
+import { DrawerData } from './MemberDrawer'
 import { MemberYear } from 'types/MemberType'
 
 export interface MemberDrawerContentRef {
   getState: () => { state: MemberDrawerState; doc?: QueryDocumentSnapshot }
-  isValid: () => boolean
+  checkValidity: () => boolean
 }
 
 type Props = DrawerData & {
@@ -45,6 +45,11 @@ export interface MemberDrawerState {
 
 const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
   ({ data, type, doc, onEdited, open }, ref) => {
+    // URL to use as image source
+    const [image, setImage] = useState<string | null>(null)
+    const [imageError, setImageError] = useState<string | null>(null)
+    const [nameError, setNameError] = useState<string | null>(null)
+
     const getStateFromProps = ({
       data: { name, year, role, imgSrc }
     }: DrawerData): MemberDrawerState => {
@@ -67,8 +72,11 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
     ) => {
       switch (action.type) {
         case 'reset':
+          setNameError(null)
+          setImageError(null)
           return getStateFromProps({ data, type, doc })
         case 'name':
+          setNameError(null)
         case 'year':
         case 'role':
         case 'image':
@@ -87,14 +95,21 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
       reducer,
       getStateFromProps({ data, type, doc })
     )
-    // URL to use as image source
-    const [image, setImage] = useState<string | null>(null)
-    const [imageError, setImageError] = useState<string | null>(null)
 
     useImperativeHandle(ref, () => ({
       getState: () => ({ state: inputs, doc }),
-      isValid: () =>
-        !!inputs.name && !!inputs.role && !!inputs.year && !imageError
+      checkValidity: () => {
+        let isValid = true
+        if(imageError) {
+          isValid = false
+        }
+        if(inputs.name === '') {
+          setNameError('This field is required.')
+          isValid = false
+        }
+
+        return isValid
+      }
     }))
 
     useEffect(() => {
@@ -126,6 +141,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
         <Input
           name='name'
           value={inputs.name}
+          error={nameError ?? undefined}
           label='Name'
           required
           onChange={e => dispatch({ type: 'name', data: e.target.value })}
