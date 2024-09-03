@@ -18,6 +18,7 @@ import Select from 'components/Select/Select'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import Tournament from 'components/Tournament/Tournament'
 import { notificationContext } from 'context/NotificationContext'
+import EditWarningPopup from '../EditWarningPopup/EditWarningPopup'
 
 export type TournamentsDrawerData = TournamentType & {
   doc?: QueryDocumentSnapshot
@@ -26,12 +27,14 @@ export type TournamentsDrawerData = TournamentType & {
 
 export interface TournamentsDrawerRef {
   open: (data?: TournamentsDrawerData) => void
-  close: () => void
+  close: () => Promise<void>
 }
 
 interface Props {
   onSave: (data: Omit<TournamentsDrawerData, 'type'>) => Promise<boolean>
 }
+
+let warningPromiseResolve: (close: boolean) => void
 
 const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
   ({ onSave }, ref) => {
@@ -40,6 +43,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
     const [doc, setDoc] = useState<QueryDocumentSnapshot | null>(null)
     const [isSaving, setIsSaving] = useState(false)
     const [edited, setEdited] = useState(false)
+    const [showWarning, setShowWarning] = useState(false)
     const { push: pushNotification } = useContext(notificationContext)
 
     type State = {
@@ -71,6 +75,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
         }
       }
 
+      setEdited(true)
       let newState = {
         ...state,
         [type]: {
@@ -144,8 +149,22 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
       setIsOpen(true)
     }
 
-    function close() {
+    async function close() {
+      if(edited) {
+        setShowWarning(true)
+        const shouldCloseDrawer = await new Promise<boolean>(
+          res => (warningPromiseResolve = res)
+        )
+        if (shouldCloseDrawer) {
+          setIsOpen(false)
+          setEdited(false)
+        }
+        setShowWarning(false)
+        return
+      }
+
       setIsOpen(false)
+      setEdited(false)
     }
 
     async function save() {
@@ -183,117 +202,123 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
     }
 
     return (
-      <Drawer
-        size={400}
-        orientation='right'
-        open={isOpen}
-        onBackdropClicked={close}>
-        <DrawerHeader
-          title={`${type === 'edit' ? 'Edit' : 'Add'} Tournament`}
-          onClose={close}
-        />
-        <DrawerContent>
-          <form className={styles['drawer-form']}>
-            <Input
-              label='Name'
-              name='name'
-              value={state.name.data}
-              error={state.name.error}
-              onChange={e => dispatch({ type: 'name', data: e.target.value })}
-              required
-            />
-            <Datepicker
-              label='Start Date'
-              value={state.dateStart.data.toDate()}
-              error={state.dateStart.error}
-              onChange={date =>
-                dispatch({ type: 'dateStart', data: Timestamp.fromDate(date) })
-              }
-              required
-            />
-            <Datepicker
-              label='End Date'
-              disabledDates={date =>
-                isBefore(date, state.dateStart.data.toDate())
-              }
-              value={state.dateEnd.data.toDate()}
-              error={state.dateEnd.error}
-              onChange={date =>
-                dispatch({ type: 'dateEnd', data: Timestamp.fromDate(date) })
-              }
-              required
-            />
-            <Input
-              label='Location Name'
-              name='location-name'
-              value={state.locationName.data}
-              error={state.locationName.error}
-              onChange={e =>
-                dispatch({ type: 'locationName', data: e.target.value })
-              }
-              required
-            />
-            <Input
-              label='Location Link'
-              name='location-link'
-              value={state.locationLink.data}
-              error={state.locationLink.error}
-              onChange={e =>
-                dispatch({ type: 'locationLink', data: e.target.value })
-              }
-              required
-            />
-            <Select
-              label='Placement'
-              options={[
-                {
-                  name: 'None',
-                  value: undefined
-                },
-                {
-                  name: 'First Place',
-                  value: 1
-                },
-                {
-                  name: 'Second Place',
-                  value: 2
-                },
-                {
-                  name: 'Third Place',
-                  value: 3
+      <>
+        <Drawer
+          size={400}
+          orientation='right'
+          open={isOpen}
+          onBackdropClicked={close}>
+          <DrawerHeader
+            title={`${type === 'edit' ? 'Edit' : 'Add'} Tournament`}
+            onClose={close}
+          />
+          <DrawerContent>
+            <form className={styles['drawer-form']}>
+              <Input
+                label='Name'
+                name='name'
+                value={state.name.data}
+                error={state.name.error}
+                onChange={e => dispatch({ type: 'name', data: e.target.value })}
+                required
+              />
+              <Datepicker
+                label='Start Date'
+                value={state.dateStart.data.toDate()}
+                error={state.dateStart.error}
+                onChange={date =>
+                  dispatch({ type: 'dateStart', data: Timestamp.fromDate(date) })
                 }
-              ]}
-              value={state.placement.data}
-              onChange={({ selected }) =>
-                dispatch({ type: 'placement', data: selected })
-              }
+                required
+              />
+              <Datepicker
+                label='End Date'
+                disabledDates={date =>
+                  isBefore(date, state.dateStart.data.toDate())
+                }
+                value={state.dateEnd.data.toDate()}
+                error={state.dateEnd.error}
+                onChange={date =>
+                  dispatch({ type: 'dateEnd', data: Timestamp.fromDate(date) })
+                }
+                required
+              />
+              <Input
+                label='Location Name'
+                name='location-name'
+                value={state.locationName.data}
+                error={state.locationName.error}
+                onChange={e =>
+                  dispatch({ type: 'locationName', data: e.target.value })
+                }
+                required
+              />
+              <Input
+                label='Location Link'
+                name='location-link'
+                value={state.locationLink.data}
+                error={state.locationLink.error}
+                onChange={e =>
+                  dispatch({ type: 'locationLink', data: e.target.value })
+                }
+                required
+              />
+              <Select
+                label='Placement'
+                options={[
+                  {
+                    name: 'None',
+                    value: undefined
+                  },
+                  {
+                    name: 'First Place',
+                    value: 1
+                  },
+                  {
+                    name: 'Second Place',
+                    value: 2
+                  },
+                  {
+                    name: 'Third Place',
+                    value: 3
+                  }
+                ]}
+                value={state.placement.data}
+                onChange={({ selected }) =>
+                  dispatch({ type: 'placement', data: selected })
+                }
+              />
+            </form>
+            <div className={styles['preview']}>
+              <h2 className={styles['preview__title']}>Preview</h2>
+              <Tournament
+                name={state.name.data}
+                locationName={state.locationName.data}
+                locationLink={state.locationLink.data}
+                placement={state.placement.data}
+                dateStart={state.dateStart.data}
+                dateEnd={state.dateEnd.data}
+              />
+            </div>
+          </DrawerContent>
+          <div className={styles['drawer-actions']}>
+            <AnimatedButton
+              text={'Save'}
+              onClick={save}
+              loading={isSaving}
             />
-          </form>
-          <div className={styles['preview']}>
-            <h2 className={styles['preview__title']}>Preview</h2>
-            <Tournament
-              name={state.name.data}
-              locationName={state.locationName.data}
-              locationLink={state.locationLink.data}
-              placement={state.placement.data}
-              dateStart={state.dateStart.data}
-              dateEnd={state.dateEnd.data}
+            <AnimatedButton
+              text={'Cancel'}
+              style='ghost'
+              onClick={() => close()}
             />
           </div>
-        </DrawerContent>
-        <div className={styles['drawer-actions']}>
-          <AnimatedButton
-            text={'Save'}
-            onClick={save}
-            loading={isSaving}
-          />
-          <AnimatedButton
-            text={'Cancel'}
-            style='ghost'
-            onClick={() => close()}
-          />
-        </div>
-      </Drawer>
+        </Drawer>
+        <EditWarningPopup
+          open={showWarning}
+          close={warningPromiseResolve}
+        />
+      </>
     )
   }
 )
