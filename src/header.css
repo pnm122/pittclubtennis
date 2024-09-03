@@ -173,7 +173,7 @@ header[aria-expanded='true'] #header-close {
   }
 }
 
-@media (width > 925px) {
+@media (width > 1024px) {
   #toggle-nav {
     display: none;
   }
