@@ -12,7 +12,7 @@ export default function Tryouts() {
         return
       }
 
-      setTryoutsInfo(res.data)
+      setTryoutsInfo(res.data.data)
     })
   }, [])
 
@@ -68,8 +68,7 @@ export default function Tryouts() {
             </div>
             {tryoutsInfo ? (
               <TryoutButton
-                state={tryoutsInfo.state}
-                link={tryoutsInfo.link}
+                data={tryoutsInfo}
               />
             ) : (
               <AnimatedButton
@@ -85,25 +84,17 @@ export default function Tryouts() {
   )
 }
 
-const TryoutButton = ({ state, link }: TryoutsType) => {
-  let text = ''
-  switch (state) {
-    case 'soon':
-      text = 'Tryouts Coming Soon'
-      break
-    case 'open':
-      text = 'Sign Up For Tryouts'
-      break
-    case 'closed':
-      text = 'Tryouts Are Closed'
-  }
-
+const TryoutButton = ({ data }: { data: TryoutsType }) => {
   return (
     <AnimatedButton
-      href={link}
+      href={data.open ? data.link : undefined}
       newTab
-      text={text}
-      disabled={state != 'open'}
+      text={
+        data.open
+          ? 'Sign Up For Tryouts'
+          : 'Tryouts Are Closed'
+      }
+      disabled={!data.open}
     />
   )
 }

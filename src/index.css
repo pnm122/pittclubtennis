@@ -67,6 +67,8 @@ body {
   --warning: #a88400;
   --warning-light: #fff7db;
   --button-ghost: #f1f2f4;
+  --disabled: #9a9a9a;
+  --disabled-light: #EAEAEA;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -444,47 +446,6 @@ section:first-of-type:not(.hero) {
 .with-hover-circle:focus-within * {
   transition: color var(--transition-short);
   color: var(--primary);
-}
-
-[role='checkbox'] {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  border: 1px solid var(--label);
-  cursor: pointer;
-  position: relative;
-}
-
-[role='checkbox'][aria-checked='true'],
-[role='checkbox'][aria-checked='mixed'] {
-  background-color: var(--primary);
-  border-color: var(--primary);
-}
-
-[role='checkbox'][aria-checked='true']::after {
-  content: '';
-  width: 4px;
-  height: 8px;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
-  border-color: var(--bg);
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%) rotate(45deg);
-}
-
-[role='checkbox'][aria-checked='mixed']::after {
-  content: '';
-  width: 8px;
-  height: 2px;
-  background-color: var(--bg);
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .hidden {
