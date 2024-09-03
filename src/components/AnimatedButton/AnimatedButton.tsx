@@ -86,7 +86,7 @@ export default function AnimatedButton({
     </Link>
   ) : (
     <button
-      type={submit ? 'submit' : undefined}
+      type={submit ? 'submit' : 'button'}
       id={id}
       aria-disabled={disabled}
       onClick={e => !disabled && !loading && onClick && onClick(e)}
