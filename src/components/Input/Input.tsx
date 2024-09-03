@@ -21,6 +21,7 @@ interface Props {
   required?: boolean
   borderless?: boolean
   width?: string
+  disabled?: boolean
 }
 
 export interface InputRef {
@@ -44,7 +45,8 @@ const Input = forwardRef<InputRef, Props>(function Input(
     error,
     required,
     borderless,
-    width
+    width,
+    disabled
   }: Props,
   ref
 ) {
@@ -76,7 +78,8 @@ const Input = forwardRef<InputRef, Props>(function Input(
       <input
         className={createClasses({
           'form-elem__main-control': true,
-          'form-elem__main-control--borderless': !!borderless
+          'form-elem__main-control--borderless': !!borderless,
+          'form-elem__main-control--disabled': !!disabled
         })}
         value={value}
         name={name}
@@ -90,6 +93,7 @@ const Input = forwardRef<InputRef, Props>(function Input(
         onBlur={e => onBlur && onBlur(e)}
         onClick={e => onClick && onClick(e)}
         required={required}
+        disabled={disabled}
         ref={input}
       />
       {!!error && <Error>{error}</Error>}
