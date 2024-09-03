@@ -10,6 +10,7 @@ import { formatDate } from 'date-fns'
 import createClasses from 'utils/createClasses'
 import { MdOpenInNew } from 'react-icons/md'
 import TournamentsDrawer, { TournamentsDrawerRef } from './TournamentsDrawer'
+import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 
 export default function Tournaments() {
   type RowData = TournamentType & { key: any }
@@ -89,7 +90,11 @@ export default function Tournaments() {
     )
   }
 
-  function openDrawer(data: RowData) {
+  function openDrawer(data?: RowData) {
+    if(!data) {
+      return tournamentsDrawer.current!.open()
+    }
+
     const { key, ...rowData } = data
     tournamentsDrawer.current!.open({ ...rowData, type: 'edit' })
   }
@@ -167,6 +172,11 @@ export default function Tournaments() {
             )
           }
         }}
+      />
+      <AnimatedButton
+        text='Add tournament'
+        onClick={() => openDrawer()}
+        className={styles['add-button']}
       />
       <TournamentsDrawer ref={tournamentsDrawer} />
     </div>

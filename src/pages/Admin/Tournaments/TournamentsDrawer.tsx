@@ -17,7 +17,7 @@ export type TournamentsDrawerData = TournamentType & {
 }
 
 export interface TournamentsDrawerRef {
-  open: (data: TournamentsDrawerData) => void
+  open: (data?: TournamentsDrawerData) => void
   close: () => void
 }
 
@@ -76,9 +76,8 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
     return newState
   }
 
-  const [state, dispatch] = useReducer(
-    reducer, 
-    {
+  function getDefaultState() {
+    return {
       name: { data: '' },
       dateStart: { data: Timestamp.fromDate(new Date()) },
       dateEnd: { data: Timestamp.fromDate(new Date()) },
@@ -86,6 +85,22 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
       locationLink: { data: '' },
       placement: { data: undefined }
     }
+  }
+
+  function getDefaultData() {
+    return {
+      name: '',
+      dateStart: Timestamp.fromDate(new Date()),
+      dateEnd: Timestamp.fromDate(new Date()),
+      locationName: '',
+      locationLink: '',
+      placement: undefined
+    }
+  }
+
+  const [state, dispatch] = useReducer(
+    reducer, 
+    getDefaultState()
   )
 
   useImperativeHandle(ref, () => ({
@@ -93,9 +108,15 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
     close
   }))
 
-  function open(data: TournamentsDrawerData) {
-    const { type: openType, ...openData } = data
-    dispatch({ type: 'init', data: openData })
+  function open(data?: TournamentsDrawerData) {
+    if(data) {
+      const { type: openType, ...openData } = data
+      setType('edit')
+      dispatch({ type: 'init', data: openData })
+    } else {
+      setType('add')
+      dispatch({ type: 'init', data: getDefaultData() })
+    }
     setIsOpen(true)
   }
 
