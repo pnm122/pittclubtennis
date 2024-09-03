@@ -10,6 +10,7 @@ import FundraiserType from 'types/FundraiserType'
 import getFundraisers from 'utils/firebase/getFundraisers'
 import createClasses from 'utils/createClasses'
 import { MdOpenInNew } from 'react-icons/md'
+import FundraisersDrawer, { FundraisersDrawerData, FundraisersDrawerRef } from './FundraisersDrawer'
 
 export default function Fundraisers() {
   type RowData = FundraiserType & { doc: QueryDocumentSnapshot; key: any }
@@ -17,7 +18,7 @@ export default function Fundraisers() {
   const [loading, setLoading] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const { push: pushNotification } = useContext(notificationContext)
-  // const tournamentsDrawer = useRef<TournamentsDrawerRef>(null)
+  const fundraisersDrawer = useRef<FundraisersDrawerRef>(null)
   const table = useRef<TableRef<RowData>>(null)
 
   const columns: Column<RowData>[] = [
@@ -73,38 +74,38 @@ export default function Fundraisers() {
     )
   }
 
-  // function openDrawer(data?: RowData) {
-  //   if (!data) {
-  //     return tournamentsDrawer.current!.open()
-  //   }
+  function openDrawer(data?: RowData) {
+    if (!data) {
+      return fundraisersDrawer.current!.open()
+    }
 
-  //   const { key, ...rowData } = data
-  //   tournamentsDrawer.current!.open({ ...rowData, type: 'edit' })
-  // }
+    const { key, ...rowData } = data
+    fundraisersDrawer.current!.open({ ...rowData, type: 'edit' })
+  }
 
-  // async function onSave(data: Omit<TournamentsDrawerData, 'type'>) {
-  //   const { doc, placement, ...saveData } = data
-  //   const saveRes = await setTournament(
-  //     {
-  //       ...saveData,
-  //       ...(placement ? { placement } : {})
-  //     },
-  //     doc
-  //   )
-  //   if (!saveRes.success) {
-  //     pushNotification({
-  //       type: 'error',
-  //       text: `Failed to ${doc ? 'update' : 'add'} tournament!`,
-  //       subtext: (saveRes.data.error as any).toString(),
-  //       timeout: -1,
-  //       dismissable: true
-  //     })
-  //     return false
-  //   }
+  async function onSave(data: Omit<FundraisersDrawerData, 'type'>) {
+    const { doc, ...saveData } = data
+    // const saveRes = await setTournament(
+    //   {
+    //     ...saveData,
+    //     ...(placement ? { placement } : {})
+    //   },
+    //   doc
+    // )
+    // if (!saveRes.success) {
+    //   pushNotification({
+    //     type: 'error',
+    //     text: `Failed to ${doc ? 'update' : 'add'} tournament!`,
+    //     subtext: (saveRes.data.error as any).toString(),
+    //     timeout: -1,
+    //     dismissable: true
+    //   })
+    //   return false
+    // }
 
-  //   fetchTournaments()
-  //   return true
-  // }
+    // fetchTournaments()
+    return true
+  }
 
   // async function onDelete() {
   //   const rows = table.current!.getSelectedRows()
@@ -150,7 +151,7 @@ export default function Fundraisers() {
           />
         ]}
         maxWidth='100%'
-        // onRowClick={openDrawer}
+        onRowClick={openDrawer}
         renderMap={(value, row) => {
           if (!value) return
           if('name' in value) {
@@ -185,10 +186,10 @@ export default function Fundraisers() {
         // onClick={() => openDrawer()}
         className={styles['add-button']}
       />
-      {/* <TournamentsDrawer
-        ref={tournamentsDrawer}
+      <FundraisersDrawer
+        ref={fundraisersDrawer}
         onSave={onSave}
-      /> */}
+      />
     </div>
   )
 }

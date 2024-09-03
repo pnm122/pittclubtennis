@@ -122,7 +122,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
     }
 
     return (
-      <div className={styles['member-drawer']}>
+      <form className='drawer-form'>
         <Input
           name='name'
           value={inputs.name}
@@ -207,7 +207,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
             imgSrc={image ?? undefined}
           />
         </div>
-      </div>
+      </form>
     )
   }
 )

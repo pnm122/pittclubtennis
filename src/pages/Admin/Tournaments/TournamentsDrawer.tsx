@@ -213,7 +213,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
             onClose={close}
           />
           <DrawerContent>
-            <form className={styles['drawer-form']}>
+            <form className='drawer-form'>
               <Input
                 label='Name'
                 name='name'
@@ -287,6 +287,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
                 onChange={({ selected }) =>
                   dispatch({ type: 'placement', data: selected })
                 }
+                required
               />
             </form>
             <div className={styles['preview']}>
@@ -301,7 +302,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
               />
             </div>
           </DrawerContent>
-          <div className={styles['drawer-actions']}>
+          <div className='drawer-actions'>
             <AnimatedButton
               text={'Save'}
               onClick={save}

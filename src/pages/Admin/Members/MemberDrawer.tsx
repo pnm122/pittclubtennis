@@ -129,7 +129,7 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
             </>
           )}
         </DrawerContent>
-        <div className={styles['member-drawer__actions']}>
+        <div className='drawer-actions'>
           <AnimatedButton
             text={'Save'}
             onClick={save}

@@ -66,7 +66,7 @@ export default function Fundraisers() {
   )
 }
 
-const Fundraiser = ({
+export const Fundraiser = ({
   name,
   description,
   linkLocation,

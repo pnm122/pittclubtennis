@@ -24,3 +24,17 @@
 .add-button {
   margin-top: var(--size-xl);
 }
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xl);
+}
+
+.preview__title {
+  font-size: var(--text-lg);
+  color: var(--label);
+  margin-top: var(--size-xl);
+  padding-bottom: var(--size-lg);
+  border-bottom: 1px solid var(--border);
+}
