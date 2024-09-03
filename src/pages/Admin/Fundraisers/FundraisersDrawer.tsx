@@ -60,8 +60,16 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
           type: 'init'
           data: FundraiserType
         }
+      | {
+          type: 'set'
+          data: State
+        }
 
     function reducer(state: State, { type, data }: ReducerAction) {
+      if(type === 'set') {
+        return data
+      }
+
       if (type === 'init') {
         return {
           name: { data: data.name },
@@ -139,9 +147,23 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
     }
 
     async function save() {
-      const hasError = !!Object.keys(state).find(
-        key => !!state[key as keyof typeof state].error
-      )
+      let hasError = false
+      const updatedState = Object.fromEntries(
+        Object.keys(state).map(key => {
+          const data = state[key as keyof typeof state].data
+          if(!data) hasError = true
+          return [
+            key,
+            {
+              data,
+              ...(!data ? { error: 'This field is required.' } : {})
+            }
+          ]
+        })
+      ) as State
+      
+      dispatch({ type: 'set', data: updatedState })
+
       if (hasError) {
         pushNotification({
           type: 'default',

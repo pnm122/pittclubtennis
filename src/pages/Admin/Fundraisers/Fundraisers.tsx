@@ -7,10 +7,11 @@ import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import deleteDocuments from 'utils/firebase/deleteDocuments'
 import FundraiserType from 'types/FundraiserType'
-import getFundraisers from 'utils/firebase/getFundraisers'
+import getFundraisers from 'utils/firebase/fundraisers/getFundraisers'
 import createClasses from 'utils/createClasses'
 import { MdOpenInNew } from 'react-icons/md'
 import FundraisersDrawer, { FundraisersDrawerData, FundraisersDrawerRef } from './FundraisersDrawer'
+import setFundraiser from 'utils/firebase/fundraisers/setFundraiser'
 
 export default function Fundraisers() {
   type RowData = FundraiserType & { doc: QueryDocumentSnapshot; key: any }
@@ -85,25 +86,22 @@ export default function Fundraisers() {
 
   async function onSave(data: Omit<FundraisersDrawerData, 'type'>) {
     const { doc, ...saveData } = data
-    // const saveRes = await setTournament(
-    //   {
-    //     ...saveData,
-    //     ...(placement ? { placement } : {})
-    //   },
-    //   doc
-    // )
-    // if (!saveRes.success) {
-    //   pushNotification({
-    //     type: 'error',
-    //     text: `Failed to ${doc ? 'update' : 'add'} tournament!`,
-    //     subtext: (saveRes.data.error as any).toString(),
-    //     timeout: -1,
-    //     dismissable: true
-    //   })
-    //   return false
-    // }
+    const saveRes = await setFundraiser(
+      saveData,
+      doc
+    )
+    if (!saveRes.success) {
+      pushNotification({
+        type: 'error',
+        text: `Failed to ${doc ? 'update' : 'add'} fundraiser!`,
+        subtext: (saveRes.data.error as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
+      return false
+    }
 
-    // fetchTournaments()
+    fetchFundraisers()
     return true
   }
 
@@ -183,7 +181,7 @@ export default function Fundraisers() {
       />
       <AnimatedButton
         text='Add fundraiser'
-        // onClick={() => openDrawer()}
+        onClick={() => openDrawer()}
         className={styles['add-button']}
       />
       <FundraisersDrawer

@@ -1,5 +1,5 @@
 import { collection, getDocs, getFirestore, QueryDocumentSnapshot } from 'firebase/firestore'
-import queryWithErrors from './queryWithErrors'
+import queryWithErrors from '../queryWithErrors'
 import { FirebaseError } from 'firebase/app'
 import FundraiserType from 'types/FundraiserType'
 

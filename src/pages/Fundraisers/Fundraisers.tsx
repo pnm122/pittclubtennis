@@ -3,7 +3,7 @@ import styles from './Fundraisers.module.css'
 import { RxExternalLink } from 'react-icons/rx'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { useContext, useEffect, useState } from 'react'
-import getFundraisers from 'utils/firebase/getFundraisers'
+import getFundraisers from 'utils/firebase/fundraisers/getFundraisers'
 import Skeleton from 'components/Skeleton/Skeleton'
 import { notificationContext } from 'context/NotificationContext'
 
