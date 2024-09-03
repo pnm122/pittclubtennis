@@ -9,9 +9,10 @@ import { Column } from 'types/Table'
 import { formatDate } from 'date-fns'
 import createClasses from 'utils/createClasses'
 import { MdOpenInNew } from 'react-icons/md'
-import TournamentsDrawer, { TournamentsDrawerRef } from './TournamentsDrawer'
+import TournamentsDrawer, { TournamentsDrawerData, TournamentsDrawerRef } from './TournamentsDrawer'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
+import setTournament from 'utils/firebase/tournaments/setTournament'
 
 export default function Tournaments() {
   type RowData = TournamentType & { doc: QueryDocumentSnapshot; key: any }
@@ -104,6 +105,27 @@ export default function Tournaments() {
     tournamentsDrawer.current!.open({ ...rowData, type: 'edit' })
   }
 
+  async function onSave(data: Omit<TournamentsDrawerData, "type">) {
+    const { doc, placement, ...saveData } = data
+    const saveRes = await setTournament({
+      ...saveData,
+      ...(placement ? { placement } : {})
+    }, doc)
+    if(!saveRes.success) {
+      pushNotification({
+        type: 'error',
+        text: `Failed to ${doc ? 'update' : 'add'} tournament!`,
+        subtext: (saveRes.data.error as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
+      return false
+    }
+
+    fetchTournaments()
+    return true
+  }
+
   return (
     <div className='container'>
       <h1 className='admin-page-title'>Tournaments</h1>
@@ -162,7 +184,6 @@ export default function Tournaments() {
               </a>
             )
           } else if ('placement' in value) {
-            console.log('placement', value.placement)
             return value.placement ? (
               <span
                 className={`${tournamentComponentStyles['place']} ${tournamentComponentStyles[`p${value.placement}`]} ${styles['table-item--placement']}`}></span>
@@ -183,7 +204,10 @@ export default function Tournaments() {
         onClick={() => openDrawer()}
         className={styles['add-button']}
       />
-      <TournamentsDrawer ref={tournamentsDrawer} />
+      <TournamentsDrawer
+        ref={tournamentsDrawer}
+        onSave={onSave}
+      />
     </div>
   )
 }

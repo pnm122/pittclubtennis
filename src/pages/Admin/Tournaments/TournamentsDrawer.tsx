@@ -1,5 +1,5 @@
 import Drawer from 'components/Drawer/Drawer'
-import { forwardRef, useImperativeHandle, useReducer, useState } from 'react'
+import { forwardRef, useContext, useImperativeHandle, useReducer, useState } from 'react'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import TournamentType from 'types/TournamentType'
 import { QueryDocumentSnapshot, Timestamp } from 'firebase/firestore'
@@ -7,10 +7,11 @@ import DrawerContent from 'components/Drawer/DrawerContent'
 import Input from 'components/Input/Input'
 import Datepicker from 'components/Datepicker/Datepicker'
 import styles from './Tournaments.module.css'
-import { isAfter, isBefore } from 'date-fns'
+import { isAfter, isBefore, isSameDay } from 'date-fns'
 import Select from 'components/Select/Select'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import Tournament from 'components/Tournament/Tournament'
+import { notificationContext } from 'context/NotificationContext'
 
 export type TournamentsDrawerData = TournamentType & {
   doc?: QueryDocumentSnapshot
@@ -22,10 +23,19 @@ export interface TournamentsDrawerRef {
   close: () => void
 }
 
-const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
+interface Props {
+  onSave: (data: Omit<TournamentsDrawerData, 'type'>) => Promise<boolean>
+}
+
+const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(({
+  onSave
+}, ref) => {
   const [isOpen, setIsOpen] = useState(false)
   const [type, setType] = useState<TournamentsDrawerData['type']>('edit')
   const [doc, setDoc] = useState<QueryDocumentSnapshot | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
+  const [edited, setEdited] = useState(false)
+  const { push: pushNotification } = useContext(notificationContext)
 
   type State = {
     [key in keyof Required<TournamentType>]: {
@@ -64,7 +74,10 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
     }
 
     if (['dateStart', 'dateEnd'].includes(type)) {
-      const isInvalidDateRange = isAfter(
+      const isInvalidDateRange = !isSameDay(
+        newState.dateStart.data.toDate(),
+        newState.dateEnd.data.toDate()
+      ) && isAfter(
         newState.dateStart.data.toDate(),
         newState.dateEnd.data.toDate()
       )
@@ -126,6 +139,40 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
 
   function close() {
     setIsOpen(false)
+  }
+
+  async function save() {
+    const hasError = !!Object.keys(state).find(key => (
+      !!state[key as keyof typeof state].error
+    ))
+    if(hasError) {
+      pushNotification({
+        type: 'default',
+        text: 'Please fix all errors before saving!'
+      })
+      return
+    }
+
+    setIsSaving(true)
+
+    const savedData = Object.fromEntries(
+      Object.keys(state).map(key => ([
+        key,
+        state[key as keyof typeof state].data
+      ]))
+    ) as any as TournamentsDrawerData
+
+    const saveRes = await onSave({
+      ...savedData,
+      doc: doc ?? undefined
+    })
+
+    setIsSaving(false)
+
+    if(saveRes) {
+      setIsOpen(false)
+      setEdited(false)
+    }
   }
 
   return (
@@ -230,8 +277,8 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
       <div className={styles['drawer-actions']}>
         <AnimatedButton
           text={'Save'}
-          // onClick={save}
-          // loading={isSaving}
+          onClick={save}
+          loading={isSaving}
         />
         <AnimatedButton
           text={'Cancel'}
