@@ -16,6 +16,7 @@ import styles from './Table.module.css'
 import { MdArrowForward } from 'react-icons/md'
 import { BsDatabaseFillSlash } from 'react-icons/bs'
 import HorizontalLoader from 'components/HorizontalLoader/HorizontalLoader'
+import Checkbox from 'components/Checkbox/Checkbox'
 
 interface Props<T extends Row> {
   loading?: boolean
@@ -125,10 +126,10 @@ function Table<T extends Row>(
     })
   }
 
-  const handleSelectAll = () => {
-    setSelected(s => {
-      if (onRowSelect) onRowSelect(rows, s.length !== rows.length)
-      return s.length === rows.length ? [] : rows.map(r => r.key)
+  const handleSelectAll = (value: boolean) => {
+    setSelected(() => {
+      if (onRowSelect) onRowSelect(rows, value === true)
+      return value === false ? [] : rows.map(r => r.key)
     })
   }
 
@@ -158,28 +159,20 @@ function Table<T extends Row>(
                   [styles['header-item']]: true
                 })}
                 style={widthStyles(CHECKBOX_WIDTH)}>
-                <div className='with-hover-circle'>
-                  <div
-                    role='checkbox'
-                    aria-checked={
-                      selected.length === rows.length
-                        ? true
-                        : selected.length > 0
-                          ? 'mixed'
-                          : false
-                    }
-                    aria-label={
-                      selected.length === rows.length
-                        ? 'Deselect all rows'
-                        : 'Select all rows'
-                    }
-                    tabIndex={0}
-                    onClick={() => handleSelectAll()}
-                    onKeyDown={({ key }) =>
-                      (key === 'Enter' || key === ' ') && handleSelectAll()
-                    }
-                  />
-                </div>
+                <Checkbox
+                  value={selected.length === rows.length
+                    ? true
+                    : selected.length > 0
+                      ? 'mixed'
+                      : false
+                  }
+                  ariaLabel={
+                    selected.length === rows.length
+                      ? 'Deselect all rows'
+                      : 'Select all rows'
+                  }
+                  onChange={(value) => handleSelectAll(value)}
+                />
               </td>
             )}
             {!!selectable &&
@@ -295,25 +288,12 @@ function Table<T extends Row>(
                     <td
                       className={checkboxClasses}
                       style={widthStyles(CHECKBOX_WIDTH)}>
-                      <div className='with-hover-circle'>
-                        <div
-                          role='checkbox'
-                          aria-checked={selected.includes(row.key)}
-                          aria-label={`Select row ${index + 1}`}
-                          tabIndex={0}
-                          onClick={e => {
-                            e.stopPropagation()
-                            handleSelect(row)
-                          }}
-                          onKeyDown={e => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.stopPropagation()
-                              e.preventDefault()
-                              handleSelect(row)
-                            }
-                          }}
-                        />
-                      </div>
+                      <Checkbox
+                        value={selected.includes(row.key)}
+                        onChange={() => handleSelect(row)}
+                        ariaLabel={`Select row ${index + 1}`}
+                        stopPropagation
+                      />
                     </td>
                   )}
                   {columns.map(({ key }) => (

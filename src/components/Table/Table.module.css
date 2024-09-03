@@ -126,11 +126,6 @@
   --sort-icon-color: var(--on-bg);
 }
 
-.item--checkbox,
-.header-item--checkbox {
-  --hover-circle-scale: 2;
-}
-
 .item--arrow svg {
   color: var(--primary);
   width: 16px;
