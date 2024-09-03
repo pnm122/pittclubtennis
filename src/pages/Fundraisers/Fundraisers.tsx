@@ -23,7 +23,7 @@ export default function Fundraisers() {
         return
       }
 
-      setFundraisers(res.data)
+      setFundraisers(res.data.map(f => f.data))
       setLoading(false)
     })
   }, [])
