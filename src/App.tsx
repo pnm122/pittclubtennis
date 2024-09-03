@@ -19,6 +19,7 @@ import Admin from 'pages/Admin/Admin'
 import Login from 'pages/Admin/Login/Login'
 import AdminMembers from 'pages/Admin/Members/Members'
 import AdminTournaments from 'pages/Admin/Tournaments/Tournaments'
+import AdminFundraisers from 'pages/Admin/Fundraisers/Fundraisers'
 import { NotificationContextProvider } from 'context/NotificationContext'
 
 function App() {
@@ -122,6 +123,10 @@ function App() {
             <Route
               path='tournaments'
               element={<AdminTournaments />}
+            />
+            <Route
+              path='fundraisers'
+              element={<AdminFundraisers />}
             />
           </Route>
           <Route

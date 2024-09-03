@@ -17,6 +17,10 @@ export default function Admin() {
     {
       path: '/admin/members',
       name: 'Members'
+    },
+    {
+      path: '/admin/fundraisers',
+      name: 'Fundraisers'
     }
   ]
 

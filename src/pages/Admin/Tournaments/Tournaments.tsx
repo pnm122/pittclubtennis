@@ -97,7 +97,7 @@ export default function Tournaments() {
       t.data.map(({ data, doc }) => ({
         ...data,
         doc,
-        key: `${data.name}${data.dateStart.toString()}`
+        key: doc.id
       }))
     )
   }
