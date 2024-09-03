@@ -1,4 +1,4 @@
-import Table from 'components/Table/Table'
+import Table, { TableRef } from 'components/Table/Table'
 import styles from './Tournaments.module.css'
 import tournamentComponentStyles from 'components/Tournament/Tournament.module.css'
 import { useContext, useEffect, useRef, useState } from 'react'
@@ -13,13 +13,16 @@ import TournamentsDrawer, { TournamentsDrawerData, TournamentsDrawerRef } from '
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import setTournament from 'utils/firebase/tournaments/setTournament'
+import deleteDocuments from 'utils/firebase/deleteDocuments'
 
 export default function Tournaments() {
   type RowData = TournamentType & { doc: QueryDocumentSnapshot; key: any }
   const [tournaments, setTournaments] = useState<RowData[]>([])
   const [loading, setLoading] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const { push: pushNotification } = useContext(notificationContext)
   const tournamentsDrawer = useRef<TournamentsDrawerRef>(null)
+  const table = useRef<TableRef<RowData>>(null)
 
   const columns: Column<RowData>[] = [
     {
@@ -126,14 +129,49 @@ export default function Tournaments() {
     return true
   }
 
+  async function onDelete() {
+    const rows = table.current!.getSelectedRows()
+    const docsToDelete = rows.map(r => r.doc)
+
+    setIsDeleting(true)
+    const deleteRes = await deleteDocuments(docsToDelete)
+    setIsDeleting(false)
+
+    if(!deleteRes.success) {
+      pushNotification({
+        type: 'error',
+        text: `Failed to delete tournaments!`,
+        subtext: (deleteRes.data.error as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
+      return false
+    }
+
+    fetchTournaments()
+    return true
+  }
+
   return (
     <div className='container'>
       <h1 className='admin-page-title'>Tournaments</h1>
       <Table
+        ref={table}
         data={tournaments}
         columns={columns}
         loading={loading}
         selectable
+        selectedActions={[
+          <AnimatedButton
+            key='delete'
+            text='Delete'
+            type='button'
+            style='negative'
+            size='small'
+            loading={isDeleting}
+            onClick={onDelete}
+          />
+        ]}
         maxWidth='100%'
         onRowClick={openDrawer}
         renderMap={(value, row) => {
