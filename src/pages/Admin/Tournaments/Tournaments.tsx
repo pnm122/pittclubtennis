@@ -3,7 +3,7 @@ import styles from './Tournaments.module.css'
 import tournamentComponentStyles from 'components/Tournament/Tournament.module.css'
 import { useContext, useEffect, useRef, useState } from 'react'
 import TournamentType from 'types/TournamentType'
-import getTournaments from 'utils/firebase/getTournaments'
+import getTournaments from 'utils/firebase/tournaments/getTournaments'
 import { notificationContext } from 'context/NotificationContext'
 import { Column } from 'types/Table'
 import { formatDate } from 'date-fns'
@@ -11,9 +11,10 @@ import createClasses from 'utils/createClasses'
 import { MdOpenInNew } from 'react-icons/md'
 import TournamentsDrawer, { TournamentsDrawerRef } from './TournamentsDrawer'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
+import { QueryDocumentSnapshot } from 'firebase/firestore'
 
 export default function Tournaments() {
-  type RowData = TournamentType & { key: any }
+  type RowData = TournamentType & { doc: QueryDocumentSnapshot, key: any }
   const [tournaments, setTournaments] = useState<RowData[]>([])
   const [loading, setLoading] = useState(false)
   const { push: pushNotification } = useContext(notificationContext)
@@ -86,7 +87,7 @@ export default function Tournaments() {
       })
     }
     setTournaments(
-      t.data.map(e => ({ ...e, key: `${e.name}${e.dateStart.toString()}` }))
+      t.data.map(({ data, doc }) => ({ ...data, doc, key: `${data.name}${data.dateStart.toString()}` }))
     )
   }
 

@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import SplitType from 'split-type'
 import { gsap } from 'gsap'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
-import getTournaments from 'utils/firebase/getTournaments'
+import getTournaments from 'utils/firebase/tournaments/getTournaments'
 import TournamentType from 'types/TournamentType'
 import Tournament, {
   TournamentSkeleton
@@ -160,7 +160,7 @@ const Tournaments = () => {
       }
 
       // Only show upcoming tournaments on the homepage
-      setTournaments(filterUpcoming(res.data).upcoming)
+      setTournaments(filterUpcoming(res.data.map(d => d.data)).upcoming)
       setLoading(false)
     })
   }, [])

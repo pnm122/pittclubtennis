@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './Tournaments.module.css'
 import TournamentType from 'types/TournamentType'
-import getTournaments from 'utils/firebase/getTournaments'
+import getTournaments from 'utils/firebase/tournaments/getTournaments'
 import Tournament, {
   TournamentSkeleton
 } from 'components/Tournament/Tournament'
@@ -20,7 +20,7 @@ export default function Tournaments() {
       }
 
       // Only show upcoming tournaments on the homepage
-      setTournaments(res.data)
+      setTournaments(res.data.map(d => d.data))
       setLoading(false)
     })
   }, [])

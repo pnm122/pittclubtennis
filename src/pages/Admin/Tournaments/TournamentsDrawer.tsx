@@ -2,7 +2,7 @@ import Drawer from 'components/Drawer/Drawer'
 import { forwardRef, useImperativeHandle, useReducer, useState } from 'react'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import TournamentType from 'types/TournamentType'
-import { Timestamp } from 'firebase/firestore'
+import { QueryDocumentSnapshot, Timestamp } from 'firebase/firestore'
 import DrawerContent from 'components/Drawer/DrawerContent'
 import Input from 'components/Input/Input'
 import Datepicker from 'components/Datepicker/Datepicker'
@@ -13,6 +13,7 @@ import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import Tournament from 'components/Tournament/Tournament'
 
 export type TournamentsDrawerData = TournamentType & {
+  doc?: QueryDocumentSnapshot
   type: 'edit' | 'add'
 }
 
@@ -24,6 +25,7 @@ export interface TournamentsDrawerRef {
 const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
   const [isOpen, setIsOpen] = useState(false)
   const [type, setType] = useState<TournamentsDrawerData['type']>('edit')
+  const [doc, setDoc] = useState<QueryDocumentSnapshot | null>(null)
 
   type State = {
     [key in keyof Required<TournamentType>]: {
@@ -110,11 +112,14 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
 
   function open(data?: TournamentsDrawerData) {
     if(data) {
-      const { type: openType, ...openData } = data
+      const { type: openType, doc: openDoc, ...openData } = data
       setType('edit')
+      // Shouldn't ever be null here, will lead to errors
+      setDoc(openDoc!)
       dispatch({ type: 'init', data: openData })
     } else {
       setType('add')
+      setDoc(null)
       dispatch({ type: 'init', data: getDefaultData() })
     }
     setIsOpen(true)
