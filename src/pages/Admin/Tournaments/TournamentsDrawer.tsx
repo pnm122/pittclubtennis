@@ -23,6 +23,7 @@ export interface TournamentsDrawerRef {
 
 const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [type, setType] = useState<TournamentsDrawerData['type']>('edit')
 
   type State = {
     [key in keyof Required<TournamentType>]: {
@@ -31,10 +32,29 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
     }
   }
 
+  type ReducerAction = {
+    type: keyof TournamentType
+    data: TournamentType[keyof TournamentType]
+  } | {
+    type: 'init'
+    data: TournamentType
+  }
+
   function reducer(
     state: State,
-    { type, data }: { type: keyof TournamentType; data: TournamentType[keyof TournamentType] }
+    { type, data }: ReducerAction
   ) {
+    if(type === 'init') {
+      return {
+        name: { data: data.name },
+        dateStart: { data: data.dateStart },
+        dateEnd: { data: data.dateEnd },
+        locationName: { data: data.locationName },
+        locationLink: { data: data.locationLink },
+        placement: { data: data.placement }
+      }
+    }
+
     let newState = {
       ...state,
       [type]: {
@@ -69,9 +89,15 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
   )
 
   useImperativeHandle(ref, () => ({
-    open: () => setIsOpen(true),
+    open,
     close
   }))
+
+  function open(data: TournamentsDrawerData) {
+    const { type: openType, ...openData } = data
+    dispatch({ type: 'init', data: openData })
+    setIsOpen(true)
+  }
 
   function close() {
     setIsOpen(false)
@@ -84,7 +110,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
       open={isOpen}
       onBackdropClicked={close}>
       <DrawerHeader
-        title={`Edit Tournament`}
+        title={`${type === 'edit' ? 'Edit' : 'Add'} Tournament`}
         onClose={close}
       />
       <DrawerContent>
@@ -134,13 +160,13 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
               name: 'None',
               value: undefined
             }, {
-              name: 'First',
+              name: 'First Place',
               value: 1
             }, {
-              name: 'Second',
+              name: 'Second Place',
               value: 2
             }, {
-              name: 'Third',
+              name: 'Third Place',
               value: 3
             }]}
             value={state.placement.data}
