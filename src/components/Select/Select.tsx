@@ -201,7 +201,7 @@ const Select = forwardRef<SelectRef, Props>(function Select(
             {renderOptions.map((o, index) => (
               <li
                 className={styles['option']}
-                key={o.value}>
+                key={o.value ?? o.name}>
                 <button
                   type='button'
                   className={createClasses({
