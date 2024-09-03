@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import styles from './Admin.module.css'
@@ -6,6 +6,7 @@ import Loader from 'components/Loader/Loader'
 import Header from 'components/Header/Header'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import './admin.css'
+import { notificationContext } from 'context/NotificationContext'
 
 export default function Admin() {
   const adminLinks = [
@@ -22,6 +23,7 @@ export default function Admin() {
   const auth = getAuth()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
+  const { push: pushNotification } = useContext(notificationContext)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, () => {
@@ -43,7 +45,13 @@ export default function Admin() {
     try {
       await auth.signOut()
     } catch (e) {
-      console.error(e)
+      pushNotification({
+        type: 'error',
+        text: 'There was an error signing out.',
+        subtext: (e as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
     }
   }
 

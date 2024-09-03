@@ -1,9 +1,4 @@
-import {
-  deleteField,
-  getDoc,
-  QueryDocumentSnapshot,
-  updateDoc
-} from 'firebase/firestore'
+import { deleteField, getDoc, QueryDocumentSnapshot } from 'firebase/firestore'
 import { MemberType, SetMemberType } from 'types/MemberType'
 import uploadToStorage from '../storage/uploadToStorage'
 import deleteFromStorage from '../storage/deleteFromStorage'

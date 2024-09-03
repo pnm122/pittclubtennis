@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styles from './Tournaments.module.css'
 import TournamentType from 'types/TournamentType'
 import getTournaments from 'utils/firebase/tournaments/getTournaments'
@@ -7,15 +7,20 @@ import Tournament, {
 } from 'components/Tournament/Tournament'
 import filterUpcoming from 'utils/filterUpcoming'
 import Skeleton from 'components/Skeleton/Skeleton'
+import { notificationContext } from 'context/NotificationContext'
 
 export default function Tournaments() {
   const [tournaments, setTournaments] = useState<TournamentType[] | null>(null)
   const [loading, setLoading] = useState(true)
+  const { push: pushNotification } = useContext(notificationContext)
 
   useEffect(() => {
     getTournaments().then(res => {
       if (!res.data) {
-        // console.error(res.error)
+        pushNotification({
+          type: 'error',
+          text: 'There was an error retrieving the tournaments.'
+        })
         return
       }
 

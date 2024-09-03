@@ -1,17 +1,22 @@
 import getMembers from 'utils/firebase/members/getMembers'
 import styles from './Members.module.css'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Skeleton from 'components/Skeleton/Skeleton'
 import { MemberType } from 'types/MemberType'
+import { notificationContext } from 'context/NotificationContext'
 
 export default function Members() {
   const [members, setMembers] = useState<MemberType[] | null>(null)
   const [loading, setLoading] = useState(true)
+  const { push: pushNotification } = useContext(notificationContext)
 
   useEffect(() => {
     getMembers().then(res => {
       if (res.error || !res.data) {
-        // TODO: show error
+        pushNotification({
+          type: 'error',
+          text: 'There was an error retrieving the members.'
+        })
         return
       }
 

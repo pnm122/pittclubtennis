@@ -2,18 +2,23 @@ import FundraiserType from 'types/FundraiserType'
 import styles from './Fundraisers.module.css'
 import { RxExternalLink } from 'react-icons/rx'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import getFundraisers from 'utils/firebase/getFundraisers'
 import Skeleton from 'components/Skeleton/Skeleton'
+import { notificationContext } from 'context/NotificationContext'
 
 export default function Fundraisers() {
   const [fundraisers, setFundraisers] = useState<FundraiserType[] | null>(null)
   const [loading, setLoading] = useState(true)
+  const { push: pushNotification } = useContext(notificationContext)
 
   useEffect(() => {
     getFundraisers().then(res => {
       if (res.error || !res.data) {
-        // console.error(res.error)
+        pushNotification({
+          type: 'error',
+          text: 'There was an error retrieving the fundraisers.'
+        })
         setLoading(false)
         return
       }

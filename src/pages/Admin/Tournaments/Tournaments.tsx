@@ -14,7 +14,7 @@ import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 
 export default function Tournaments() {
-  type RowData = TournamentType & { doc: QueryDocumentSnapshot, key: any }
+  type RowData = TournamentType & { doc: QueryDocumentSnapshot; key: any }
   const [tournaments, setTournaments] = useState<RowData[]>([])
   const [loading, setLoading] = useState(false)
   const { push: pushNotification } = useContext(notificationContext)
@@ -87,12 +87,16 @@ export default function Tournaments() {
       })
     }
     setTournaments(
-      t.data.map(({ data, doc }) => ({ ...data, doc, key: `${data.name}${data.dateStart.toString()}` }))
+      t.data.map(({ data, doc }) => ({
+        ...data,
+        doc,
+        key: `${data.name}${data.dateStart.toString()}`
+      }))
     )
   }
 
   function openDrawer(data?: RowData) {
-    if(!data) {
+    if (!data) {
       return tournamentsDrawer.current!.open()
     }
 

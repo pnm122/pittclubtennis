@@ -1,5 +1,5 @@
 import styles from './Homepage.module.css'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import SplitType from 'split-type'
 import { gsap } from 'gsap'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
@@ -11,6 +11,7 @@ import Tournament, {
 import filterUpcoming from 'utils/filterUpcoming'
 import { textFrom, textTo } from 'utils/animation/textAnimation'
 import { fadeFrom, fadeTo } from 'utils/animation/fadeAnimation'
+import { notificationContext } from 'context/NotificationContext'
 
 export default function Homepage() {
   return (
@@ -151,11 +152,15 @@ const About = () => {
 const Tournaments = () => {
   const [tournaments, setTournaments] = useState<TournamentType[] | null>(null)
   const [loading, setLoading] = useState(true)
+  const { push: pushNotification } = useContext(notificationContext)
 
   useEffect(() => {
     getTournaments().then(res => {
       if (!res.data) {
-        // console.error(res.error)
+        pushNotification({
+          type: 'error',
+          text: 'There was an error retrieving the tournaments.'
+        })
         return
       }
 

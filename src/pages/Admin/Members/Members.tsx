@@ -82,7 +82,13 @@ export default function Members() {
     const res = await getMembers()
     setLoading(false)
     if (res.error) {
-      console.error(res.error)
+      pushNotification({
+        type: 'error',
+        text: 'There was an error retrieving the members.',
+        subtext: `Error code: ${res.error.code}`,
+        timeout: -1,
+        dismissable: true
+      })
       return
     } else if (res) {
       setMemberData(res.data)

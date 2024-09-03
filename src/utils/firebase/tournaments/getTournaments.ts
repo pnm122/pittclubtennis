@@ -1,4 +1,9 @@
-import { collection, getDocs, getFirestore, QueryDocumentSnapshot } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  QueryDocumentSnapshot
+} from 'firebase/firestore'
 import TournamentType from 'types/TournamentType'
 import queryWithErrors from '../queryWithErrors'
 import { FirebaseError } from 'firebase/app'
@@ -6,7 +11,10 @@ import { FirebaseError } from 'firebase/app'
 const getTournaments = async () => {
   const db = getFirestore()
 
-  const q = await queryWithErrors<{ data: TournamentType, doc: QueryDocumentSnapshot }[], FirebaseError>(async () => {
+  const q = await queryWithErrors<
+    { data: TournamentType; doc: QueryDocumentSnapshot }[],
+    FirebaseError
+  >(async () => {
     const t = await getDocs(collection(db, 'tournaments'))
     const docs = t.docs
     let tournaments = docs.map(doc => {

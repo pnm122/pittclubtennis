@@ -34,19 +34,18 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
     }
   }
 
-  type ReducerAction = {
-    type: keyof TournamentType
-    data: TournamentType[keyof TournamentType]
-  } | {
-    type: 'init'
-    data: TournamentType
-  }
+  type ReducerAction =
+    | {
+        type: keyof TournamentType
+        data: TournamentType[keyof TournamentType]
+      }
+    | {
+        type: 'init'
+        data: TournamentType
+      }
 
-  function reducer(
-    state: State,
-    { type, data }: ReducerAction
-  ) {
-    if(type === 'init') {
+  function reducer(state: State, { type, data }: ReducerAction) {
+    if (type === 'init') {
       return {
         name: { data: data.name },
         dateStart: { data: data.dateStart },
@@ -60,13 +59,16 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
     let newState = {
       ...state,
       [type]: {
-        data,
+        data
       }
     }
 
-    if(['dateStart', 'dateEnd'].includes(type)) {
-      const isInvalidDateRange = isAfter(newState.dateStart.data.toDate(), newState.dateEnd.data.toDate())
-      if(isInvalidDateRange) {
+    if (['dateStart', 'dateEnd'].includes(type)) {
+      const isInvalidDateRange = isAfter(
+        newState.dateStart.data.toDate(),
+        newState.dateEnd.data.toDate()
+      )
+      if (isInvalidDateRange) {
         newState.dateStart.error = 'Start date must be before end date.'
         newState.dateEnd.error = 'End date must be after start date.'
       } else {
@@ -100,10 +102,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
     }
   }
 
-  const [state, dispatch] = useReducer(
-    reducer, 
-    getDefaultState()
-  )
+  const [state, dispatch] = useReducer(reducer, getDefaultState())
 
   useImperativeHandle(ref, () => ({
     open,
@@ -111,7 +110,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
   }))
 
   function open(data?: TournamentsDrawerData) {
-    if(data) {
+    if (data) {
       const { type: openType, doc: openDoc, ...openData } = data
       setType('edit')
       // Shouldn't ever be null here, will lead to errors
@@ -153,15 +152,21 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
             label='Start Date'
             value={state.dateStart.data.toDate()}
             error={state.dateStart.error}
-            onChange={date => dispatch({ type: 'dateStart', data: Timestamp.fromDate(date) })}
+            onChange={date =>
+              dispatch({ type: 'dateStart', data: Timestamp.fromDate(date) })
+            }
             required
           />
           <Datepicker
             label='End Date'
-            disabledDates={date => isBefore(date, state.dateStart.data.toDate())}
+            disabledDates={date =>
+              isBefore(date, state.dateStart.data.toDate())
+            }
             value={state.dateEnd.data.toDate()}
             error={state.dateEnd.error}
-            onChange={date => dispatch({ type: 'dateEnd', data: Timestamp.fromDate(date) })}
+            onChange={date =>
+              dispatch({ type: 'dateEnd', data: Timestamp.fromDate(date) })
+            }
             required
           />
           <Input
@@ -169,7 +174,9 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
             name='location-name'
             value={state.locationName.data}
             error={state.locationName.error}
-            onChange={e => dispatch({ type: 'locationName', data: e.target.value })}
+            onChange={e =>
+              dispatch({ type: 'locationName', data: e.target.value })
+            }
             required
           />
           <Input
@@ -177,26 +184,35 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef>((_, ref) => {
             name='location-link'
             value={state.locationLink.data}
             error={state.locationLink.error}
-            onChange={e => dispatch({ type: 'locationLink', data: e.target.value })}
+            onChange={e =>
+              dispatch({ type: 'locationLink', data: e.target.value })
+            }
             required
           />
           <Select
             label='Placement'
-            options={[{
-              name: 'None',
-              value: undefined
-            }, {
-              name: 'First Place',
-              value: 1
-            }, {
-              name: 'Second Place',
-              value: 2
-            }, {
-              name: 'Third Place',
-              value: 3
-            }]}
+            options={[
+              {
+                name: 'None',
+                value: undefined
+              },
+              {
+                name: 'First Place',
+                value: 1
+              },
+              {
+                name: 'Second Place',
+                value: 2
+              },
+              {
+                name: 'Third Place',
+                value: 3
+              }
+            ]}
             value={state.placement.data}
-            onChange={({ selected }) => dispatch({ type: 'placement', data: selected })}
+            onChange={({ selected }) =>
+              dispatch({ type: 'placement', data: selected })
+            }
           />
         </form>
         <div className={styles['preview']}>
