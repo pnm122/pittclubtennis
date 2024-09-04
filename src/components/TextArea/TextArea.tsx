@@ -19,6 +19,7 @@ interface Props {
   onClick?: React.MouseEventHandler<HTMLTextAreaElement>
   error?: string
   required?: boolean
+  disabled?: boolean
   borderless?: boolean
   width?: string
   height?: string
@@ -48,6 +49,7 @@ const TextArea = forwardRef<TextAreaRef, Props>((
     onClick,
     error,
     required,
+    disabled,
     borderless,
     width,
     height,
@@ -84,6 +86,7 @@ const TextArea = forwardRef<TextAreaRef, Props>((
         className={createClasses({
           'form-elem__main-control': true,
           'form-elem__main-control--borderless': !!borderless,
+          'form-elem__main-control--disabled': !!disabled,
           [styles['textarea']]: true
         })}
         style={{ ...(width ? { width } : {}), ...(height ? { height } : {}), resize }}
@@ -98,6 +101,7 @@ const TextArea = forwardRef<TextAreaRef, Props>((
         onBlur={e => onBlur && onBlur(e)}
         onClick={e => onClick && onClick(e)}
         required={required}
+        disabled={disabled}
         ref={textarea}
       />
       {!!error && <Error>{error}</Error>}
