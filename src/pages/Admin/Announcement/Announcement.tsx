@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './Announcement.module.css'
-import { DocumentSnapshot } from 'firebase/firestore'
+import { DocumentSnapshot, updateDoc } from 'firebase/firestore'
 import AnnouncementType from 'types/AnnouncementType'
 import Loader from 'components/Loader/Loader'
 import getAnnouncement from 'utils/firebase/getAnnouncement'
@@ -12,10 +12,22 @@ import { AnnouncementComponent } from 'components/Announcement/Announcement'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 
 export default function Announcement() {
+  type Errors = {
+    [key in keyof Omit<AnnouncementType, 'active' | 'linkNewTab'>]: string
+  }
+
+  const noErrors = {
+    title: '',
+    message: '',
+    linkTitle: '',
+    link: ''
+  }
+
   const [announcement, setAnnouncement] = useState<{
     data: AnnouncementType
     doc: DocumentSnapshot
   } | null>(null)
+  const [errors, setErrors] = useState<Errors>(noErrors)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const { push: pushNotification } = useContext(notificationContext)
@@ -46,6 +58,11 @@ export default function Announcement() {
     type: keyof AnnouncementType,
     value: AnnouncementType[keyof AnnouncementType]
   ) {
+    // Clear error on changed state
+    setErrors(e => ({
+      ...e,
+      [type]: ''
+    }))
     setAnnouncement(a =>
       a
         ? {
@@ -59,6 +76,51 @@ export default function Announcement() {
     )
   }
 
+  async function save(e: React.FormEvent) {
+    e.preventDefault()
+
+    if(!announcement) return
+
+    const { title, message, link, linkTitle, active } = announcement.data
+    const errorMessage = 'This field is required.'
+
+    // Probably handled by browser by default, but should be here in case
+    if(active) {
+      setErrors({
+        title: title === '' ? errorMessage : '',
+        message: message === '' ? errorMessage : '',
+        link: link === '' ? errorMessage : '',
+        linkTitle: linkTitle === '' ? errorMessage : ''
+      })
+      const hasError = title === '' || message === '' || link === '' || linkTitle === ''
+      if(hasError) {
+        return pushNotification({
+          text: 'Please fill out all required fields.'
+        })
+      }
+    }
+
+    setErrors(noErrors)
+    setIsSaving(true)
+    try {
+      await updateDoc(announcement.doc.ref, announcement.data as any)
+      pushNotification({
+        type: 'success',
+        text: 'Successfully updated the announcement!'
+      })
+      fetchAnnouncement()
+    } catch (e) {
+      pushNotification({
+        type: 'error',
+        text: 'There was an error updating the announcement.',
+        subtext: (e as any).toString(),
+        timeout: -1,
+        dismissable: true
+      })
+    }
+    setIsSaving(false)
+  }
+
   return (
     <div className='container'>
       <h1 className='admin-page-title'>Announcement</h1>
@@ -66,7 +128,7 @@ export default function Announcement() {
         <Loader size={32} />
       ) : (
         <>
-          <form className={styles['form']}>
+          <form className={styles['form']} onSubmit={save}>
             <Checkbox
               value={announcement.data.active}
               onChange={value => setState('active', value)}
@@ -82,6 +144,7 @@ export default function Announcement() {
                 onChange={e => setState('title', e.target.value)}
                 disabled={!announcement.data.active}
                 required={announcement.data.active}
+                error={!announcement.data.active ? '' : errors.title}
               />
               <TextArea
                 name='message'
@@ -92,6 +155,7 @@ export default function Announcement() {
                 height='150px'
                 disabled={!announcement.data.active}
                 required={announcement.data.active}
+                error={!announcement.data.active ? '' : errors.message}
               />
             </div>
             <hr className={styles['divider']}></hr>
@@ -104,6 +168,7 @@ export default function Announcement() {
                 onChange={e => setState('linkTitle', e.target.value)}
                 disabled={!announcement.data.active}
                 required={announcement.data.active}
+                error={!announcement.data.active ? '' : errors.linkTitle}
               />
               <Input
                 name='link'
@@ -113,6 +178,7 @@ export default function Announcement() {
                 onChange={e => setState('link', e.target.value)}
                 disabled={!announcement.data.active}
                 required={announcement.data.active}
+                error={!announcement.data.active ? '' : errors.link}
               />
               <Checkbox
                 value={announcement.data.linkNewTab}
@@ -135,7 +201,7 @@ export default function Announcement() {
                 <hr className={styles['divider']}></hr>
               </>
             )}
-            <AnimatedButton text='Save' />
+            <AnimatedButton text='Save' type='button' loading={isSaving} submit />
           </form>
         </>
       )}

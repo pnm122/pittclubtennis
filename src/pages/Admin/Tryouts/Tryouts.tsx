@@ -49,6 +49,7 @@ export default function Tryouts() {
         type: 'success',
         text: 'Successfully updated tryouts information!'
       })
+      fetchTryouts()
     } catch (e) {
       pushNotification({
         type: 'error',
@@ -59,7 +60,6 @@ export default function Tryouts() {
       })
     }
     setIsSaving(false)
-    fetchTryouts()
   }
 
   return (
