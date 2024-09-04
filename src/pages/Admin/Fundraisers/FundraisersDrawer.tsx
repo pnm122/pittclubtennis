@@ -209,7 +209,7 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
             <form className='drawer-form'>
               <Input
                 label='Name'
-                name='name'
+                name='fundraiser-name'
                 value={state.name.data}
                 error={state.name.error}
                 onChange={e => dispatch({ type: 'name', data: e.target.value })}

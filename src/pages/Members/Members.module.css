@@ -48,3 +48,13 @@
   left: 0;
   z-index: -2;
 }
+
+.no-members {
+  font: var(--default-font);
+  text-transform: none;
+  background-color: var(--warning-light);
+  padding: var(--size-lg);
+  border-radius: var(--rounding);
+  border: 1px solid var(--warning);
+  color: var(--warning);
+}

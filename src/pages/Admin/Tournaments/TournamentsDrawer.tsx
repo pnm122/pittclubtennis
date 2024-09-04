@@ -215,7 +215,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
             <form className='drawer-form'>
               <Input
                 label='Name'
-                name='name'
+                name='tournament-name'
                 value={state.name.data}
                 error={state.name.error}
                 onChange={e => dispatch({ type: 'name', data: e.target.value })}

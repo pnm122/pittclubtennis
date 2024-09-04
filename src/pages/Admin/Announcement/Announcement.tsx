@@ -79,21 +79,22 @@ export default function Announcement() {
   async function save(e: React.FormEvent) {
     e.preventDefault()
 
-    if(!announcement) return
+    if (!announcement) return
 
     const { title, message, link, linkTitle, active } = announcement.data
     const errorMessage = 'This field is required.'
 
     // Probably handled by browser by default, but should be here in case
-    if(active) {
+    if (active) {
       setErrors({
         title: title === '' ? errorMessage : '',
         message: message === '' ? errorMessage : '',
         link: link === '' ? errorMessage : '',
         linkTitle: linkTitle === '' ? errorMessage : ''
       })
-      const hasError = title === '' || message === '' || link === '' || linkTitle === ''
-      if(hasError) {
+      const hasError =
+        title === '' || message === '' || link === '' || linkTitle === ''
+      if (hasError) {
         return pushNotification({
           text: 'Please fill out all required fields.'
         })
@@ -128,7 +129,9 @@ export default function Announcement() {
         <Loader size={32} />
       ) : (
         <>
-          <form className={styles['form']} onSubmit={save}>
+          <form
+            className={styles['form']}
+            onSubmit={save}>
             <Checkbox
               value={announcement.data.active}
               onChange={value => setState('active', value)}
@@ -201,7 +204,12 @@ export default function Announcement() {
                 <hr className={styles['divider']}></hr>
               </>
             )}
-            <AnimatedButton text='Save' type='button' loading={isSaving} submit />
+            <AnimatedButton
+              text='Save'
+              type='button'
+              loading={isSaving}
+              submit
+            />
           </form>
         </>
       )}

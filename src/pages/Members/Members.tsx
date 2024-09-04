@@ -50,10 +50,10 @@ export default function Members() {
                 members.length > 0 ? (
                   membersRender
                 ) : (
-                  <p>Members coming soon!</p>
+                  <p className={styles['no-members']}>Members coming soon!</p>
                 )
               ) : (
-                <p className='error'>Error loading members.</p>
+                <></>
               )}
             </div>
           </div>
