@@ -1,15 +1,15 @@
-import getNotification from 'utils/firebase/getNotification'
-import styles from './ClubTennisNotification.module.css'
+import getAnnouncement from 'utils/firebase/getAnnouncement'
+import styles from './Announcement.module.css'
 import { useEffect, useState } from 'react'
-import NotificationType from 'types/NotificationType'
+import AnnouncementType from 'types/AnnouncementType'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 
-export default function ClubTennisNotification() {
-  const [notif, setNotif] = useState<NotificationType | null>(null)
+export default function Announcement() {
+  const [notif, setNotif] = useState<AnnouncementType | null>(null)
   const [showing, setShowing] = useState(false)
 
   useEffect(() => {
-    getNotification().then(res => {
+    getAnnouncement().then(res => {
       if (res.error || !res.data) {
         return
       }
