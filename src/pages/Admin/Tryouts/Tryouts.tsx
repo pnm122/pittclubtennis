@@ -81,6 +81,7 @@ export default function Tryouts() {
               value={tryouts.data.link}
               onChange={e => setTryouts({ ...tryouts, data: { ...tryouts.data, link: e.target.value } })}
               label='Link'
+              type='url'
               disabled={!tryouts.data.open}
               width='100%'
             />

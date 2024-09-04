@@ -11,6 +11,14 @@ import { notificationContext } from 'context/NotificationContext'
 export default function Admin() {
   const adminLinks = [
     {
+      path: '/admin/tryouts',
+      name: 'Tryouts'
+    },
+    {
+      path: '/admin/fundraisers',
+      name: 'Fundraisers'
+    },
+    {
       path: '/admin/tournaments',
       name: 'Tournaments'
     },
@@ -19,12 +27,8 @@ export default function Admin() {
       name: 'Members'
     },
     {
-      path: '/admin/fundraisers',
-      name: 'Fundraisers'
-    },
-    {
-      path: '/admin/tryouts',
-      name: 'Tryouts'
+      path: '/admin/announcement',
+      name: 'Announcement'
     }
   ]
 

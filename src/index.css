@@ -293,7 +293,9 @@ a.inline:hover::after {
 }
 
 hr {
-  border: 1px solid var(--on-bg50);
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border);
 }
 
 nav ul {

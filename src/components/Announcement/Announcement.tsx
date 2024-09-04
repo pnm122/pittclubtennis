@@ -14,7 +14,7 @@ export default function Announcement() {
         return
       }
 
-      setNotif(res.data)
+      setNotif(res.data.data)
       setShowing(true)
     })
   }, [])
@@ -25,28 +25,49 @@ export default function Announcement() {
       aria-hidden={!showing}>
       <div className='container'>
         {notif && notif.active ? (
-          <div id={styles['notif']}>
-            <div id={styles['notif-content']}>
-              <h3>{notif.title}</h3>
-              <p>{notif.message}</p>
-            </div>
-            <div id={styles['buttons']}>
-              <AnimatedButton
-                href={notif.link}
-                text={notif.linkTitle}
-                newTab={notif.linkNewTab}
-                onClick={() => setShowing(false)}
-              />
-              <button
-                onClick={() => setShowing(false)}
-                id={styles['hide-button']}>
-                Hide
-              </button>
-            </div>
-          </div>
+          <AnnouncementComponent
+            announcement={notif}
+            setShowing={setShowing}
+          />
         ) : (
           <></>
         )}
+      </div>
+    </div>
+  )
+}
+
+interface AnnouncementComponentProps {
+  announcement: AnnouncementType
+  setShowing?: (s: boolean) => void
+  preview?: boolean
+}
+
+export function AnnouncementComponent({
+  announcement,
+  setShowing,
+  preview
+}: AnnouncementComponentProps) {
+  return (
+    <div id={styles['notif']}>
+      <div id={styles['notif-content']}>
+        <h3>{announcement.title}</h3>
+        <p>{announcement.message}</p>
+      </div>
+      <div id={styles['buttons']}>
+        <AnimatedButton
+          href={announcement.link}
+          text={announcement.linkTitle}
+          // Automatically open in new tab in preview mode so that changes aren't lost
+          newTab={preview || announcement.linkNewTab}
+          onClick={() => setShowing && setShowing(false)}
+        />
+        <button
+          onClick={() => setShowing && setShowing(false)}
+          type='button'
+          id={styles['hide-button']}>
+          Hide
+        </button>
       </div>
     </div>
   )

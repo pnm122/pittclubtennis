@@ -228,6 +228,7 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
               <Input
                 label='Link'
                 name='link'
+                type='url'
                 value={state.linkLocation.data}
                 error={state.linkLocation.error}
                 onChange={e => dispatch({ type: 'linkLocation', data: e.target.value })}
