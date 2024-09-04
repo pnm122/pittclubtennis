@@ -150,7 +150,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
     }
 
     async function close() {
-      if(edited) {
+      if (edited) {
         setShowWarning(true)
         const shouldCloseDrawer = await new Promise<boolean>(
           res => (warningPromiseResolve = res)
@@ -226,7 +226,10 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
                 value={state.dateStart.data.toDate()}
                 error={state.dateStart.error}
                 onChange={date =>
-                  dispatch({ type: 'dateStart', data: Timestamp.fromDate(date) })
+                  dispatch({
+                    type: 'dateStart',
+                    data: Timestamp.fromDate(date)
+                  })
                 }
                 required
               />

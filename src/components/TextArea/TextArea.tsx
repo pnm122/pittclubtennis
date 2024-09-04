@@ -34,79 +34,88 @@ export interface TextAreaRef {
   focus: () => void
 }
 
-const TextArea = forwardRef<TextAreaRef, Props>((
-  {
-    placeholder,
-    label,
-    name,
-    value,
-    onChange,
-    onSelect,
-    onFocus,
-    onBeforeInput,
-    onKeyDown,
-    onBlur,
-    onClick,
-    error,
-    required,
-    disabled,
-    borderless,
-    width,
-    height,
-    resize = 'both'
-  }: Props,
-  ref
-) => {
-  useImperativeHandle(ref, () => ({
-    focus() {
-      textarea.current?.focus()
-    }
-  }))
+const TextArea = forwardRef<TextAreaRef, Props>(
+  (
+    {
+      placeholder,
+      label,
+      name,
+      value,
+      onChange,
+      onSelect,
+      onFocus,
+      onBeforeInput,
+      onKeyDown,
+      onBlur,
+      onClick,
+      error,
+      required,
+      disabled,
+      borderless,
+      width,
+      height,
+      resize = 'both'
+    }: Props,
+    ref
+  ) => {
+    useImperativeHandle(ref, () => ({
+      focus() {
+        textarea.current?.focus()
+      }
+    }))
 
-  const textarea = useRef<HTMLTextAreaElement>(null)
+    const textarea = useRef<HTMLTextAreaElement>(null)
 
-  const textareaGroupClasses = createClasses({
-    'form-elem': true,
-    'form-elem--error': !!error
-  })
+    const textareaGroupClasses = createClasses({
+      'form-elem': true,
+      'form-elem--error': !!error
+    })
 
-  return (
-    <div
-      className={textareaGroupClasses}
-      style={{ ...(width ? { width } : {}), ...(height ? { height: 'fit-content' } : {}) }}>
-      {!!label && (
-        <label
-          className={'form-elem__label'}
-          htmlFor={name}>
-          {label}
-          {required && <span className={'required-star'}>*</span>}
-        </label>
-      )}
-      <textarea
-        className={createClasses({
-          'form-elem__main-control': true,
-          'form-elem__main-control--borderless': !!borderless,
-          'form-elem__main-control--disabled': !!disabled,
-          [styles['textarea']]: true
-        })}
-        style={{ ...(width ? { width } : {}), ...(height ? { height } : {}), resize }}
-        value={value}
-        name={name}
-        placeholder={placeholder}
-        onBeforeInput={e => onBeforeInput && onBeforeInput(e)}
-        onChange={e => onChange && onChange(e)}
-        onSelect={e => onSelect && onSelect(e)}
-        onFocus={e => onFocus && onFocus(e)}
-        onKeyDown={e => onKeyDown && onKeyDown(e)}
-        onBlur={e => onBlur && onBlur(e)}
-        onClick={e => onClick && onClick(e)}
-        required={required}
-        disabled={disabled}
-        ref={textarea}
-      />
-      {!!error && <Error>{error}</Error>}
-    </div>
-  )
-})
+    return (
+      <div
+        className={textareaGroupClasses}
+        style={{
+          ...(width ? { width } : {}),
+          ...(height ? { height: 'fit-content' } : {})
+        }}>
+        {!!label && (
+          <label
+            className={'form-elem__label'}
+            htmlFor={name}>
+            {label}
+            {required && <span className={'required-star'}>*</span>}
+          </label>
+        )}
+        <textarea
+          className={createClasses({
+            'form-elem__main-control': true,
+            'form-elem__main-control--borderless': !!borderless,
+            'form-elem__main-control--disabled': !!disabled,
+            [styles['textarea']]: true
+          })}
+          style={{
+            ...(width ? { width } : {}),
+            ...(height ? { height } : {}),
+            resize
+          }}
+          value={value}
+          name={name}
+          placeholder={placeholder}
+          onBeforeInput={e => onBeforeInput && onBeforeInput(e)}
+          onChange={e => onChange && onChange(e)}
+          onSelect={e => onSelect && onSelect(e)}
+          onFocus={e => onFocus && onFocus(e)}
+          onKeyDown={e => onKeyDown && onKeyDown(e)}
+          onBlur={e => onBlur && onBlur(e)}
+          onClick={e => onClick && onClick(e)}
+          required={required}
+          disabled={disabled}
+          ref={textarea}
+        />
+        {!!error && <Error>{error}</Error>}
+      </div>
+    )
+  }
+)
 
 export default TextArea

@@ -160,18 +160,19 @@ function Table<T extends Row>(
                 })}
                 style={widthStyles(CHECKBOX_WIDTH)}>
                 <Checkbox
-                  value={selected.length === rows.length
-                    ? true
-                    : selected.length > 0
-                      ? 'mixed'
-                      : false
+                  value={
+                    selected.length === rows.length
+                      ? true
+                      : selected.length > 0
+                        ? 'mixed'
+                        : false
                   }
                   ariaLabel={
                     selected.length === rows.length
                       ? 'Deselect all rows'
                       : 'Select all rows'
                   }
-                  onChange={(value) => handleSelectAll(value)}
+                  onChange={value => handleSelectAll(value)}
                 />
               </td>
             )}

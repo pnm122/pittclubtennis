@@ -67,9 +67,7 @@ export default function Tryouts() {
               </p>
             </div>
             {tryoutsInfo ? (
-              <TryoutButton
-                data={tryoutsInfo}
-              />
+              <TryoutButton data={tryoutsInfo} />
             ) : (
               <AnimatedButton
                 href='#'
@@ -89,11 +87,7 @@ const TryoutButton = ({ data }: { data: TryoutsType }) => {
     <AnimatedButton
       href={data.open ? data.link : undefined}
       newTab
-      text={
-        data.open
-          ? 'Sign Up For Tryouts'
-          : 'Tryouts Are Closed'
-      }
+      text={data.open ? 'Sign Up For Tryouts' : 'Tryouts Are Closed'}
       disabled={!data.open}
     />
   )

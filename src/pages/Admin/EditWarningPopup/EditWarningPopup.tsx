@@ -8,10 +8,7 @@ interface Props {
   close: (deleteProgress: boolean) => void
 }
 
-export default function EditWarningPopup({
-  open,
-  close
-}: Props) {
+export default function EditWarningPopup({ open, close }: Props) {
   return (
     <Popup open={open}>
       <div className={styles['popup']}>
@@ -20,9 +17,7 @@ export default function EditWarningPopup({
           <span>Warning</span>
         </div>
         <div className={styles['popup__body']}>
-          <h1 className={styles['popup__title']}>
-            You have unsaved changes!
-          </h1>
+          <h1 className={styles['popup__title']}>You have unsaved changes!</h1>
           <p>
             Are you sure you want to cancel editing? This action cannot be
             undone.

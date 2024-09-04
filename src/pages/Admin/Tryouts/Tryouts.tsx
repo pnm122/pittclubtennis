@@ -12,7 +12,10 @@ import { DocumentSnapshot, updateDoc } from 'firebase/firestore'
 export default function Tryouts() {
   const [isSaving, setIsSaving] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [tryouts, setTryouts] = useState<{ data: TryoutsType, doc: DocumentSnapshot } | null>(null)
+  const [tryouts, setTryouts] = useState<{
+    data: TryoutsType
+    doc: DocumentSnapshot
+  } | null>(null)
   const { push: pushNotification } = useContext(notificationContext)
 
   useEffect(() => {
@@ -24,7 +27,7 @@ export default function Tryouts() {
     const t = await getTryoutsInfo()
     setIsLoading(false)
 
-    if(t.error) {
+    if (t.error) {
       return pushNotification({
         type: 'error',
         text: 'There was an error retrieving tryouts information.',
@@ -46,7 +49,7 @@ export default function Tryouts() {
         type: 'success',
         text: 'Successfully updated tryouts information!'
       })
-    } catch(e) {
+    } catch (e) {
       pushNotification({
         type: 'error',
         text: 'There was an error updating tryouts.',
@@ -63,29 +66,38 @@ export default function Tryouts() {
     <div className='container'>
       <h1 className='admin-page-title'>Tryouts</h1>
       {isLoading || !tryouts ? (
-        <Loader
-          size={32}
-        />
+        <Loader size={32} />
       ) : (
         <form
           className={styles['form']}
           onSubmit={save}>
           <Checkbox
             value={tryouts.data.open}
-            onChange={value => setTryouts({ ...tryouts, data: { ...tryouts.data, open: value } })}
+            onChange={value =>
+              setTryouts({ ...tryouts, data: { ...tryouts.data, open: value } })
+            }
             label='Open Tryouts'
           />
           <div className={styles['input-group']}>
             <Input
               name='link'
               value={tryouts.data.link}
-              onChange={e => setTryouts({ ...tryouts, data: { ...tryouts.data, link: e.target.value } })}
+              onChange={e =>
+                setTryouts({
+                  ...tryouts,
+                  data: { ...tryouts.data, link: e.target.value }
+                })
+              }
               label='Link'
               type='url'
               disabled={!tryouts.data.open}
               width='100%'
             />
-            {!tryouts.data.open && <p className={styles['input-group__helper']}>Open tryouts to edit the link.</p>}
+            {!tryouts.data.open && (
+              <p className={styles['input-group__helper']}>
+                Open tryouts to edit the link.
+              </p>
+            )}
           </div>
           <AnimatedButton
             text='Save'

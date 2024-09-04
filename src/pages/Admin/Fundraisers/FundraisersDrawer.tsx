@@ -66,7 +66,7 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
         }
 
     function reducer(state: State, { type, data }: ReducerAction) {
-      if(type === 'set') {
+      if (type === 'set') {
         return data
       }
 
@@ -129,7 +129,7 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
     }
 
     async function close() {
-      if(edited) {
+      if (edited) {
         setShowWarning(true)
         const shouldCloseDrawer = await new Promise<boolean>(
           res => (warningPromiseResolve = res)
@@ -151,7 +151,7 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
       const updatedState = Object.fromEntries(
         Object.keys(state).map(key => {
           const data = state[key as keyof typeof state].data
-          if(!data) hasError = true
+          if (!data) hasError = true
           return [
             key,
             {
@@ -161,7 +161,7 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
           ]
         })
       ) as State
-      
+
       dispatch({ type: 'set', data: updatedState })
 
       if (hasError) {
@@ -220,7 +220,9 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
                 name='description'
                 value={state.description.data}
                 error={state.description.error}
-                onChange={e => dispatch({ type: 'description', data: e.target.value })}
+                onChange={e =>
+                  dispatch({ type: 'description', data: e.target.value })
+                }
                 resize='vertical'
                 height='100px'
                 required
@@ -231,7 +233,9 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
                 type='url'
                 value={state.linkLocation.data}
                 error={state.linkLocation.error}
-                onChange={e => dispatch({ type: 'linkLocation', data: e.target.value })}
+                onChange={e =>
+                  dispatch({ type: 'linkLocation', data: e.target.value })
+                }
                 required
               />
               <Input
@@ -239,7 +243,9 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
                 name='link-title'
                 value={state.linkTitle.data}
                 error={state.linkTitle.error}
-                onChange={e => dispatch({ type: 'linkTitle', data: e.target.value })}
+                onChange={e =>
+                  dispatch({ type: 'linkTitle', data: e.target.value })
+                }
                 required
               />
             </form>

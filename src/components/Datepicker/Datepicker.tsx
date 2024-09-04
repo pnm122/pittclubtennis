@@ -131,8 +131,7 @@ export default function Datepicker({
         onBlur={onBlur}>
         <div className={styles['datepicker__inner']}>
           {!!label && (
-            <label
-              className={'form-elem__label'}>
+            <label className={'form-elem__label'}>
               {label}
               {required && <span className={'required-star'}>*</span>}
             </label>

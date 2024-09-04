@@ -10,7 +10,10 @@ import FundraiserType from 'types/FundraiserType'
 import getFundraisers from 'utils/firebase/fundraisers/getFundraisers'
 import createClasses from 'utils/createClasses'
 import { MdOpenInNew } from 'react-icons/md'
-import FundraisersDrawer, { FundraisersDrawerData, FundraisersDrawerRef } from './FundraisersDrawer'
+import FundraisersDrawer, {
+  FundraisersDrawerData,
+  FundraisersDrawerRef
+} from './FundraisersDrawer'
 import setFundraiser from 'utils/firebase/fundraisers/setFundraiser'
 
 export default function Fundraisers() {
@@ -86,10 +89,7 @@ export default function Fundraisers() {
 
   async function onSave(data: Omit<FundraisersDrawerData, 'type'>) {
     const { doc, ...saveData } = data
-    const saveRes = await setFundraiser(
-      saveData,
-      doc
-    )
+    const saveRes = await setFundraiser(saveData, doc)
     if (!saveRes.success) {
       pushNotification({
         type: 'error',
@@ -152,15 +152,16 @@ export default function Fundraisers() {
         onRowClick={openDrawer}
         renderMap={(value, row) => {
           if (!value) return
-          if('name' in value) {
+          if ('name' in value) {
+            return <span className={styles['table-item']}>{value.name}</span>
+          } else if ('description' in value || 'linkTitle' in value) {
             return (
-              <span className={styles['table-item']}>{value.name}</span>
+              <span
+                className={`${styles['table-item']} ${styles['table-item--ellipsis']}`}>
+                {Object.values(value)}
+              </span>
             )
-          } else if('description' in value || 'linkTitle' in value) {
-            return (
-              <span className={`${styles['table-item']} ${styles['table-item--ellipsis']}`}>{Object.values(value)}</span>
-            )
-          } else if('linkLocation' in value) {
+          } else if ('linkLocation' in value) {
             return (
               <a
                 href={value.linkLocation}

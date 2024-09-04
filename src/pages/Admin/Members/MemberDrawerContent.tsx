@@ -100,10 +100,10 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
       getState: () => ({ state: inputs, doc }),
       checkValidity: () => {
         let isValid = true
-        if(imageError) {
+        if (imageError) {
           isValid = false
         }
-        if(inputs.name === '') {
+        if (inputs.name === '') {
           setNameError('This field is required.')
           isValid = false
         }

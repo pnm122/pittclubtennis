@@ -26,21 +26,22 @@ export default function Checkbox({
 }: Props) {
   function handleChange(e: React.MouseEvent | React.KeyboardEvent) {
     e.preventDefault()
-    if(stopPropagation) {
+    if (stopPropagation) {
       e.stopPropagation()
     }
-    if(!value || value === 'mixed') {
+    if (!value || value === 'mixed') {
       onChange(true)
     } else {
       onChange(false)
     }
   }
-  
+
   return (
-    <div className={createClasses({
-      [styles['checkbox']]: true,
-      [styles['checkbox--disabled']]: !!disabled
-    })}>
+    <div
+      className={createClasses({
+        [styles['checkbox']]: true,
+        [styles['checkbox--disabled']]: !!disabled
+      })}>
       <div className='with-hover-circle'>
         <div
           role='checkbox'

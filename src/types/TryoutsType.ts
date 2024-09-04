@@ -1,5 +1,5 @@
 type TryoutsType = {
-  open: boolean,
+  open: boolean
   link: string
 }
 

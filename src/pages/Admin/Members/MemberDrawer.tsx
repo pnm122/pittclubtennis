@@ -7,7 +7,13 @@ import MemberDrawerContent, {
   MemberDrawerState
 } from './MemberDrawerContent'
 import Popup from 'components/Popup/Popup'
-import { forwardRef, useContext, useImperativeHandle, useRef, useState } from 'react'
+import {
+  forwardRef,
+  useContext,
+  useImperativeHandle,
+  useRef,
+  useState
+} from 'react'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import { MdWarning } from 'react-icons/md'
 import { QueryDocumentSnapshot } from 'firebase/firestore'

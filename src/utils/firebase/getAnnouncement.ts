@@ -4,7 +4,10 @@ import { FirebaseError } from 'firebase/app'
 import { doc, DocumentSnapshot, getDoc, getFirestore } from 'firebase/firestore'
 
 const getAnnouncement = () => {
-  return queryWithErrors<{ data: AnnouncementType, doc: DocumentSnapshot }, FirebaseError>(async () => {
+  return queryWithErrors<
+    { data: AnnouncementType; doc: DocumentSnapshot },
+    FirebaseError
+  >(async () => {
     const db = getFirestore()
     const d = await getDoc(doc(db, 'announcement', 'data'))
 
