@@ -1,3 +1,4 @@
+import createClasses from 'utils/createClasses'
 import styles from './Checkbox.module.css'
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
    * Call stopPropagation on click.
    */
   stopPropagation?: boolean
+  disabled?: boolean
 }
 
 export default function Checkbox({
@@ -19,7 +21,8 @@ export default function Checkbox({
   onChange,
   label,
   ariaLabel,
-  stopPropagation
+  stopPropagation,
+  disabled
 }: Props) {
   function handleChange(e: React.MouseEvent | React.KeyboardEvent) {
     e.preventDefault()
@@ -34,22 +37,26 @@ export default function Checkbox({
   }
   
   return (
-    <div className={styles['checkbox']}>
+    <div className={createClasses({
+      [styles['checkbox']]: true,
+      [styles['checkbox--disabled']]: !!disabled
+    })}>
       <div className='with-hover-circle'>
         <div
           role='checkbox'
+          aria-disabled={disabled}
           aria-checked={value}
           aria-label={ariaLabel}
           tabIndex={0}
-          onClick={handleChange}
+          onClick={e => !disabled && handleChange(e)}
           onKeyDown={e =>
-            (e.key === 'Enter' || e.key === ' ') && handleChange(e)
+            (e.key === 'Enter' || e.key === ' ') && !disabled && handleChange(e)
           }
         />
       </div>
       {label && (
         <label
-          onClick={handleChange}
+          onClick={e => !disabled && handleChange(e)}
           className={styles['checkbox__label']}>
           {label}
         </label>

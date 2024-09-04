@@ -46,3 +46,16 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.checkbox--disabled [role='checkbox'] {
+  background-color: var(--disabled-light);
+  border-color: var(--disabled);
+}
+
+.checkbox--disabled [role='checkbox']::after {
+  border-color: var(--disabled);
+}
+
+.checkbox--disabled .checkbox__label {
+  color: var(--disabled);
+}
