@@ -75,13 +75,17 @@ export default function Tryouts() {
             onChange={value => setTryouts({ ...tryouts, data: { ...tryouts.data, open: value } })}
             label='Open Tryouts'
           />
-          <Input
-            name='link'
-            value={tryouts.data.link}
-            onChange={e => setTryouts({ ...tryouts, data: { ...tryouts.data, link: e.target.value } })}
-            label='Link'
-            disabled={!tryouts.data.open}
-          />
+          <div className={styles['input-group']}>
+            <Input
+              name='link'
+              value={tryouts.data.link}
+              onChange={e => setTryouts({ ...tryouts, data: { ...tryouts.data, link: e.target.value } })}
+              label='Link'
+              disabled={!tryouts.data.open}
+              width='100%'
+            />
+            {!tryouts.data.open && <p className={styles['input-group__helper']}>Open tryouts to edit the link.</p>}
+          </div>
           <AnimatedButton
             text='Save'
             type='button'

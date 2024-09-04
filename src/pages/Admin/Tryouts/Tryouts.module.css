@@ -3,3 +3,15 @@
   flex-direction: column;
   gap: var(--size-lg);
 }
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-sm);
+  max-width: 350px;
+}
+
+.input-group__helper {
+  color: var(--label);
+  font-size: var(--text-sm);
+}
