@@ -114,6 +114,8 @@ body {
   --default-font: 'Public Sans', system-ui, sans-serif;
 
   font-family: var(--default-font);
+  margin: 0;
+  background-color: var(--bg);
 }
 
 /* body[theme='dark'] {
@@ -137,9 +139,10 @@ body[theme='light'] {
   }
 }
 
-body {
-  margin: 0;
-  background-color: var(--bg);
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 p,
@@ -343,6 +346,7 @@ section:first-of-type:not(.hero) {
   padding-left: 20px;
   padding-right: 20px;
   max-width: 1140px;
+  width: 100%;
 }
 
 .no-overflow {
