@@ -21,10 +21,10 @@ import { MemberYear } from 'types/MemberType'
 export interface MemberDrawerContentRef {
   getState: () => { state: MemberDrawerState; doc?: QueryDocumentSnapshot }
   checkValidity: () => boolean
+  isEdited: () => boolean
 }
 
 type Props = DrawerData & {
-  onEdited: () => void
   open: boolean
 }
 
@@ -44,11 +44,12 @@ export interface MemberDrawerState {
 }
 
 const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
-  ({ data, type, doc, onEdited, open }, ref) => {
+  ({ data, type, doc, open }, ref) => {
     // URL to use as image source
     const [image, setImage] = useState<string | null>(null)
     const [imageError, setImageError] = useState<string | null>(null)
     const [nameError, setNameError] = useState<string | null>(null)
+    const [edited, setEdited] = useState(false)
 
     const getStateFromProps = ({
       data: { name, year, role, imgSrc }
@@ -74,13 +75,14 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
         case 'reset':
           setNameError(null)
           setImageError(null)
+          setEdited(false)
           return getStateFromProps({ data, type, doc })
         case 'name':
           setNameError(null)
         case 'year':
         case 'role':
         case 'image':
-          onEdited()
+          setEdited(true)
           return {
             ...inputs,
             [action.type]: action.data
@@ -109,7 +111,8 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
         }
 
         return isValid
-      }
+      },
+      isEdited: () => edited
     }))
 
     useEffect(() => {
@@ -171,7 +174,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
             }
           ]}
           value={inputs.year}
-          onChange={({ selected }) =>
+          onChange={(selected) =>
             dispatch({ type: 'year', data: selected })
           }
           required
@@ -179,7 +182,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
         <Select
           label='Role'
           options={[
-            'None',
+            { value: 'None', name: 'None' },
             'President',
             'Vice President',
             'Business Manager',
@@ -189,7 +192,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
             'Fundraising Committee'
           ]}
           value={inputs.role}
-          onChange={({ selected }) =>
+          onChange={(selected) =>
             dispatch({ type: 'role', data: selected })
           }
           required

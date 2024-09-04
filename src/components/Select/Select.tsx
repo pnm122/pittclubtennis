@@ -16,11 +16,11 @@ interface Props {
   /** Optional label for the select. */
   label?: string
   /** Selectable values. Optional value can be provided, which will sent on change instead of the name, which is displayed to the user. */
-  options: readonly string[] | readonly { value: any; name: string }[]
-  /** Index or item currently selected */
+  options: readonly (string | { value: any; name: string })[]
+  /** Item currently selected. If providing both a name and value for the selected option, this must be the value of that option. */
   value?: string | number | null
   /** Callback fired when an item is selected */
-  onChange: ({ index, selected }: { index: number; selected: any }) => void
+  onChange: (selected: any) => void
   /** Placeholder for the select. By default, it says "Select" */
   placeholder?: string
   /** Error to show for the select */
@@ -71,10 +71,7 @@ const Select = forwardRef<SelectRef, Props>(function Select(
       ? { value: o, name: o }
       : { value: o.value, name: o.name ?? o.value }
   )
-  const renderValue =
-    typeof value === 'number'
-      ? renderOptions[value]
-      : renderOptions.find(o => o.value === value)
+  const renderValue = renderOptions.find(o => o.value === value)
 
   const focus = () => {
     current.current?.focus()
@@ -209,7 +206,7 @@ const Select = forwardRef<SelectRef, Props>(function Select(
                     [styles['option__button--selected']]:
                       renderValue?.value === o.value
                   })}
-                  onClick={() => handleChange({ index, selected: o.value })}
+                  onClick={() => handleChange(o.value)}
                   ref={el => (optionElements.current[index] = el)}>
                   {o.name}
                 </button>

@@ -53,8 +53,6 @@ let warningPromiseResolve: (close: boolean) => void
 
 const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
   const [drawerData, setDrawerData] = useState<DrawerData | null>(null)
-  // Track if the drawer has been edited to show a warning when trying to close the drawer
-  const [drawerEdited, setDrawerEdited] = useState(false)
   const [showWarning, setShowWarning] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -84,25 +82,22 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
 
   function close() {
     setIsOpen(false)
-    setDrawerEdited(false)
   }
 
   async function closeDrawer() {
-    if (drawerEdited) {
+    if (memberDrawerContent.current?.isEdited()) {
       setShowWarning(true)
       const shouldCloseDrawer = await new Promise<boolean>(
         res => (warningPromiseResolve = res)
       )
       if (shouldCloseDrawer) {
         setIsOpen(false)
-        setDrawerEdited(false)
       }
       setShowWarning(false)
       return
     }
 
     setIsOpen(false)
-    setDrawerEdited(false)
   }
 
   async function save() {
@@ -133,7 +128,6 @@ const MemberDrawer = forwardRef<MemberDrawerRef, Props>(({ onSave }, ref) => {
             <>
               <MemberDrawerContent
                 {...drawerData}
-                onEdited={() => setDrawerEdited(true)}
                 open={isOpen}
                 ref={memberDrawerContent}
               />

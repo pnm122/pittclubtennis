@@ -286,7 +286,7 @@ const TournamentsDrawer = forwardRef<TournamentsDrawerRef, Props>(
                   }
                 ]}
                 value={state.placement.data}
-                onChange={({ selected }) =>
+                onChange={(selected) =>
                   dispatch({ type: 'placement', data: selected })
                 }
                 required
