@@ -15,7 +15,7 @@ const getTournaments = async () => {
     { data: TournamentType; doc: QueryDocumentSnapshot }[],
     FirebaseError
   >(async () => {
-    const t = await getDocs(collection(db, 'TEST_tournaments'))
+    const t = await getDocs(collection(db, 'tournaments'))
     const docs = t.docs
     let tournaments = docs.map(doc => {
       return {

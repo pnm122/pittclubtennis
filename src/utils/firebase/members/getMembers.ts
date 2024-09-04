@@ -16,7 +16,7 @@ const getMembers = async () => {
     { data: MemberType; doc: QueryDocumentSnapshot }[],
     FirebaseError | StorageError
   >(async () => {
-    const m = await getDocs(collection(db, 'TEST_members'))
+    const m = await getDocs(collection(db, 'members'))
     const members = m.docs.map(doc => {
       return {
         data: doc.data() as unknown as MemberType,

@@ -13,7 +13,7 @@ export default async function setFundraiser(
       return updateRes
     }
   } else {
-    const addRes = await addToDatabase('TEST_fundraisers', data)
+    const addRes = await addToDatabase('fundraisers', data)
     if (!addRes.success) {
       return addRes
     }

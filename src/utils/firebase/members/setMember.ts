@@ -19,7 +19,7 @@ export default async function setMember(
   async function maybeUploadNewImage() {
     if (data.image.source === 'local' && data.image.data) {
       const uploadRes = await uploadToStorage(
-        `TEST_members/${data.name}`,
+        `members/${data.name}`,
         data.image.data
       )
 
@@ -60,7 +60,7 @@ export default async function setMember(
       return uploadRes
     }
 
-    const addRes = await addToDatabase('TEST_members', newData)
+    const addRes = await addToDatabase('members', newData)
     if (!addRes.success) {
       return addRes
     }

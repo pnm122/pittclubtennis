@@ -13,7 +13,7 @@ export default async function setTournament(
       return updateRes
     }
   } else {
-    const addRes = await addToDatabase('TEST_tournaments', data)
+    const addRes = await addToDatabase('tournaments', data)
     if (!addRes.success) {
       return addRes
     }

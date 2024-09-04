@@ -15,7 +15,7 @@ const getFundraisers = async () => {
     { data: FundraiserType; doc: QueryDocumentSnapshot }[],
     FirebaseError
   >(async () => {
-    const t = await getDocs(collection(db, 'TEST_fundraisers'))
+    const t = await getDocs(collection(db, 'fundraisers'))
     const docs = t.docs
     const fundraisers = docs.map(doc => {
       return {
