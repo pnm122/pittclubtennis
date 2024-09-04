@@ -223,7 +223,8 @@ export default function Tournaments() {
                   [styles['table-item']]: true,
                   [styles['table-item--link']]: true,
                   'with-hover-circle': true
-                })}>
+                })}
+                onClick={e => e.stopPropagation()}>
                 <MdOpenInNew />
               </a>
             )
