@@ -36,15 +36,20 @@ export default function Fundraisers() {
           <div className='content fade-in'>
             <p>
               We need your support! Fundraisers help us afford practices, attend
-              tournaments, among other club expenses. Check out our fundraisers
-              below to see how you can help us today!
+              tournaments, among other club expenses.
+              {fundraisers && fundraisers.length > 0 && (
+                <>
+                  {' '}Check out our fundraisers below to see how you can help us
+                  today!
+                </>
+              )}
             </p>
             {loading ? (
               <>
                 <FundraiserSkeleton />
                 <FundraiserSkeleton />
               </>
-            ) : fundraisers ? (
+            ) : fundraisers && fundraisers.length > 0 ? (
               fundraisers.map((f, index) => {
                 return (
                   <Fundraiser
@@ -56,9 +61,9 @@ export default function Fundraisers() {
                   />
                 )
               })
-            ) : (
-              <p className='error'>Error loading fundraisers.</p>
-            )}
+            ) : fundraisers ? (
+              <h2 className={styles['no-fundraisers']}>There are currently no fundraisers. Check back later for more opportunities to support us!</h2>
+            ) : <></>}
           </div>
         </div>
       </section>

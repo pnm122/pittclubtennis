@@ -22,3 +22,13 @@
 .fundraiser h3 {
   font-size: var(--text-lg);
 }
+
+.no-fundraisers {
+  font: var(--default-font);
+  text-transform: none;
+  background-color: var(--warning-light);
+  padding: var(--size-lg);
+  border-radius: var(--rounding);
+  border: 1px solid var(--warning);
+  color: var(--warning);
+}
