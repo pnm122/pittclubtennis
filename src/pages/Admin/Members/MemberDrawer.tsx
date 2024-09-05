@@ -1,12 +1,10 @@
 import Drawer from 'components/Drawer/Drawer'
-import styles from './Members.module.css'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import DrawerContent from 'components/Drawer/DrawerContent'
 import MemberDrawerContent, {
   MemberDrawerContentRef,
   MemberDrawerState
 } from './MemberDrawerContent'
-import Popup from 'components/Popup/Popup'
 import {
   forwardRef,
   useContext,
@@ -15,7 +13,6 @@ import {
   useState
 } from 'react'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
-import { MdWarning } from 'react-icons/md'
 import { QueryDocumentSnapshot } from 'firebase/firestore'
 import { MemberType } from 'types/MemberType'
 import EditWarningPopup from '../EditWarningPopup/EditWarningPopup'

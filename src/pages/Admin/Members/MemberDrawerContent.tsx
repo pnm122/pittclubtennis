@@ -77,6 +77,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
           setImageError(null)
           setEdited(false)
           return getStateFromProps({ data, type, doc })
+        // @ts-ignore
         case 'name':
           setNameError(null)
         case 'year':

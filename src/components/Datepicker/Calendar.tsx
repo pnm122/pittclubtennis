@@ -24,7 +24,6 @@ import {
   subMonths,
   subWeeks
 } from 'date-fns'
-import createClasses from 'utils/createClasses'
 import CalendarDay from './CalendarDay'
 import waitFor from 'utils/waitFor'
 

@@ -2,13 +2,10 @@ import Notification from 'components/Notification/Notification'
 import {
   createContext,
   PropsWithChildren,
-  useEffect,
-  useLayoutEffect,
   useRef,
   useState
 } from 'react'
 import styles from 'components/Notification/Notification.module.css'
-import gsap from 'gsap/all'
 
 export interface SingleNotification {
   /**

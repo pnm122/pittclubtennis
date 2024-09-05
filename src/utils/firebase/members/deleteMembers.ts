@@ -26,6 +26,7 @@ export default async function deleteMembers(
   )
 
   const results = await Promise.all(promises)
+  // @ts-ignore
   const errors = results.filter(res => !res.success).map(f => f.data.error)
   if (errors.length !== 0) {
     return {

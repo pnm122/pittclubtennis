@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes, useImperativeHandle, useRef } from 'react'
+import { forwardRef, useImperativeHandle, useRef } from 'react'
 import 'formElement.css'
 import createClasses from 'utils/createClasses'
 import Error from 'components/Error/Error'

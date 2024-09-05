@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import styles from '../Admin.module.css'
-import Loader from 'components/Loader/Loader'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import AnimatedButton from 'components/AnimatedButton/AnimatedButton'
 import Input from 'components/Input/Input'

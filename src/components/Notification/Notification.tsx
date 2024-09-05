@@ -4,7 +4,7 @@ import {
   SingleNotification
 } from 'context/NotificationContext'
 import styles from './Notification.module.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import createClasses from 'utils/createClasses'
 import { MdWarning } from 'react-icons/md'
 import { MdError } from 'react-icons/md'
