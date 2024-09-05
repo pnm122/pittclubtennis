@@ -182,7 +182,7 @@ const MemberDrawerContent = forwardRef<MemberDrawerContentRef, Props>(
         <Select
           label='Role'
           options={[
-            { value: 'None', name: 'None' },
+            'None',
             'President',
             'Vice President',
             'Business Manager',

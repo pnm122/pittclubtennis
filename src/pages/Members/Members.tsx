@@ -78,7 +78,9 @@ export const Member = ({ name, role, year, imgSrc }: MemberType) => {
         />
       )}
       <h3>{name}</h3>
-      <h6>{role}</h6>
+      {role && role !== 'None' && (
+        <h6>{role}</h6>
+      )}
       <span>{year}</span>
     </div>
   )
