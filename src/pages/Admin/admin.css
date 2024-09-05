@@ -1,4 +1,8 @@
-.admin-page-title {
+.admin-page {
+  padding-bottom: var(--size-4xl);
+}
+
+.admin-page__title {
   font-size: var(--text-xl);
   margin-top: var(--size-2xl);
   margin-bottom: var(--size-xl);

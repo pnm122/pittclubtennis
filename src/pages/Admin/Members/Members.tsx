@@ -169,8 +169,8 @@ export default function Members() {
         ref={memberDrawer}
         onSave={onSave}
       />
-      <div className='container'>
-        <h1 className='admin-page-title'>Members</h1>
+      <div className='container admin-page'>
+        <h1 className='admin-page__title'>Members</h1>
         <div style={{ overflow: 'auto', marginTop: '16px' }}>
           <Table
             ref={table}

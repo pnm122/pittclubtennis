@@ -63,8 +63,8 @@ export default function Tryouts() {
   }
 
   return (
-    <div className='container'>
-      <h1 className='admin-page-title'>Tryouts</h1>
+    <div className='container admin-page'>
+      <h1 className='admin-page__title'>Tryouts</h1>
       {isLoading || !tryouts ? (
         <Loader size={32} />
       ) : (

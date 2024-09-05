@@ -135,8 +135,8 @@ export default function Fundraisers() {
   }
 
   return (
-    <div className='container'>
-      <h1 className='admin-page-title'>Fundraisers</h1>
+    <div className='container admin-page'>
+      <h1 className='admin-page__title'>Fundraisers</h1>
       <Table
         ref={table}
         data={fundraisers}

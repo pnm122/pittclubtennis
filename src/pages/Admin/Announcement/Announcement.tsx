@@ -123,8 +123,8 @@ export default function Announcement() {
   }
 
   return (
-    <div className='container'>
-      <h1 className='admin-page-title'>Announcement</h1>
+    <div className='container admin-page'>
+      <h1 className='admin-page__title'>Announcement</h1>
       {isLoading || !announcement ? (
         <Loader size={32} />
       ) : (
