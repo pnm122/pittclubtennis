@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+
+- Full admin panel for editing data across the site
+- Slight modifications to data formats
+
 ## 1.2.1
 
 - Update packages
