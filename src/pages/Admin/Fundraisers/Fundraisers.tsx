@@ -15,6 +15,7 @@ import FundraisersDrawer, {
   FundraisersDrawerRef
 } from './FundraisersDrawer'
 import setFundraiser from 'utils/firebase/fundraisers/setFundraiser'
+import { isAfter } from 'date-fns'
 
 export default function Fundraisers() {
   type RowData = FundraiserType & { doc: QueryDocumentSnapshot; key: any }
@@ -49,6 +50,11 @@ export default function Fundraisers() {
       name: 'Link',
       width: 60,
       allowOverflow: true
+    },
+    {
+      key: 'endDate',
+      name: 'State',
+      width: 80
     }
   ]
 
@@ -176,6 +182,22 @@ export default function Fundraisers() {
                 onClick={e => e.stopPropagation()}>
                 <MdOpenInNew />
               </a>
+            )
+          } else if ('endDate' in value) {
+            const endDatePassed = isAfter(new Date(), value.endDate.toDate())
+            return (
+              <span
+                className={createClasses({
+                  [styles['date-pill']]: true,
+                  [styles['date-pill--active']]: !endDatePassed,
+                  [styles['date-pill--hidden']]: endDatePassed
+                })}>
+                {endDatePassed ? (
+                  'Hidden'
+                ) : (
+                  'Active'
+                )}
+              </span>
             )
           }
           return <>{Object.values(value)}</>

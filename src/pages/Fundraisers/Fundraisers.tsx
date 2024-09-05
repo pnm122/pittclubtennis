@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import getFundraisers from 'utils/firebase/fundraisers/getFundraisers'
 import Skeleton from 'components/Skeleton/Skeleton'
 import { notificationContext } from 'context/NotificationContext'
+import { isAfter } from 'date-fns'
 
 export default function Fundraisers() {
   const [fundraisers, setFundraisers] = useState<FundraiserType[] | null>(null)
@@ -23,7 +24,8 @@ export default function Fundraisers() {
         return
       }
 
-      setFundraisers(res.data.map(f => f.data))
+      // Filter out fundraisers whose end date has passed
+      setFundraisers(res.data.map(f => f.data).filter(f => !isAfter(new Date(), f.endDate.toDate())))
       setLoading(false)
     })
   }, [])
@@ -58,6 +60,7 @@ export default function Fundraisers() {
                     description={f.description}
                     linkLocation={f.linkLocation}
                     linkTitle={f.linkTitle}
+                    endDate={f.endDate}
                   />
                 )
               })

@@ -38,3 +38,21 @@
   padding-bottom: var(--size-lg);
   border-bottom: 1px solid var(--border);
 }
+
+.date-pill {
+  height: 24px;
+  line-height: 24px;
+  padding-inline: var(--size-lg);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+}
+
+.date-pill--active {
+  background-color: var(--positive);
+  color: var(--positive-light)
+}
+
+.date-pill--hidden {
+  background-color: var(--disabled-light);
+  color: var(--label);
+}

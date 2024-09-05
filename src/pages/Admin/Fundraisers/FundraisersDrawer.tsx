@@ -8,7 +8,7 @@ import {
 } from 'react'
 import DrawerHeader from 'components/Drawer/DrawerHeader'
 import FundraiserType from 'types/FundraiserType'
-import { QueryDocumentSnapshot } from 'firebase/firestore'
+import { QueryDocumentSnapshot, Timestamp } from 'firebase/firestore'
 import DrawerContent from 'components/Drawer/DrawerContent'
 import Input from 'components/Input/Input'
 import styles from './Fundraisers.module.css'
@@ -17,6 +17,7 @@ import { notificationContext } from 'context/NotificationContext'
 import EditWarningPopup from '../EditWarningPopup/EditWarningPopup'
 import { Fundraiser } from 'pages/Fundraisers/Fundraisers'
 import TextArea from 'components/TextArea/TextArea'
+import Datepicker from 'components/Datepicker/Datepicker'
 
 export type FundraisersDrawerData = FundraiserType & {
   doc?: QueryDocumentSnapshot
@@ -75,7 +76,8 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
           name: { data: data.name },
           description: { data: data.description },
           linkTitle: { data: data.linkTitle },
-          linkLocation: { data: data.linkLocation }
+          linkLocation: { data: data.linkLocation },
+          endDate: { data: data.endDate }
         }
       }
 
@@ -93,7 +95,8 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
         name: { data: '' },
         description: { data: '' },
         linkTitle: { data: '' },
-        linkLocation: { data: '' }
+        linkLocation: { data: '' },
+        endDate: { data: Timestamp.fromDate(new Date()) }
       }
     }
 
@@ -102,7 +105,8 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
         name: '',
         description: '',
         linkTitle: '',
-        linkLocation: ''
+        linkLocation: '',
+        endDate: Timestamp.fromDate(new Date())
       }
     }
 
@@ -248,6 +252,13 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
                 }
                 required
               />
+              <Datepicker
+                label='End Date'
+                value={state.endDate.data.toDate()}
+                onChange={value => dispatch({ type: 'endDate', data: Timestamp.fromDate(value) })}
+                error={state.endDate.error}
+                required
+              />
             </form>
             <div className={styles['preview']}>
               <h2 className={styles['preview__title']}>Preview</h2>
@@ -256,6 +267,7 @@ const FundraisersDrawer = forwardRef<FundraisersDrawerRef, Props>(
                 description={state.description.data}
                 linkLocation={state.linkLocation.data}
                 linkTitle={state.linkTitle.data}
+                endDate={state.endDate.data}
               />
             </div>
           </DrawerContent>
