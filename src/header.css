@@ -14,12 +14,18 @@ header {
   position: relative;
 }
 
-#title {
+#header-title {
   font-size: var(--text-lg);
   color: white;
   font-family: var(--title-font);
   font-weight: 600;
   text-transform: uppercase;
+}
+
+#header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2xl);
 }
 
 header nav {
@@ -36,9 +42,10 @@ header nav {
   width: 100%;
   z-index: 99;
   padding: 0 var(--size-2xl);
-  transition: visibility var(--transition-short),
-              opacity var(--transition-short),
-              transform var(--transition-short);
+  transition:
+    visibility var(--transition-short),
+    opacity var(--transition-short),
+    transform var(--transition-short);
 }
 
 header nav ul {
@@ -105,8 +112,9 @@ header nav a.active {
   width: 20px;
   height: 2px;
   border-radius: 1px;
-  transition: width var(--transition-short), 
-              transform var(--transition-short);
+  transition:
+    width var(--transition-short),
+    transform var(--transition-short);
   /* transition-delay: 150ms; */
 }
 
@@ -116,24 +124,24 @@ header nav a.active {
   /* transition-delay: 0ms; */
 }
 
-body:has(header[aria-expanded=true]) {
+body:has(header[aria-expanded='true']) {
   overflow: hidden;
 }
 
-header[aria-expanded=true] .hamburger-line:nth-of-type(1) {
+header[aria-expanded='true'] .hamburger-line:nth-of-type(1) {
   transform: translateY(6px) rotate(45deg);
 }
 
-header[aria-expanded=true] .hamburger-line:nth-of-type(2) {
+header[aria-expanded='true'] .hamburger-line:nth-of-type(2) {
   width: 0;
   margin: 0;
 }
 
-header[aria-expanded=true] .hamburger-line:nth-of-type(3) {
+header[aria-expanded='true'] .hamburger-line:nth-of-type(3) {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-header[aria-expanded=true] nav {
+header[aria-expanded='true'] nav {
   visibility: visible;
   opacity: 1;
   transform: translateX(0);
@@ -149,11 +157,12 @@ header[aria-expanded=true] nav {
   z-index: 1;
   visibility: hidden;
   opacity: 0;
-  transition: visibility var(--transition-short),
-              opacity var(--transition-short);
+  transition:
+    visibility var(--transition-short),
+    opacity var(--transition-short);
 }
 
-header[aria-expanded=true] #header-close {
+header[aria-expanded='true'] #header-close {
   visibility: visible;
   opacity: 1;
 }
@@ -164,7 +173,7 @@ header[aria-expanded=true] #header-close {
   }
 }
 
-@media (width > 925px) {
+@media (width > 1024px) {
   #toggle-nav {
     display: none;
   }

@@ -1,4 +1,4 @@
-export default interface NotificationType {
+export default interface AnnouncementType {
   active: boolean
   title: string
   message: string

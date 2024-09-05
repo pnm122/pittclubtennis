@@ -1,5 +1,6 @@
 footer {
   margin-bottom: var(--page-vert-pad);
+  margin-top: auto;
 }
 
 #inner {
@@ -130,7 +131,9 @@ footer a:hover {
     gap: var(--size-3xl);
   }
 
-  #lower, #copyright, #upper {
+  #lower,
+  #copyright,
+  #upper {
     flex-direction: row;
   }
 }

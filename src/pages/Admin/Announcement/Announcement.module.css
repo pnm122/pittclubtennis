@@ -1,0 +1,31 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xl);
+}
+
+.form__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-lg);
+  max-width: 350px;
+}
+
+.form__heading {
+  font-size: var(--text-lg);
+  text-transform: none;
+}
+
+.preview {
+  max-width: unset;
+}
+
+.preview__title {
+  font-size: var(--text-lg);
+  text-transform: none;
+}
+
+.divider {
+  max-width: 350px;
+  margin: 0;
+}

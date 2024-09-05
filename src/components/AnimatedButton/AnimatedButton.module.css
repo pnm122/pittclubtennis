@@ -1,0 +1,116 @@
+.link {
+  --link-bg: var(--primary);
+  --link-color: var(--secondary);
+  --link-hover-bg: var(--primary);
+  --link-hover-color: white;
+  background-color: var(--link-bg);
+  color: var(--link-color);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-sm);
+  border-radius: var(--rounding);
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: var(--transition-short);
+  width: fit-content;
+}
+
+.link:hover {
+  background-color: var(--link-bg);
+  color: var(--link-color);
+}
+
+.link:focus-visible {
+  outline: 2px auto var(--primary);
+  outline-offset: 3px;
+}
+
+.link--small {
+  padding: 0 var(--size-md);
+  height: var(--control-height-small);
+  font-size: var(--text-sm);
+  border-radius: var(--rounding-small);
+}
+
+.link--medium {
+  padding: 0 var(--size-2xl);
+  height: var(--control-height-medium);
+  font-size: var(--text-md);
+}
+
+.link--large {
+  padding: 0 var(--size-2xl);
+  height: var(--control-height-large);
+  font-size: var(--text-lg);
+}
+
+.link--primary {
+  --link-bg: var(--primary);
+  --link-color: var(--secondary);
+  --link-hover-color: white;
+}
+
+.link--secondary {
+  --link-bg: var(--secondary);
+  --link-color: var(--primary);
+}
+
+.link--accent {
+  --link-bg: var(--accent);
+  --link-color: var(--on-bg);
+}
+
+.link--positive {
+  --link-bg: var(--positive);
+  --link-color: white;
+}
+
+.link--negative {
+  --link-bg: var(--negative);
+  --link-color: white;
+}
+
+.link--ghost {
+  --link-bg: var(--button-ghost);
+  --link-color: black;
+}
+
+.link--primary[aria-disabled='true'],
+.link--secondary[aria-disabled='true'] {
+  --link-bg: var(--on-bg10);
+  --link-color: var(--on-bg50);
+  cursor: default;
+}
+
+.link--loading {
+  opacity: 0.75;
+  cursor: default;
+}
+
+.link--full-width {
+  width: 100%;
+}
+
+.link__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  font-size: inherit;
+  height: 1em;
+  line-height: 1em;
+  gap: 100%;
+  transition: transform var(--transition-short);
+  white-space: nowrap;
+}
+
+.link__inner:not([aria-disabled='true'])::before {
+  content: attr(data-text);
+}
+
+.link:not([aria-disabled='true']):hover .link__inner {
+  transform: translateY(calc(-1 * (100% + 1em)));
+}

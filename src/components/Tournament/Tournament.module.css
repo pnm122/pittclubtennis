@@ -1,4 +1,5 @@
-.tournament, .tournament-skeleton {
+.tournament,
+.tournament-skeleton {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -17,7 +18,8 @@
 }
 
 @media (width > 656px) {
-  .tournament, .tournament-skeleton {
+  .tournament,
+  .tournament-skeleton {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -28,7 +30,7 @@
   }
 }
 
-.tournament:not(:first-of-type), 
+.tournament:not(:first-of-type),
 .tournament-skeleton:not(:first-of-type) {
   padding-top: var(--size-xl);
 }
@@ -59,6 +61,12 @@
   border-radius: 999px;
   font-size: var(--text-sm);
   white-space: nowrap;
+  display: block;
+  width: fit-content;
+  font-family: var(--title-font);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 6px;
 }
 
 .p1 {

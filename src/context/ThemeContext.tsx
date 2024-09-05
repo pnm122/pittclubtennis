@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark'
 
@@ -13,11 +13,11 @@ export const ThemeContext = createContext<ThemeContextType>({
 })
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-export function ThemeProvider({ children } : Props) {
-  const [theme, setTheme] = useState<Theme>('light');
+export function ThemeProvider({ children }: Props) {
+  const [theme, setTheme] = useState<Theme>('light')
 
   useEffect(() => {
     let body = document.querySelector('body')!
@@ -48,17 +48,16 @@ export function ThemeProvider({ children } : Props) {
     }
 
     // go away TS errors :)
-    if((document as any).startViewTransition) {
-      (document as any).startViewTransition(() => callback())
+    if ((document as any).startViewTransition) {
+      ;(document as any).startViewTransition(() => callback())
     } else {
-      callback();
+      callback()
     }
-    
   }
 
   return (
     <ThemeContext.Provider value={{ theme, switchTheme }}>
-      { children }
+      {children}
     </ThemeContext.Provider>
   )
 }

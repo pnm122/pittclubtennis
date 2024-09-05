@@ -16,7 +16,7 @@ export const fadeToInView = (trigger: any) => {
     ...fadeTo,
     scrollTrigger: {
       trigger: trigger,
-      start: '80px bottom',
+      start: '80px bottom'
     }
   }
 }

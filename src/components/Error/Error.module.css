@@ -1,0 +1,31 @@
+.error {
+  display: flex;
+  gap: var(--size-sm);
+  align-items: center;
+}
+
+.error--large {
+  font-size: var(--text-lg);
+}
+
+.error--medium {
+  font-size: var(--text-md);
+}
+
+.error--small {
+  font-size: var(--text-sm);
+}
+
+.error__icon,
+.error__inner {
+  color: var(--negative);
+}
+
+.error__icon {
+  width: 1em;
+  height: 1em;
+}
+
+.error__inner {
+  font-size: 1em;
+}

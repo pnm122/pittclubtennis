@@ -1,9 +1,14 @@
-import { Link } from 'react-router-dom'
 import NavLinks from 'components/NavLinks/NavLinks'
 import { useState, useEffect } from 'react'
 import 'header.css'
 
-export default function Header() {
+interface Props {
+  links: { path: string; name: string }[]
+  leftSlot?: React.ReactNode
+  rightSlot?: React.ReactNode
+}
+
+export default function Header({ links, leftSlot, rightSlot }: Props) {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -11,22 +16,27 @@ export default function Header() {
   }, [location.pathname])
 
   return (
-    <header 
+    <header
       className='container'
       aria-expanded={active}>
       <div id='header-inner'>
-        <Link to='/' id='title'>Club Tennis at Pitt</Link>
-        <NavLinks />
-        <button 
-          onClick={() => setActive(!active)} 
-          aria-label='Toggle navigation'
-          id='toggle-nav'>
-          <div className='hamburger-line'></div>
-          <div className='hamburger-line'></div>
-          <div className='hamburger-line'></div>
-        </button>
+        {leftSlot}
+        <div id='header-right'>
+          <NavLinks links={links} />
+          {rightSlot}
+          <button
+            onClick={() => setActive(!active)}
+            aria-label='Toggle navigation'
+            id='toggle-nav'>
+            <div className='hamburger-line'></div>
+            <div className='hamburger-line'></div>
+            <div className='hamburger-line'></div>
+          </button>
+        </div>
       </div>
-      <div id='header-close' onClick={() => setActive(false)}></div>
+      <div
+        id='header-close'
+        onClick={() => setActive(false)}></div>
     </header>
   )
 }

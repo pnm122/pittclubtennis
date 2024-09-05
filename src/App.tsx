@@ -1,7 +1,7 @@
 import Homepage from 'pages/Homepage/Homepage.tsx'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { ThemeProvider } from 'context/ThemeContext'
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app'
 import PageNotFound from 'pages/404/PageNotFound'
 import { useLayoutEffect, useEffect } from 'react'
 import { gsap } from 'gsap'
@@ -15,20 +15,28 @@ import Members from 'pages/Members/Members'
 import Tournaments from 'pages/Tournaments/Tournaments'
 import Fundraisers from 'pages/Fundraisers/Fundraisers'
 import PageLayout from 'layout/PageLayout'
+import Admin from 'pages/Admin/Admin'
+import Login from 'pages/Admin/Login/Login'
+import AdminMembers from 'pages/Admin/Members/Members'
+import AdminTournaments from 'pages/Admin/Tournaments/Tournaments'
+import AdminFundraisers from 'pages/Admin/Fundraisers/Fundraisers'
+import AdminTryouts from 'pages/Admin/Tryouts/Tryouts'
+import AdminAnnouncement from 'pages/Admin/Announcement/Announcement'
+import { NotificationContextProvider } from 'context/NotificationContext'
 
 function App() {
   const location = useLocation()
 
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,
-    authDomain: "clubtennisatpitt-0.firebaseapp.com",
-    projectId: "clubtennisatpitt-0",
-    storageBucket: "clubtennisatpitt-0.appspot.com",
-    messagingSenderId: "750088423287",
-    appId: "1:750088423287:web:f3d96de20f7c2d1521c372",
-    measurementId: "G-Q7Y5R3WVNC"
+    authDomain: 'clubtennisatpitt-0.firebaseapp.com',
+    projectId: 'clubtennisatpitt-0',
+    storageBucket: 'clubtennisatpitt-0.appspot.com',
+    messagingSenderId: '750088423287',
+    appId: '1:750088423287:web:f3d96de20f7c2d1521c372',
+    measurementId: 'G-Q7Y5R3WVNC'
   }
-  
+
   // Initialize Firebase
   // @ts-ignore
   const app = initializeApp(firebaseConfig)
@@ -39,8 +47,8 @@ function App() {
     // For each two-cols section on the page, create a GSAP context where
     // the content of the section animates in when the section appears on-screen
     const sections = document.getElementsByClassName('two-cols')
-    let ctxs : gsap.Context[] = []
-    for(let s of sections) {
+    let ctxs: gsap.Context[] = []
+    for (let s of sections) {
       ctxs.push(
         gsap.context(() => {
           const splitTextElem = s.querySelector('.title')
@@ -52,10 +60,10 @@ function App() {
           const splitText = new SplitType(splitTextElem as any, {
             wordClass: 'no-overflow'
           })
-          
+
           gsap.fromTo(splitText.chars, textFrom, textToInView(s))
-      
-          for(let elem of fadeInElems) {
+
+          for (let elem of fadeInElems) {
             gsap.fromTo(elem, fadeFrom, fadeToInView(s))
           }
         }, s)
@@ -63,7 +71,7 @@ function App() {
     }
 
     return () => {
-      for(let ctx of ctxs) {
+      for (let ctx of ctxs) {
         ctx.revert()
       }
     }
@@ -75,17 +83,68 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Routes>
-        <Route element={<PageLayout />}>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/tryouts" element={<Tryouts />} />
-          <Route path="/tournaments" element={<Tournaments />} />
-          <Route path="/fundraisers" element={<Fundraisers />} />
-          <Route path="/members" element={<Members />} />
-        </Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <NotificationContextProvider>
+        <Routes>
+          <Route element={<PageLayout />}>
+            <Route
+              path='/'
+              element={<Homepage />}
+            />
+            <Route
+              path='/about'
+              element={<About />}
+            />
+            <Route
+              path='/tryouts'
+              element={<Tryouts />}
+            />
+            <Route
+              path='/tournaments'
+              element={<Tournaments />}
+            />
+            <Route
+              path='/fundraisers'
+              element={<Fundraisers />}
+            />
+            <Route
+              path='/members'
+              element={<Members />}
+            />
+          </Route>
+          <Route
+            path='/admin'
+            element={<Admin />}>
+            <Route
+              path='login'
+              element={<Login />}
+            />
+            <Route
+              path='members'
+              element={<AdminMembers />}
+            />
+            <Route
+              path='tournaments'
+              element={<AdminTournaments />}
+            />
+            <Route
+              path='fundraisers'
+              element={<AdminFundraisers />}
+            />
+            <Route
+              path='tryouts'
+              element={<AdminTryouts />}
+            />
+            <Route
+              path='announcement'
+              element={<AdminAnnouncement />}
+            />
+          </Route>
+          <Route
+            path='*'
+            element={<PageNotFound />}
+          />
+        </Routes>
+      </NotificationContextProvider>
     </ThemeProvider>
   )
 }

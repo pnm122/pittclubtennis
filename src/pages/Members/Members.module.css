@@ -11,7 +11,8 @@
 }
 
 .member {
-  background: var(--on-bg10) linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.67));
+  background: var(--on-bg10)
+    linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.67));
   border-radius: var(--rounding);
   aspect-ratio: 3/4;
   overflow: hidden;
@@ -46,4 +47,14 @@
   top: 0;
   left: 0;
   z-index: -2;
+}
+
+.no-members {
+  font: var(--default-font);
+  text-transform: none;
+  background-color: var(--warning-light);
+  padding: var(--size-lg);
+  border-radius: var(--rounding);
+  border: 1px solid var(--warning);
+  color: var(--warning);
 }

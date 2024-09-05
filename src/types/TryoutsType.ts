@@ -1,4 +1,6 @@
-export default interface TryoutsType {
-  state: 'soon' | 'open' | 'closed'
-  link?: string
+type TryoutsType = {
+  open: boolean
+  link: string
 }
+
+export default TryoutsType

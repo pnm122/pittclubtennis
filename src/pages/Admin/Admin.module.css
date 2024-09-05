@@ -1,0 +1,32 @@
+#loader {
+  height: 100vh;
+  max-height: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login {
+  height: 100vh;
+  max-height: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: auto;
+}
+
+#login img {
+  max-width: 100%;
+  max-height: 125px;
+  margin-bottom: var(--size-2xl);
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-lg);
+  width: 100%;
+}

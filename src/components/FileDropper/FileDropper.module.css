@@ -1,0 +1,80 @@
+.file-dropper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-sm);
+  border-style: dashed !important;
+}
+
+.file-dropper--file-hover,
+.file-dropper--has-file {
+  border: 1px solid var(--selected-border) !important;
+  background-color: var(--selected);
+}
+
+.file-dropper--file-hover * {
+  /* Prevent ondragleave firing when hovering on text/icon inside file dropper */
+  pointer-events: none;
+}
+
+.file-dropper--has-file {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-dropper--error {
+  border-color: var(--negative) !important;
+  background-color: var(--negative-light) !important;
+}
+
+.file-dropper__icon,
+.file-dropper__text {
+  color: var(--unselected);
+}
+
+.file-dropper--file-hover .file-dropper__icon,
+.file-dropper--file-hover .file-dropper__text {
+  color: var(--primary);
+}
+
+.file-dropper--error .file-dropper__icon,
+.file-dropper--error .file-dropper__text {
+  color: var(--negative);
+}
+
+.file-dropper__upload-file {
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.file-dropper__filename {
+  display: flex;
+  align-items: center;
+  gap: var(--size-sm);
+  color: var(--primary);
+  min-width: 0;
+}
+
+.file-dropper--error .file-dropper__filename {
+  color: var(--negative);
+}
+
+.file-dropper__filename svg {
+  min-width: 1em;
+}
+
+.file-dropper__filename span {
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.file-dropper__delete {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  height: 24px;
+}

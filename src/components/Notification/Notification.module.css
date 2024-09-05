@@ -1,65 +1,84 @@
-#notif-outer {
+.notifications {
   position: fixed;
-  bottom: 0;
-  margin-bottom: var(--page-vert-pad);
-  width: 100%;
-  transition: transform cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s;
-}
-
-#notif-outer[aria-hidden=true] {
-  transform: translateY(calc(100% + var(--page-vert-pad) + 100px));
-}
-
-#notif {
-  background-color: var(--accent);
-  padding: var(--size-xl);
-  border-radius: var(--size-md);
-  box-shadow: var(--shadow-xl);
+  inset: 0;
+  bottom: unset;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: var(--size-md);
-  
+  align-items: center;
+  gap: var(--size-lg);
+  padding: var(--size-lg);
 }
 
-#notif-content {
+.notification {
+  background-color: var(--warning-light);
+  border-left: 6px solid var(--warning);
+  color: var(--warning);
+  padding: var(--size-lg);
+  border-radius: var(--size-sm);
+  width: 350px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-md);
+  box-shadow: var(--shadow-sm);
+  view-transition-class: notification;
+}
+
+.notification--error {
+  background-color: var(--negative-light);
+  color: var(--negative);
+  border-color: var(--negative);
+}
+
+.notification--success {
+  background-color: var(--positive-light);
+  color: var(--positive);
+  border-color: var(--positive);
+}
+
+.notification span {
+  color: inherit;
+}
+
+.notification__inner {
+  display: flex;
+  gap: var(--size-sm);
+}
+
+.notification__inner svg {
+  min-width: 1em;
+  min-height: 1.2em;
+}
+
+.notification__text {
   display: flex;
   flex-direction: column;
-  gap: var(--size-md);
+  gap: var(--size-sm);
 }
 
-#notif-content h3 {
-  font-size: var(--text-md);
+.text {
+  font-weight: 500;
+  line-height: 1.2em;
 }
 
-#notif-content p {
+.subtext {
   font-size: var(--text-sm);
 }
 
-#buttons {
-  display: flex;
-  gap: var(--size-md);
+.notification__close {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
 }
 
-#hide-button {
-  font-family: var(--title-font);
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--primary);
+::view-transition-group(notification-1) {
+  animation-timing-function: linear;
+  animation-duration: 2s;
 }
-
-@media (width > 768px) {
-  #notif {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--size-md);
-  }
-
-  #notif-content h3 {
-    font-size: var(--text-lg);
-  }
-
-  #notif-content p {
-    font-size: var(--text-md);
-  }
-}
+/* 
+html::view-transition-group(.notification)::view-transition-old {
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+} */
