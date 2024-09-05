@@ -78,10 +78,10 @@ const DatepickerPopup = forwardRef<PopupRef>(function DatepickerPopup(_, ref) {
         </button>
         <Select
           options={months}
-          value={getMonth(month)}
+          value={months[getMonth(month)]}
           onChange={(selected) =>
             setMonthAndInitFocusedDate(
-              new Date(`${selected} ${month.getFullYear()}`)
+              new Date(month.getFullYear(), months.findIndex(m => m === selected))
             )
           }
           width='120px'
